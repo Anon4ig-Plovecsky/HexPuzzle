@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c07f84b89b8a0d9238c0fc0f8f5e5a0f
+  m_SerializeEntries:
+  - m_GUID: 7eb19f695a9afcc5397bff5306a986ff
+    m_Address: Assets/Images/ExitButton/ExitGameButtonImageSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a095f21ef9a854c8d986ab679879ce50
+    m_Address: Assets/Images/ExitButton/ExitGameButtonImage.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 525d43215a46c8bd8a05f0a7ed1f21da
+    m_Address: Assets/Images/NewGameButton/NewGameButtonSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5147162e6dec2fb5a8710dfe98ebfac5
+    m_Address: Assets/Images/NewGameButton/NewGameButtonImage.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ef5fe54b2a6f7a84aa959b0a64610fc7
+    m_Address: Assets/Images/ResultsButton/ResultsButtonImage.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2de8b2419b47c73c0933ed2ee42b5e8f
+    m_Address: Assets/Images/ResultsButton/ResultsButtonImageSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5d8a785bdc44ec879966bc71f59c1b63
+    m_Address: Assets/Images/SettingsButton/SettingsButtonImage.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a13ba8a3f817b76b4b92532fdf16e328
+    m_Address: Assets/Images/SettingsButton/SettingsButtonImageSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1aff5cc750017c2c6a4ed7a832516f2a, type: 2}
+    - {fileID: 11400000, guid: f5c6a6373ee5095cc9591ae0c3f8dcaa, type: 2}
