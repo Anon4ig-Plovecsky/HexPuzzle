@@ -67,11 +67,12 @@ public class CubeGenerator : MonoBehaviour
             {
                 mainTexture = imageCreator.GetPartsOfPainting()[i].texture
             };
-            cubesPrefab[i].transform.GetChild(0).GetComponent<Renderer>().material = material;
+            cubesPrefab[i].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = material;
             cubesGameObjects[i] = Instantiate(cubesPrefab[i], pointsOfSpawn[cubeSpawn.ToArray()[i]].position, 
                 pointsOfSpawn[cubeSpawn.ToArray()[i]].rotation);
             cubesGameObjects[i].name = $"PartOfPainting ({i})";
             cubesGameObjects[i].transform.SetParent(cubesParent.transform);
+            cubesGameObjects[i].transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 }
