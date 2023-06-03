@@ -58,6 +58,10 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/PartOfPainting.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 334e295d02d79c030a76bcca8f6766ce
+    m_Address: Assets/Prefabs/Cell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:
