@@ -49,8 +49,8 @@ MonoBehaviour:
     m_Address: Assets/Images/SettingsButton/SettingsButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 43632e06230b17d9181aace499a2b010
-    m_Address: Assets/Images/Paintings
+  - m_GUID: 113d1e016cb8bca4a8a01dcaec775d16
+    m_Address: Assets/Images/Paintings/Textures
     m_ReadOnly: 0
     m_SerializedLabels:
     - Paintings
