@@ -4,9 +4,9 @@ using System;
 public class CellController : MonoBehaviour
 {
     private const string CorrectlyString = "[Correctly]";
+    private string nameDefault, nameOtherCollider;
     private ParticleSystem effectGameObject;
     private Renderer rendererGameObject;
-    private string nameDefault, nameOtherCollider;
     private Vector3 size;
     private int index;
     private void Start()

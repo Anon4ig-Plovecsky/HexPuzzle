@@ -119,10 +119,4 @@ public class LaserHand : SteamVR_LaserPointer
         else 
             Debug.Log("Failed to load!");
     }
-    // private void ListAll()
-    // {
-    //     if (sprites.Count != paths.Length) return;
-    //     foreach(var sprite in sprites)
-    //         Debug.Log(sprite);
-    // }
 }
