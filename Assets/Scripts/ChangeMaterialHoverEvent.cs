@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ChangeMaterialHoverEvent : MonoBehaviour
@@ -19,7 +18,7 @@ public class ChangeMaterialHoverEvent : MonoBehaviour
     }
     public void ObjectSelected(bool selected)
     {
-        for (var i = 0; i < CubeSize; i++)
-            materialsOfObject[i].mainTexture = selected ? selectedMaterial.mainTexture : originalTextures[i];
+        // for (var i = 0; i < CubeSize; i++)
+        //     materialsOfObject[i].mainTexture = selected ? selectedMaterial.mainTexture : originalTextures[i];
     }
 }
