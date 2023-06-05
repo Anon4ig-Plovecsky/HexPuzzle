@@ -17,7 +17,7 @@ public class PauseController : MonoBehaviour
         new List<GameObject>(FindObjectsOfType<GameObject>()).ForEach(obj =>
         {
             Renderer gameObjectRenderer;
-            if((gameObjectRenderer = obj.GetComponent<Renderer>()) != null && !obj.CompareTag("UI"))
+            if((gameObjectRenderer = obj.GetComponent<Renderer>()) != null && obj.layer != 5 && obj.layer != 6)
                 gameObjectsRenderer.Add(gameObjectRenderer);
         });
     }
