@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Valve.VR.Extras;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class LaserHand : SteamVR_LaserPointer
 {
@@ -18,24 +19,26 @@ public class LaserHand : SteamVR_LaserPointer
     private Button resultsButton;
     private Button settingsButton;
     private Button exitGameButton;
-    
+
+    private bool isSorted;
     private const string NameNewGameButton = "NewGameButton";
     private const string NameResultsButton = "ResultsButton";
     private const string NameSettingsButton = "SettingsButton";
     private const string NameExitGameButton = "ExitGameButton";
     private readonly string[] paths =
     {
-        "Assets/Images/NewGameButton/NewGameButtonImage.png",           // 0
-        "Assets/Images/NewGameButton/NewGameButtonSelected.png",        // 1
-        "Assets/Images/ExitButton/ExitGameButtonImage.png",             // 2
-        "Assets/Images/ExitButton/ExitGameButtonImageSelected.png",     // 3
+        "Assets/Images/ExitButton/ExitGameButtonImage.png",             // 0
+        "Assets/Images/ExitButton/ExitGameButtonImageSelected.png",     // 1
+        "Assets/Images/NewGameButton/NewGameButtonImage.png",           // 2
+        "Assets/Images/NewGameButton/NewGameButtonSelected.png",        // 3
         "Assets/Images/ResultsButton/ResultsButtonImage.png",           // 4
         "Assets/Images/ResultsButton/ResultsButtonImageSelected.png",   // 5
         "Assets/Images/SettingsButton/SettingsButtonImage.png",         // 6
         "Assets/Images/SettingsButton/SettingsButtonImageSelected.png", // 7
     };
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         newGameButton = GameObject.Find("NewGameButton").GetComponent<Button>();
         resultsButton = GameObject.Find("ResultsButton").GetComponent<Button>();
         settingsButton = GameObject.Find("SettingsButton").GetComponent<Button>();
@@ -52,6 +55,16 @@ public class LaserHand : SteamVR_LaserPointer
         foreach(var sprite in sprites)
             Debug.Log(sprite.name);
     }
+    protected override void Update()
+    {
+        if (sprites.Count == paths.Length && !isSorted)
+        {
+            isSorted = true;
+            sprites.Sort((sprite1, sprite2) => 
+                string.Compare(sprite1.name, sprite2.name, StringComparison.Ordinal));
+        }
+        base.Update();
+    }
     public override void OnPointerIn(PointerEventArgs e)
     {
         base.OnPointerIn(e);
@@ -59,10 +72,10 @@ public class LaserHand : SteamVR_LaserPointer
         switch (e.target.name)
         {
             case NameNewGameButton:
-                newGameButtonImage.sprite = sprites[1]; 
+                newGameButtonImage.sprite = sprites[3]; 
                 break;
             case NameExitGameButton:
-                exitGameButtonImage.sprite = sprites[3];
+                exitGameButtonImage.sprite = sprites[1];
                 break;
             case NameResultsButton:
                 resultsButtonImage.sprite = sprites[5];
@@ -93,10 +106,10 @@ public class LaserHand : SteamVR_LaserPointer
         switch (e.target.name)
         {
             case NameNewGameButton:
-                newGameButtonImage.sprite = sprites[0];
+                newGameButtonImage.sprite = sprites[2];
                 break;
             case NameExitGameButton:
-                exitGameButtonImage.sprite = sprites[2];
+                exitGameButtonImage.sprite = sprites[0];
                 break;
             case NameResultsButton:
                 resultsButtonImage.sprite = sprites[4];
@@ -105,10 +118,6 @@ public class LaserHand : SteamVR_LaserPointer
                 settingsButtonImage.sprite = sprites[6];
                 break;
         }
-    }
-    private void Update()
-    {
-        
     }
     private void OnLoadDone(AsyncOperationHandle<Sprite> asyncOperationHandle)
     {
