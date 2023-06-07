@@ -11,6 +11,7 @@ public class CubeGenerator : MonoBehaviour
     [SerializeField] private AssetLabelReference assetLabelReferenceNormalMap;
     [SerializeField] private AssetLabelReference assetLabelReferenceTexture;
     [SerializeField] private GameObject pauseController;
+    private bool mainPaintingIsCrop;
     private readonly Tuple<int, int> cubeQty = new(3, 2); //[SerializeField]
     private GameObject cubesParent;
     //Cubes
@@ -53,6 +54,15 @@ public class CubeGenerator : MonoBehaviour
         for(var i = 0; i < pointsOfSpawnParent.transform.childCount; i++)
             pointsOfSpawn.Add(pointsOfSpawnParent.transform.GetChild(i));
     }
+    private void Update()
+    {
+        if (PauseController.classPauseController is null || mainPaintingIsCrop) return;
+        mainPaintingIsCrop = true;
+        var mainSprite = imageCreator.Item1.CropEntirePainting();
+        // PauseController.classPauseController.ShowImage(mainSprite, imageCreator.Item1.dimension);
+        StartCoroutine(PauseController.classPauseController.ShowImage(mainSprite,
+            imageCreator.Item1.dimension));
+    }
     private void OnLoadDone(AsyncOperationHandle<IList<Sprite>> asyncOperationHandle)
     {
         if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
@@ -61,6 +71,7 @@ public class CubeGenerator : MonoBehaviour
             while (normalMaps.Count != paintings.Count) {}
             ChooseImage();
             SpawnCubes();
+            pauseController.SetActive(true);
         }
         else 
             Debug.Log("Failed to load paintings!");
@@ -72,8 +83,8 @@ public class CubeGenerator : MonoBehaviour
         mainNormalMap = normalMaps[mainIndex];
         imageCreator = new Tuple<ImageCreator, ImageCreator>(new ImageCreator(mainPainting, cubeQty),
             new ImageCreator(mainNormalMap, cubeQty));
-        imageCreator.Item1.CropPainting();
-        imageCreator.Item2.CropPainting();
+        imageCreator.Item1.CropPaintingByParts();
+        imageCreator.Item2.CropPaintingByParts();
     }
     private void SpawnCubes()
     {
@@ -98,6 +109,5 @@ public class CubeGenerator : MonoBehaviour
             cubesGameObjects[i].transform.SetParent(cubesParent.transform);
             cubesGameObjects[i].transform.GetChild(1).gameObject.SetActive(true);
         }
-        pauseController.SetActive(true);
     }
 }
