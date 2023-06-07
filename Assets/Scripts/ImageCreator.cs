@@ -3,6 +3,7 @@ using System;
 
 public class ImageCreator
 {
+    public Vector2 dimension { get; private set; }
     private int intervalWidth;
     private readonly Sprite painting;
     private readonly int height, width;
@@ -24,22 +25,29 @@ public class ImageCreator
         offsetByWidth = (width - intervalWidth * cubeQty.Item1) / 2;
         offsetByHeight = (height - intervalWidth * cubeQty.Item2) / 2;
     }
-    public void CropPainting()
+    public void CropPaintingByParts()
     {
         for (var i = 0; i < cubeQty.Item2; i++)
-        {
             for (var j = 0; j < cubeQty.Item1; j++)
-            {
-                var texture = new Texture2D(intervalWidth, intervalWidth);
-                texture.SetPixels(painting.texture.GetPixels(offsetByWidth + j * intervalWidth,
-                    offsetByHeight + i * intervalWidth, intervalWidth, intervalWidth));
-                texture.Apply();
-                var sprite = Sprite.Create(texture, new Rect(0f, 0f, intervalWidth, intervalWidth),
-                    new Vector2(0.5f, 0.5f));
-                partsOfPaintings[i * cubeQty.Item1 + j] = sprite;
-            }
-        }
+                partsOfPaintings[i * cubeQty.Item1 + j] = CropImage(offsetByWidth + j * intervalWidth,
+                    offsetByHeight + i * intervalWidth, intervalWidth, intervalWidth);
     }
+    public Sprite CropEntirePainting()
+    {
+        dimension = new Vector2(intervalWidth * cubeQty.Item1, intervalWidth * cubeQty.Item2);
+        var sprite = CropImage(offsetByWidth, offsetByHeight, 
+            Convert.ToInt32(dimension.x), Convert.ToInt32(dimension.y));
+        return sprite;
+    }
+    private Sprite CropImage(int x, int y, int widthImage, int heightImage)
+    {
+    var texture = new Texture2D(widthImage, heightImage);
+        texture.SetPixels(painting.texture.GetPixels(x, y, widthImage, heightImage));
+        texture.Apply();
+        var sprite = Sprite.Create(texture, new Rect(0f, 0f, widthImage, heightImage),
+            new Vector2(0.5f, 0.5f));
+        return sprite;
+    } 
     public Sprite[] GetPartsOfPainting()
     {
         return partsOfPaintings;

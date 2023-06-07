@@ -23,6 +23,11 @@ public class GridController : GridGenerator
                 isCorrectly = false;
         if (!isCorrectly) return;
         isWin = true;
-        Debug.Log("You win!");
+        ShowWinPanel();
+    }
+    private void ShowWinPanel()
+    {
+        PauseController.classPauseController.SetPause(true);
+        
     }
 }
