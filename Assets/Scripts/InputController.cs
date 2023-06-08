@@ -8,8 +8,8 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && pauseController.activeSelf)
         {
-            isPaused = !isPaused;
-            PauseController.classPauseController.SetPause(isPaused);
+            isPaused = Time.timeScale != 0;
+            CanvasController.classCanvasController.SetPause(isPaused);
         }
     }
 }

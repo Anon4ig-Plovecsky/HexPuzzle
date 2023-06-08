@@ -9,13 +9,13 @@ public class ImageCreator
     private readonly int height, width;
     private readonly Tuple<int, int> cubeQty;
     private int offsetByWidth, offsetByHeight;
-    private readonly Sprite[] partsOfPaintings;
+    private readonly Sprite[] partsOfPainting;
     public ImageCreator(Sprite mainPainting, Tuple<int, int> cubeQty)
     {
         painting = mainPainting;
         height = painting.texture.height;
         width = painting.texture.width;
-        partsOfPaintings = new Sprite[cubeQty.Item1 * cubeQty.Item2];
+        partsOfPainting = new Sprite[cubeQty.Item1 * cubeQty.Item2];
         this.cubeQty = cubeQty;
         CalculateWidth();
     }
@@ -29,7 +29,7 @@ public class ImageCreator
     {
         for (var i = 0; i < cubeQty.Item2; i++)
             for (var j = 0; j < cubeQty.Item1; j++)
-                partsOfPaintings[i * cubeQty.Item1 + j] = CropImage(offsetByWidth + j * intervalWidth,
+                partsOfPainting[i * cubeQty.Item1 + j] = CropImage(offsetByWidth + j * intervalWidth,
                     offsetByHeight + i * intervalWidth, intervalWidth, intervalWidth);
     }
     public Sprite CropEntirePainting()
@@ -50,6 +50,6 @@ public class ImageCreator
     } 
     public Sprite[] GetPartsOfPainting()
     {
-        return partsOfPaintings;
+        return partsOfPainting;
     }
 }
