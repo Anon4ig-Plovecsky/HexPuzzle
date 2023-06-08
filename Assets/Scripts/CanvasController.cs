@@ -1,15 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
+using UnityEngine;
+using System;
 
-public class PauseController : MonoBehaviour
+public class CanvasController : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject imagePanel;
-    // [SerializeField] private GameObject winPanel;
-    public static PauseController classPauseController { get; private set; }
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private LaserHand laserHand;
+    public static CanvasController classCanvasController { get; private set; }
     private readonly List<Renderer> gameObjectsRenderer = new();
     
     //ImagePanel
@@ -20,8 +21,8 @@ public class PauseController : MonoBehaviour
     private Color grayColor;
     private void Start()
     {
-        if (classPauseController == null)
-            classPauseController = this;
+        if (classCanvasController == null)
+            classCanvasController = this;
         defaultColor = new Color(1, 1, 1);
         grayColor = new Color(0.432f, 0.432f, 0.432f);
         new List<GameObject>(FindObjectsOfType<GameObject>()).ForEach(obj =>
@@ -37,6 +38,8 @@ public class PauseController : MonoBehaviour
         StopTime(isPaused);
         pausePanel.SetActive(isPaused);
         imagePanel.SetActive(isPaused);
+        laserHand.enabled = true;
+        laserHand.active = isPaused;
     }
     public IEnumerator ShowImage(Sprite sprite, Vector2 dimension)
     {
@@ -57,12 +60,18 @@ public class PauseController : MonoBehaviour
     public void ShowWinPanel()
     {
         StopTime(true);
-        
+        winPanel.SetActive(true);
+        laserHand.enabled = true;
+        laserHand.active = true;
     }
     private void StopTime(bool isStop)
     {
         Time.timeScale = isStop ? 0 : 1;
         foreach (var rendererGameObject in gameObjectsRenderer)
             rendererGameObject.material.color = isStop ? grayColor : defaultColor;
+    }
+    public static void DestroyClass()
+    {
+        classCanvasController = null;
     }
 }

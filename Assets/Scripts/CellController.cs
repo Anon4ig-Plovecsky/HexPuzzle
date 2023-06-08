@@ -41,6 +41,7 @@ public class CellController : MonoBehaviour
     private void OnTriggerExit(Collider otherCollider)
     {
         if (rendererGameObject.enabled || nameOtherCollider != otherCollider.name) return;
+        nameOtherCollider = "";
         name = nameDefault;
         rendererGameObject.enabled = true;
         effectGameObject.Play();
