@@ -8,66 +8,75 @@ using System;
 
 public class CubeGenerator : MonoBehaviour
 {
+    // Input data
     [SerializeField] private AssetLabelReference assetLabelReferenceNormalMap;
     [SerializeField] private AssetLabelReference assetLabelReferenceTexture;
     [SerializeField] private GameObject pauseController;
-    private readonly Tuple<int, int> cubeQty = new(3, 2); //[SerializeField]
-    private GameObject cubesParent;
+    private readonly Tuple<int, int> _cubeQty = new(3, 2);      //[SerializeField]
+    
+    private GameObject _cubesParent;
+    
     //Cubes
-    private readonly List<Transform> pointsOfSpawn = new();
-    private HashSet<int> cubeSpawn = new();
-    private GameObject[] cubesGameObjects;
-    private GameObject[] cubesPrefab;
-    private const int CubeSides = 6;
-    private Shader cubeShader;
+    private readonly List<Transform> _pointsOfSpawn = new();    // Point objects for cube spawning
+    private HashSet<int> _hashIndexesOfSpawn = new();           // Indexes of spawn points to be used
+    
+    private GameObject[] _cubesGameObjects;                     
+    private GameObject[] _cubesPrefab;
+    
+    private Shader _cubeShader;
+    
     //Paintings
-    private readonly Tuple<ImageCreator, ImageCreator>[] partsOfPaintings = new Tuple<ImageCreator, ImageCreator>[CubeSides]; // [0] - Top
+    private readonly Tuple<ImageCreator, ImageCreator>[] _partsOfPaintings = new Tuple<ImageCreator, ImageCreator>[CommonKeys.CubeSides]; // [0] - Top
     private static readonly int BumpMap = Shader.PropertyToID("_BumpMap");
-    private HashSet<int> paintingIndexes = new();
-    private bool mainPaintingIsCrop;
-    private List<Sprite> normalMaps; //[0] - mainPainting
-    private List<Sprite> paintings; //[0] - mainNormalMap
+    private HashSet<int> _paintingIndexes = new();
+    private bool _mainPaintingIsCrop;
+    private List<Sprite> _normalMaps; //[0] - mainPainting
+    private List<Sprite> _paintings; //[0] - mainNormalMap
     private void Start()
     {
-        cubesParent = GameObject.Find("Cubes");
-        cubeShader = Shader.Find("Standard");
-        cubesPrefab = new GameObject[cubeQty.Item1 * cubeQty.Item2];
-        cubesGameObjects = new GameObject[cubesPrefab.Length];
-        var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/PartOfPainting.prefab");
+        _cubesParent = GameObject.Find("Cubes");
+        _cubeShader = Shader.Find("Standard");
+        
+        _cubesPrefab = new GameObject[_cubeQty.Item1 * _cubeQty.Item2];
+        _cubesGameObjects = new GameObject[_cubesPrefab.Length];
+        
+        var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.PartOfPainting);
         asyncOperationHandle.Completed += delegate
         {
-            if(asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
-                for (var i = 0; i < cubesPrefab.Length; i++)
-                    cubesPrefab[i] = asyncOperationHandle.Result;
+            if (asyncOperationHandle.Status != AsyncOperationStatus.Succeeded)
+                return;
+                
+            for (var i = 0; i < _cubesPrefab.Length; i++)
+                _cubesPrefab[i] = asyncOperationHandle.Result;
         };
         var asyncOperationListHandleNormalMap = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceNormalMap, _ => {});
         asyncOperationListHandleNormalMap.Completed += delegate
         {
             if(asyncOperationListHandleNormalMap.Status == AsyncOperationStatus.Succeeded)
-                normalMaps = new List<Sprite>(asyncOperationListHandleNormalMap.Result.ToArray());
+                _normalMaps = new List<Sprite>(asyncOperationListHandleNormalMap.Result.ToArray());
             else 
                 Debug.Log("Failed to load Normal Maps!");
         };
         var pointsOfSpawnParent = GameObject.Find("PointsOfSpawn");
         for(var i = 0; i < pointsOfSpawnParent.transform.childCount; i++)
-            pointsOfSpawn.Add(pointsOfSpawnParent.transform.GetChild(i));
+            _pointsOfSpawn.Add(pointsOfSpawnParent.transform.GetChild(i));
         var asyncOperationIListHandleTexture = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceTexture, _ => {});
         asyncOperationIListHandleTexture.Completed += delegate { OnLoadDone(asyncOperationIListHandleTexture); };
     }
     private void Update()
     {
-        if (CanvasController.classCanvasController is null || mainPaintingIsCrop) return;
-        mainPaintingIsCrop = true;
-        var mainSprite = partsOfPaintings[0].Item1.CropEntirePainting();
+        if (CanvasController.classCanvasController is null || _mainPaintingIsCrop) return;
+        _mainPaintingIsCrop = true;
+        var mainSprite = _partsOfPaintings[0].Item1.CropEntirePainting();
         StartCoroutine(CanvasController.classCanvasController.ShowImage(mainSprite,
-            partsOfPaintings[0].Item1.dimension));
+            _partsOfPaintings[0].Item1.dimension));
     }
     private void OnLoadDone(AsyncOperationHandle<IList<Sprite>> asyncOperationHandle)
     {
         if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
         {
-            paintings = new List<Sprite>(asyncOperationHandle.Result.ToArray());
-            while (normalMaps.Count != paintings.Count || cubesPrefab[^1] == null) {}
+            _paintings = new List<Sprite>(asyncOperationHandle.Result.ToArray());
+            while (_normalMaps.Count != _paintings.Count || _cubesPrefab[^1] == null) {}
             ChooseImages();
             SpawnCubes();
             pauseController.SetActive(true);
@@ -77,46 +86,46 @@ public class CubeGenerator : MonoBehaviour
     }
     private void ChooseImages()
     {
-        paintingIndexes = GenerateNumbers(paintingIndexes, CubeSides, paintings.Count);
-        for (var i = 0; i < CubeSides; i++)
+        _paintingIndexes = GenerateNumbers(_paintingIndexes, CommonKeys.CubeSides, _paintings.Count);
+        for (var i = 0; i < CommonKeys.CubeSides; i++)
         {
-            partsOfPaintings[i] = new Tuple<ImageCreator, ImageCreator>(
-                new ImageCreator(paintings[paintingIndexes.ToArray()[i]], cubeQty),
-                new ImageCreator(normalMaps[paintingIndexes.ToArray()[i]], cubeQty));
-            partsOfPaintings[i].Item1.CropPaintingByParts();
-            partsOfPaintings[i].Item2.CropPaintingByParts();
+            _partsOfPaintings[i] = new Tuple<ImageCreator, ImageCreator>(
+                new ImageCreator(_paintings[_paintingIndexes.ToArray()[i]], _cubeQty),
+                new ImageCreator(_normalMaps[_paintingIndexes.ToArray()[i]], _cubeQty));
+            _partsOfPaintings[i].Item1.CropPaintingByParts();
+            _partsOfPaintings[i].Item2.CropPaintingByParts();
         }
     }
     private void SpawnCubes()
     {
-        cubeSpawn = GenerateNumbers(cubeSpawn, cubeQty.Item1 * cubeQty.Item2, pointsOfSpawn.Count);
-        for (var cubeIndex = 0; cubeIndex < cubesPrefab.Length; cubeIndex++)
+        _hashIndexesOfSpawn = GenerateNumbers(_hashIndexesOfSpawn, _cubeQty.Item1 * _cubeQty.Item2, _pointsOfSpawn.Count);
+        for (var cubeIndex = 0; cubeIndex < _cubesPrefab.Length; cubeIndex++)
         {
             SetTexture(cubeIndex);
-            cubesGameObjects[cubeIndex] = Instantiate(cubesPrefab[cubeIndex], pointsOfSpawn[cubeSpawn.ToArray()[cubeIndex]].position, 
-                pointsOfSpawn[cubeSpawn.ToArray()[cubeIndex]].rotation);
-            cubesGameObjects[cubeIndex].transform.Rotate(
+            _cubesGameObjects[cubeIndex] = Instantiate(_cubesPrefab[cubeIndex], _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].position, 
+                _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].rotation);
+            _cubesGameObjects[cubeIndex].transform.Rotate(
                 Random.Range(0, 4) * 90, Random.Range(0, 4) * 90, Random.Range(0, 4) * 90
                 );
-            cubesGameObjects[cubeIndex].name = $"PartOfPainting ({cubeIndex})";
-            cubesGameObjects[cubeIndex].transform.SetParent(cubesParent.transform);
+            _cubesGameObjects[cubeIndex].name = $"PartOfPainting ({cubeIndex})";
+            _cubesGameObjects[cubeIndex].transform.SetParent(_cubesParent.transform);
         }
     }
     private void SetTexture(int cubeIndex)
     {
-        for (var side = 0; side < CubeSides; side++)
+        for (var side = 0; side < CommonKeys.CubeSides; side++)
         {
-            var imageMaterial = new Material(cubeShader)
+            var imageMaterial = new Material(_cubeShader)
             {
-                mainTexture = partsOfPaintings[side].Item1.GetPartsOfPainting()[cubeIndex].texture
+                mainTexture = _partsOfPaintings[side].Item1.GetPartsOfPainting()[cubeIndex].texture
             };
             imageMaterial.EnableKeyword("_NORMALMAP");
-            imageMaterial.SetTexture(BumpMap, partsOfPaintings[side].Item2.GetPartsOfPainting()[cubeIndex].texture);
-            cubesPrefab[cubeIndex].transform.GetChild(0).GetChild(side).GetComponent<Renderer>().material =
+            imageMaterial.SetTexture(BumpMap, _partsOfPaintings[side].Item2.GetPartsOfPainting()[cubeIndex].texture);
+            _cubesPrefab[cubeIndex].transform.GetChild(0).GetChild(side).GetComponent<Renderer>().material =
                 imageMaterial;
         }
     }
-    private HashSet<int> GenerateNumbers(HashSet<int> hashSet, int size, int range)
+    private HashSet<int> GenerateNumbers(ISet<int> hashSet, int size, int range)
     {
         while (hashSet.Count < size)
             hashSet.Add(Random.Range(0, range));

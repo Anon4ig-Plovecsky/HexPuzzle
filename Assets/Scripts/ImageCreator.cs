@@ -41,7 +41,7 @@ public class ImageCreator
     }
     private Sprite CropImage(int x, int y, int widthImage, int heightImage)
     {
-    var texture = new Texture2D(widthImage, heightImage);
+        var texture = new Texture2D(widthImage, heightImage);
         texture.SetPixels(painting.texture.GetPixels(x, y, widthImage, heightImage));
         texture.Apply();
         var sprite = Sprite.Create(texture, new Rect(0f, 0f, widthImage, heightImage),

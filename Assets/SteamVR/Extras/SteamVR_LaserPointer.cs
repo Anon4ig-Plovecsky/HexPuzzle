@@ -27,7 +27,7 @@ namespace Valve.VR.Extras
         Transform previousContact = null;
 
 
-        protected virtual void Start()
+        private void Start()
         {
             if (pose == null)
                 pose = this.GetComponent<SteamVR_Behaviour_Pose>();
@@ -89,15 +89,13 @@ namespace Valve.VR.Extras
         }
 
 
-        protected virtual void Update()
+        private void Update()
         {
-            if(active != isActive)
+            if (!isActive)
             {
-                isActive = active;
-                pointer?.SetActive(isActive);
+                isActive = true;
+                this.transform.GetChild(0).gameObject.SetActive(true);
             }
-            if(!isActive)
-                return;
 
             float dist = 100f;
 
