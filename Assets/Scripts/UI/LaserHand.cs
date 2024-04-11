@@ -20,13 +20,15 @@ namespace UI
         private readonly Dictionary<CommonKeys.UiKeys, ButtonImagePaths> _mapBtnImgStrPaths = new()
         {
             { CommonKeys.UiKeys.Continue, CommonKeys.Addressable.ButtonImages.Continue },
-            { CommonKeys.UiKeys.ExitGame, CommonKeys.Addressable.ButtonImages.ExitGame },
-            { CommonKeys.UiKeys.GoToMainMenu, CommonKeys.Addressable.ButtonImages.GoToMainMenu },
-            { CommonKeys.UiKeys.GoToMainMenuWinPanel, CommonKeys.Addressable.ButtonImages.GoToMainMenuWinPanel },
+            { CommonKeys.UiKeys.QuitGame, CommonKeys.Addressable.ButtonImages.QuitGame },
+            { CommonKeys.UiKeys.ExitToMenu, CommonKeys.Addressable.ButtonImages.ExitToMenu },
+            { CommonKeys.UiKeys.ExitToMenuWinPanel, CommonKeys.Addressable.ButtonImages.ExitToMenuWinPanel },
             { CommonKeys.UiKeys.Results, CommonKeys.Addressable.ButtonImages.Results },
             { CommonKeys.UiKeys.Settings, CommonKeys.Addressable.ButtonImages.Settings },
-            { CommonKeys.UiKeys.NewGame, CommonKeys.Addressable.ButtonImages.NewGame}
-        
+            { CommonKeys.UiKeys.StartGame, CommonKeys.Addressable.ButtonImages.StartGame},
+            { CommonKeys.UiKeys.GoToMenu, CommonKeys.Addressable.ButtonImages.GoToMainMenu },
+            { CommonKeys.UiKeys.MainLevels, CommonKeys.Addressable.ButtonImages.MainLevels },
+            { CommonKeys.UiKeys.CustomLevel, CommonKeys.Addressable.ButtonImages.CustomLevel }
         };
 
         private bool _isSorted;
@@ -37,7 +39,7 @@ namespace UI
             // Getting buttons and images by names
             foreach(CommonKeys.UiKeys buttonKey in Enum.GetValues(typeof(CommonKeys.UiKeys)))
             {
-                _mapButtons.Add(buttonKey, GameObject.Find(CommonKeys.UiNames[buttonKey]).GetComponent<Button>());
+                _mapButtons.Add(buttonKey, GameObject.Find(CommonKeys.UiButtonNames[buttonKey]).GetComponent<Button>());
                 _mapImages.Add(buttonKey, _mapButtons[buttonKey].GetComponent<Image>());
             }
         
@@ -52,10 +54,6 @@ namespace UI
                 _mapBtnImgSpritesMap.Add(path.Key, new ButtonImageSprites(spriteStandard, spriteSelected));
             }
         }
-        protected /*override*/ void Update()
-        {
-            // base.Update();
-        }
         public override void OnPointerIn(PointerEventArgs e)
         {
             base.OnPointerIn(e);
@@ -64,11 +62,11 @@ namespace UI
             if (!e.target.CompareTag("ButtonUI"))
                 return;
 
-            if (!CommonKeys.UiNames.ContainsValue(e.target.name))
+            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 
             // Finding the button key
-            var uiKey = CommonKeys.UiNames.FirstOrDefault(uiName
+            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
                 => uiName.Value.Equals(e.target.name)).Key;
 
             // Replacing button sprite with selected sprite
@@ -77,17 +75,16 @@ namespace UI
         public override void OnPointerClick(PointerEventArgs e)
         {
             base.OnPointerClick(e);
-            if (!e.target.CompareTag("ButtonUI")) return;
         
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
                 return;
 
-            if (!CommonKeys.UiNames.ContainsValue(e.target.name))
+            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 
             // Finding the button key
-            var uiKey = CommonKeys.UiNames.FirstOrDefault(uiName
+            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
                 => uiName.Value.Equals(e.target.name)).Key;
 
             // Activating button using the found uiKey
@@ -101,11 +98,11 @@ namespace UI
             if (!e.target.CompareTag("ButtonUI"))
                 return;
 
-            if (!CommonKeys.UiNames.ContainsValue(e.target.name))
+            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 
             // Finding the button key
-            var uiKey = CommonKeys.UiNames.FirstOrDefault(uiName
+            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
                 => uiName.Value.Equals(e.target.name)).Key;
 
             // Replacing button sprite with standard sprite

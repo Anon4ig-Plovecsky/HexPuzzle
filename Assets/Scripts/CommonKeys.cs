@@ -9,23 +9,37 @@ public static class CommonKeys
     public enum UiKeys
     {
         Continue,
-        ExitGame,
-        GoToMainMenu,
-        GoToMainMenuWinPanel,
-        NewGame,
+        QuitGame,
+        ExitToMenu,
+        ExitToMenuWinPanel,
+        GoToMenu,
+        StartGame,
         Results,
-        Settings
+        Settings,
+        MainLevels,
+        CustomLevel
     }
 
-    public static readonly Dictionary<UiKeys, string> UiNames = new()
+    public static class StrButtonNames
     {
-        { UiKeys.NewGame, "NewGameButton" },
-        { UiKeys.Results, "ResultsButton" },
-        { UiKeys.Settings, "SettingsButton" },
-        { UiKeys.ExitGame, "ExitGameButton" },
-        { UiKeys.Continue,  "ContinueButton"},
-        { UiKeys.GoToMainMenu, "GoToMainMenuButton" },
-        { UiKeys.GoToMainMenuWinPanel, "GoToMainMenuButtonWinPanel" }
+        public const string StartGame = "StartGameButton";
+        public const string Results = "ResultsButton";
+        public const string Settings = "SettingsButton";
+        public const string QuitGame = "QuitGameButton";
+        public const string Continue = "ContinueButton";
+        public const string ExitToMenu = "ExitToMenuButton";
+        public const string ExitToMenuWinPanel = "ExitToMenuButtonWinPanel";
+    }
+
+    public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
+    {
+        { UiKeys.StartGame, StrButtonNames.StartGame },
+        { UiKeys.Results, StrButtonNames.Results },
+        { UiKeys.Settings, StrButtonNames.Settings },
+        { UiKeys.QuitGame, StrButtonNames.QuitGame },
+        { UiKeys.Continue,  StrButtonNames.Continue },
+        { UiKeys.ExitToMenu, StrButtonNames.ExitToMenu },
+        { UiKeys.ExitToMenuWinPanel, StrButtonNames.ExitToMenuWinPanel }
     };
     
     // Addressable paths
@@ -36,13 +50,21 @@ public static class CommonKeys
         // Addressable paths to button images
         public static class ButtonImages
         {
-            public static readonly ButtonImagePaths Continue = new("Assets/Images/ContinueButton/ContinueButtonImage.png");
-            public static readonly ButtonImagePaths ExitGame = new("Assets/Images/ExitButton/ExitGameButtonImage.png");
-            public static readonly ButtonImagePaths GoToMainMenu = new("Assets/Images/GoToMainMenuButton/GoToMainMenuButtonImage.png");
-            public static readonly ButtonImagePaths GoToMainMenuWinPanel = new("Assets/Images/GoToMainMenuInWinPanelButton/GoToMainMenuInWinPanelButtonImage.png");
-            public static readonly ButtonImagePaths NewGame = new("Assets/Images/NewGameButton/NewGameButtonImage.png");
-            public static readonly ButtonImagePaths Results = new("Assets/Images/ResultsButton/ResultsButtonImage.png");
-            public static readonly ButtonImagePaths Settings = new("Assets/Images/SettingsButton/SettingsButtonImage.png");
+            // Main menu
+            public static readonly ButtonImagePaths Continue = new("Assets/Images/UI/MainMenu/ContinueButton/ContinueButtonImage.png");
+            public static readonly ButtonImagePaths QuitGame = new("Assets/Images/UI/MainMenu/QuitButton/QuitGameButtonImage.png");
+            public static readonly ButtonImagePaths ExitToMenu = new("Assets/Images/UI/MainMenu/ExitToMenuButton/ExitToMenuButtonImage.png");
+            public static readonly ButtonImagePaths ExitToMenuWinPanel = new("Assets/Images/UI/MainMenu/ExitToMenuInWinPanelButton/ExitToMenuInWinPanelButtonImage.png");
+            public static readonly ButtonImagePaths StartGame = new("Assets/Images/UI/MainMenu/StartGameButton/StartGameButtonImage.png");
+            public static readonly ButtonImagePaths Results = new("Assets/Images/UI/MainMenu/ResultsButton/ResultsButtonImage.png");
+            public static readonly ButtonImagePaths Settings = new("Assets/Images/UI/MainMenu/SettingsButton/SettingsButtonImage.png");
+            
+            // Common
+            public static readonly ButtonImagePaths GoToMainMenu = new("Assets/Images/UI/GoToMenuButton/GoToMenu.png");
+
+            // Start Game
+            public static readonly ButtonImagePaths MainLevels = new("Assets/Images/UI/StartGame/MainLevels/MainLevels.png");
+            public static readonly ButtonImagePaths CustomLevel = new("Assets/Images/UI/StartGame/CustomLevel/CustomLevels.png");
         }
     }
 }

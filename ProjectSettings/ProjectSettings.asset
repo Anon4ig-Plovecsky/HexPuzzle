@@ -733,11 +733,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: ca6c0142-ae16-4dec-b866-49535d2d283f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: HexPuzzle
+  organizationId: anon4ig-plovecsky
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

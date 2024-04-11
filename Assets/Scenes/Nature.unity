@@ -2809,11 +2809,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1531046994}
+    - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.ButtonsController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1685626992657340968}
+    - target: {fileID: 1685626992329459640, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685626992329459642, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_Name
+      value: ExitToMenuButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+--- !u!1 &1685626992657340968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1685626992329459642, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+  m_PrefabInstance: {fileID: 1685626992657340967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1829032139069061027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2913,12 +2942,41 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1829032140265151004, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_Name
+      value: ExitToMenuButtonWinPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1531046994}
+    - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.ButtonsController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1829032139069061028}
+    - target: {fileID: 1829032140265151074, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+--- !u!1 &1829032139069061028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1829032140265151004, guid: 3e8762a8cace70613b4220b764e3062b, type: 3}
+  m_PrefabInstance: {fileID: 1829032139069061027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2378793424026821656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1605795132754279666, guid: 8859cb4b088afa979961ee7b720e136f, type: 3}

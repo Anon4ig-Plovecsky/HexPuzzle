@@ -6,6 +6,8 @@ using System;
 
 namespace UI
 {
+    /// CanvasController is responsible for the behavior of the game's GUI panels,
+    /// as well as their interaction with the game environment
     public class CanvasController : MonoBehaviour
     {
         [SerializeField] private GameObject pausePanel;
