@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 1829032139830353515}
   - component: {fileID: 1829032139830353508}
   - component: {fileID: 1829032139830353509}
+  - component: {fileID: 2624309690121373650}
   m_Layer: 5
   m_Name: CanvasWinPanel
   m_TagString: Untagged
@@ -179,6 +180,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &2624309690121373650
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829032139830353511}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1829032140265151004
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,9 @@ public static class CommonKeys
         public const string Continue = "ContinueButton";
         public const string ExitToMenu = "ExitToMenuButton";
         public const string ExitToMenuWinPanel = "ExitToMenuButtonWinPanel";
+        public const string GoToMenu = "GoToMenuButton";
+        public const string MainLevels = "MainLevelsButton";
+        public const string CustomLevel = "CustomLevelButton";
     }
 
     public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
@@ -39,7 +42,10 @@ public static class CommonKeys
         { UiKeys.QuitGame, StrButtonNames.QuitGame },
         { UiKeys.Continue,  StrButtonNames.Continue },
         { UiKeys.ExitToMenu, StrButtonNames.ExitToMenu },
-        { UiKeys.ExitToMenuWinPanel, StrButtonNames.ExitToMenuWinPanel }
+        { UiKeys.ExitToMenuWinPanel, StrButtonNames.ExitToMenuWinPanel },
+        { UiKeys.GoToMenu, StrButtonNames.GoToMenu },
+        { UiKeys.MainLevels, StrButtonNames.MainLevels },
+        { UiKeys.CustomLevel, StrButtonNames.CustomLevel }
     };
     
     // Addressable paths
