@@ -115,6 +115,34 @@ MonoBehaviour:
     m_Address: Assets/Images/UI/StartGame/MainLevels/MainLevelsSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 04239046a3e49b4469e717c864c85f94
+    m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 26c1aece41ade214193d40289ebb5258
+    m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrowSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 169d411d196bc2341bc7cbafa81a767c
+    m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: acb562be126f0f34f8eedc4e3d6feaae
+    m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrowSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 24794bf0202da8a439380955456daaee
+    m_Address: Assets/Images/UI/BackToMenuButton/BackToMenu.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3b2fd5d2ac1940847a74b533f949f815
+    m_Address: Assets/Images/UI/BackToMenuButton/BackToMenuSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b15dfc388ee04d44c8da1558e8a0f199
+    m_Address: Assets/Images/UI/MainLevels/LevelButton/LevelButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:

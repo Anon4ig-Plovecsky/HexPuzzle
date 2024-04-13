@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 using System;
+using Unity.VisualScripting;
 
 namespace UI
 {
@@ -19,16 +20,26 @@ namespace UI
         private Dictionary<CommonKeys.UiKeys, ButtonImageSprites> _mapBtnImgSpritesMap;
         private readonly Dictionary<CommonKeys.UiKeys, ButtonImagePaths> _mapBtnImgStrPaths = new()
         {
-            { CommonKeys.UiKeys.Continue, CommonKeys.Addressable.ButtonImages.Continue },
-            { CommonKeys.UiKeys.QuitGame, CommonKeys.Addressable.ButtonImages.QuitGame },
-            { CommonKeys.UiKeys.ExitToMenu, CommonKeys.Addressable.ButtonImages.ExitToMenu },
-            { CommonKeys.UiKeys.ExitToMenuWinPanel, CommonKeys.Addressable.ButtonImages.ExitToMenuWinPanel },
+            // MainMenu
+            { CommonKeys.UiKeys.StartGame, CommonKeys.Addressable.ButtonImages.StartGame},
             { CommonKeys.UiKeys.Results, CommonKeys.Addressable.ButtonImages.Results },
             { CommonKeys.UiKeys.Settings, CommonKeys.Addressable.ButtonImages.Settings },
-            { CommonKeys.UiKeys.StartGame, CommonKeys.Addressable.ButtonImages.StartGame},
+            { CommonKeys.UiKeys.QuitGame, CommonKeys.Addressable.ButtonImages.QuitGame },
+            { CommonKeys.UiKeys.Continue, CommonKeys.Addressable.ButtonImages.Continue },
+            { CommonKeys.UiKeys.ExitToMenu, CommonKeys.Addressable.ButtonImages.ExitToMenu },
+            { CommonKeys.UiKeys.ExitToMenuWinPanel, CommonKeys.Addressable.ButtonImages.ExitToMenuWinPanel },
+            
+            // Common
             { CommonKeys.UiKeys.GoToMenu, CommonKeys.Addressable.ButtonImages.GoToMainMenu },
+            { CommonKeys.UiKeys.BackToMenu, CommonKeys.Addressable.ButtonImages.BackToMenu },
+            
+            // Start Game
             { CommonKeys.UiKeys.MainLevels, CommonKeys.Addressable.ButtonImages.MainLevels },
-            { CommonKeys.UiKeys.CustomLevel, CommonKeys.Addressable.ButtonImages.CustomLevel }
+            { CommonKeys.UiKeys.CustomLevel, CommonKeys.Addressable.ButtonImages.CustomLevel },
+            
+            // Main Levels
+            { CommonKeys.UiKeys.LeftArrow, CommonKeys.Addressable.ButtonImages.LeftArrow },
+            { CommonKeys.UiKeys.RightArrow, CommonKeys.Addressable.ButtonImages.RightArrow }
         };
 
         private bool _isSorted;
@@ -65,6 +76,10 @@ namespace UI
             if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 
+            var btnTarget = e.target.GetComponent<Button>();
+            if (btnTarget.IsUnityNull() || !btnTarget.enabled)
+                return;
+
             // Finding the button key
             var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
                 => uiName.Value.Equals(e.target.name)).Key;
@@ -80,6 +95,10 @@ namespace UI
             if (!e.target.CompareTag("ButtonUI"))
                 return;
 
+            var btnTarget = e.target.GetComponent<Button>();
+            if (btnTarget.IsUnityNull() || !btnTarget.enabled)
+                return;
+            
             if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 

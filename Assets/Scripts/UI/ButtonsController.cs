@@ -64,8 +64,6 @@ namespace UI
             }
             else
                 Sequence.Create(HidePanel(_objThisPanel));
-            
-            
         }
         
         /// <summary>
@@ -95,6 +93,8 @@ namespace UI
             {
                 case CommonKeys.StrButtonNames.StartGame:
                 case CommonKeys.StrButtonNames.GoToMenu:
+                case CommonKeys.StrButtonNames.MainLevels:
+                case CommonKeys.StrButtonNames.BackToMenu:
                     GoToPanel();
                     break;
                 case CommonKeys.StrButtonNames.ExitToMenu:
@@ -115,7 +115,7 @@ namespace UI
         /// </summary>
         /// <param name="objShow">Object to be shown</param>
         /// <param name="fDuration">Animation duration</param>
-        private Tween ShowPanel(GameObject objShow,  float fDuration = 0.8f)
+        private static Tween ShowPanel(GameObject objShow,  float fDuration = 0.8f)
         {
             return Tween.LocalPositionY(objShow.transform, 0.0f, fDuration, Ease.OutQuad)
                 .OnUpdate(target: objShow, (_, tween) =>
@@ -140,6 +140,10 @@ namespace UI
                     
                     // Raise the panel two positions higher from the current one so that the animation works correctly again
                     objHide.transform.localPosition += new Vector3(0.0f, _rPosition * 2.0f, 0.0f);
+                    
+                    // If the player go to a new panel before the previous animation ends, we will re-enable
+                    // the called panel to avoid all panels disappearing
+                    objCalled.SetActive(true);
                 });
         }
 

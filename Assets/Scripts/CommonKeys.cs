@@ -1,27 +1,38 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public static class CommonKeys
+public abstract record CommonKeys
 {
     public const int CubeSides = 6;
 
     // Enumerated type for UI buttons value map
     public enum UiKeys
     {
-        Continue,
-        QuitGame,
-        ExitToMenu,
-        ExitToMenuWinPanel,
-        GoToMenu,
+        // Main Menu
         StartGame,
         Results,
         Settings,
+        QuitGame,
+        Continue,
+        ExitToMenu,
+        ExitToMenuWinPanel,
+
+        // Common
+        BackToMenu,
+        GoToMenu,
+
+        // Start Game
         MainLevels,
-        CustomLevel
+        CustomLevel,
+        
+        // Main Levels
+        LeftArrow,
+        RightArrow
     }
 
     public static class StrButtonNames
     {
+        // Main Menu
         public const string StartGame = "StartGameButton";
         public const string Results = "ResultsButton";
         public const string Settings = "SettingsButton";
@@ -29,13 +40,23 @@ public static class CommonKeys
         public const string Continue = "ContinueButton";
         public const string ExitToMenu = "ExitToMenuButton";
         public const string ExitToMenuWinPanel = "ExitToMenuButtonWinPanel";
+        
+        // Common
         public const string GoToMenu = "GoToMenuButton";
+        public const string BackToMenu = "BackToMenuButton";
+        
+        // Start Game
         public const string MainLevels = "MainLevelsButton";
         public const string CustomLevel = "CustomLevelButton";
+        
+        // Main Levels
+        public const string LeftArrow = "LeftArrowButton";
+        public const string RightArrow = "RightArrowButton";
     }
 
     public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
     {
+        // MainMenu
         { UiKeys.StartGame, StrButtonNames.StartGame },
         { UiKeys.Results, StrButtonNames.Results },
         { UiKeys.Settings, StrButtonNames.Settings },
@@ -43,9 +64,18 @@ public static class CommonKeys
         { UiKeys.Continue,  StrButtonNames.Continue },
         { UiKeys.ExitToMenu, StrButtonNames.ExitToMenu },
         { UiKeys.ExitToMenuWinPanel, StrButtonNames.ExitToMenuWinPanel },
+        
+        // Common
         { UiKeys.GoToMenu, StrButtonNames.GoToMenu },
         { UiKeys.MainLevels, StrButtonNames.MainLevels },
-        { UiKeys.CustomLevel, StrButtonNames.CustomLevel }
+        
+        // Start Game
+        { UiKeys.CustomLevel, StrButtonNames.CustomLevel },
+        { UiKeys.BackToMenu, StrButtonNames.BackToMenu },
+        
+        // MainLevels
+        { UiKeys.LeftArrow, StrButtonNames.LeftArrow },
+        { UiKeys.RightArrow, StrButtonNames.RightArrow }
     };
     
     // Addressable paths
@@ -67,10 +97,15 @@ public static class CommonKeys
             
             // Common
             public static readonly ButtonImagePaths GoToMainMenu = new("Assets/Images/UI/GoToMenuButton/GoToMenu.png");
+            public static readonly ButtonImagePaths BackToMenu = new("Assets/Images/UI/BackToMenuButton/BackToMenu.png");
 
             // Start Game
             public static readonly ButtonImagePaths MainLevels = new("Assets/Images/UI/StartGame/MainLevels/MainLevels.png");
             public static readonly ButtonImagePaths CustomLevel = new("Assets/Images/UI/StartGame/CustomLevel/CustomLevels.png");
+            
+            // MainLevels
+            public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png");
+            public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png");
         }
     }
 }
@@ -79,22 +114,21 @@ public static class CommonKeys
 public class ButtonImagePaths
 {
     // Path of a button with a standard name
-    private string _name;
+    private readonly string _name;
     public string Name
     {
-        init
+        private init
         {
             _name = value;
 
             var arrSplitPath = _name.Split(".png");
-            _selected = arrSplitPath[0] + "Selected.png";
+            Selected = arrSplitPath[0] + "Selected.png";
         }
         get => _name;
     }
 
     // Path to the highlighted button
-    private string _selected;
-    public string Selected => _selected;
+    public string Selected { get; private set; }
 
     public ButtonImagePaths(string name)
     {
