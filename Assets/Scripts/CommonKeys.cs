@@ -27,7 +27,8 @@ public abstract record CommonKeys
         
         // Main Levels
         LeftArrow,
-        RightArrow
+        RightArrow,
+        MainLevel
     }
 
     public static class StrButtonNames
@@ -52,6 +53,7 @@ public abstract record CommonKeys
         // Main Levels
         public const string LeftArrow = "LeftArrowButton";
         public const string RightArrow = "RightArrowButton";
+        public const string MainLevel = "MainLevel";
     }
 
     public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
@@ -75,7 +77,8 @@ public abstract record CommonKeys
         
         // MainLevels
         { UiKeys.LeftArrow, StrButtonNames.LeftArrow },
-        { UiKeys.RightArrow, StrButtonNames.RightArrow }
+        { UiKeys.RightArrow, StrButtonNames.RightArrow },
+        { UiKeys.MainLevel, StrButtonNames.MainLevel }
     };
     
     // Addressable paths
@@ -106,6 +109,7 @@ public abstract record CommonKeys
             // MainLevels
             public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png");
             public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png");
+            public static readonly ButtonImagePaths MainLevel = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
         }
     }
 }

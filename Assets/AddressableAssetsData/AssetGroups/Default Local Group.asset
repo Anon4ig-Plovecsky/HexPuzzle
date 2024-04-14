@@ -143,6 +143,10 @@ MonoBehaviour:
     m_Address: Assets/Images/UI/MainLevels/LevelButton/LevelButton.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bafaaf9e502688e43b93606325d0f11b
+    m_Address: Assets/Images/UI/MainLevels/LevelButton/LevelButtonSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:

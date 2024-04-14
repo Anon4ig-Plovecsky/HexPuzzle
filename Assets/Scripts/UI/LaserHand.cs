@@ -1,12 +1,12 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Valve.VR.Extras;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 using System;
-using Unity.VisualScripting;
 
 namespace UI
 {
@@ -39,7 +39,8 @@ namespace UI
             
             // Main Levels
             { CommonKeys.UiKeys.LeftArrow, CommonKeys.Addressable.ButtonImages.LeftArrow },
-            { CommonKeys.UiKeys.RightArrow, CommonKeys.Addressable.ButtonImages.RightArrow }
+            { CommonKeys.UiKeys.RightArrow, CommonKeys.Addressable.ButtonImages.RightArrow },
+            { CommonKeys.UiKeys.MainLevel, CommonKeys.Addressable.ButtonImages.MainLevel }
         };
 
         private bool _isSorted;
