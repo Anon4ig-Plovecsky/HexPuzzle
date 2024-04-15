@@ -3,9 +3,9 @@ using System;
 
 namespace LevelsController
 {
-    public record LevelParametersMap
+    public abstract record LevelParametersMap
     {
-        public readonly Dictionary<int, LevelInfoTransfer> LevelInfo = new()
+        public static readonly Dictionary<int, LevelInfoTransfer> LevelInfo = new()
         {
             { 1, new LevelInfoTransfer(1, new Tuple<int, int>(3, 4), new List<string>
                 {

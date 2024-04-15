@@ -81,10 +81,17 @@ public abstract record CommonKeys
         { UiKeys.MainLevel, StrButtonNames.MainLevel }
     };
     
+    // Names
+    public static class Names
+    {
+        public const string MainLevelButton = "LevelButton";
+    }
+    
     // Addressable paths
     public static class Addressable
     {
         public const string PartOfPainting = "Assets/Prefabs/PartOfPainting.prefab";
+        public const string LevelButton = "Assets/Prefabs/UI/LevelButton.prefab";
 
         // Addressable paths to button images
         public static class ButtonImages
