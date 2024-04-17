@@ -85,6 +85,7 @@ public abstract record CommonKeys
     public static class Names
     {
         public const string MainLevelButton = "LevelButton";
+        public const string MaskLevels = "MainLevelsPanel/MaskLevels";
     }
     
     // Addressable paths
