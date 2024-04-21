@@ -22,7 +22,7 @@ namespace LevelsController
         {
             _cellsGameObject = new GameObject[CubeQty.Item1 * CubeQty.Item2];
             GridGameObject = GameObject.Find("Grid");
-            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Cell.prefab");
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.CellPrefab);
             asyncOperationHandle.Completed += delegate { LoadCell(asyncOperationHandle); };
         }
         private void LoadCell(AsyncOperationHandle<GameObject> asyncOperationHandle)

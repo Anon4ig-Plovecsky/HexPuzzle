@@ -3,6 +3,9 @@ using UnityEngine;
 
 public abstract record CommonKeys
 {
+    // Number of visible main level buttons on the panel
+    public const int LevelsOnPanel = 5;
+    
     public const int CubeSides = 6;
 
     // Enumerated type for UI buttons value map
@@ -28,7 +31,7 @@ public abstract record CommonKeys
         // Main Levels
         LeftArrow,
         RightArrow,
-        MainLevel
+        LevelButton
     }
 
     public static class StrButtonNames
@@ -53,7 +56,7 @@ public abstract record CommonKeys
         // Main Levels
         public const string LeftArrow = "LeftArrowButton";
         public const string RightArrow = "RightArrowButton";
-        public const string MainLevel = "MainLevel";
+        public const string LevelButton = "LevelButton";
     }
 
     public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
@@ -78,7 +81,7 @@ public abstract record CommonKeys
         // MainLevels
         { UiKeys.LeftArrow, StrButtonNames.LeftArrow },
         { UiKeys.RightArrow, StrButtonNames.RightArrow },
-        { UiKeys.MainLevel, StrButtonNames.MainLevel }
+        { UiKeys.LevelButton, StrButtonNames.LevelButton }
     };
     
     // Names
@@ -86,13 +89,21 @@ public abstract record CommonKeys
     {
         public const string MainLevelButton = "LevelButton";
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
+        public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
+
+        public const string MainLevels = "MainLevels";
+        public const string MainMenu = "MainMenu";
+        
+        // Scenes
+        public const string SceneNature = "Nature";
     }
     
     // Addressable paths
     public static class Addressable
     {
         public const string PartOfPainting = "Assets/Prefabs/PartOfPainting.prefab";
-        public const string LevelButton = "Assets/Prefabs/UI/LevelButton.prefab";
+        public const string LevelButtonPrefab = "Assets/Prefabs/UI/LevelButton.prefab";
+        public const string CellPrefab = "Assets/Prefabs/Cell.prefab";
 
         // Addressable paths to button images
         public static class ButtonImages
@@ -117,7 +128,7 @@ public abstract record CommonKeys
             // MainLevels
             public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png");
             public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png");
-            public static readonly ButtonImagePaths MainLevel = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
+            public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
         }
     }
 }

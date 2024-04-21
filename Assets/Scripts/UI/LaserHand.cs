@@ -40,7 +40,7 @@ namespace UI
             // Main Levels
             { CommonKeys.UiKeys.LeftArrow, CommonKeys.Addressable.ButtonImages.LeftArrow },
             { CommonKeys.UiKeys.RightArrow, CommonKeys.Addressable.ButtonImages.RightArrow },
-            { CommonKeys.UiKeys.MainLevel, CommonKeys.Addressable.ButtonImages.MainLevel }
+            { CommonKeys.UiKeys.LevelButton, CommonKeys.Addressable.ButtonImages.LevelButtonPath }
         };
 
         private bool _isSorted;
@@ -117,7 +117,7 @@ namespace UI
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
                 return;
-
+            
             if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
                 return;
 

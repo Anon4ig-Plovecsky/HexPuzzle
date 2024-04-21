@@ -9,18 +9,17 @@ using TMPro;
 
 namespace UI
 {
+    /// Special class for buttons in the MainLevels panel
     public class MainLevelsController : MonoBehaviour
     {
         // Array of main game buttons
-        private Button[] _btnMainLevelArray = new Button[LevelParametersMap.LevelInfo.Count];
+        private Button[] _arrMainLevelButtons = new Button[LevelParametersMap.LevelInfo.Count];
         // Main level button prefab, for placement on the panel
         private GameObject _levelButtonPrefab;
         // Button offset relative to the center of the previous button
         private const float PaddingButton = 0.09f;
-        // Number of visible main level buttons on the panel
-        private const int LevelsOnPanel = 5;
-
-        private Transform _transformMask;
+        
+        private Transform _levelsGroup;
         
         // Start is called before the first frame update
         private void Start()
@@ -28,21 +27,21 @@ namespace UI
             // Initially, leave the panel active in order to load all levels into the panel in advance
             gameObject.SetActive(false);
 
-            _transformMask = transform.Find(CommonKeys.Names.MaskLevels);
-            if (_transformMask.IsUnityNull())
+            _levelsGroup = transform.Find(CommonKeys.Names.LevelsGroup);
+            if (_levelsGroup.IsUnityNull())
             {
-                Debug.Log("Couldn't find mask");
+                Debug.Log("Couldn't find levels group");
                 return;
             }
 
             // Getting the game's main level button prefab
-            var asyncOperation = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.LevelButton);
+            var asyncOperation = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.LevelButtonPrefab);
             asyncOperation.Completed += delegate
             {
                 if (asyncOperation.Status != AsyncOperationStatus.Succeeded) 
                     return;
                 _levelButtonPrefab = asyncOperation.Result;
-                _btnMainLevelArray = PlaceLevelsButton();
+                _arrMainLevelButtons = PlaceLevelsButton();
             };
         }
 
@@ -54,8 +53,8 @@ namespace UI
             if (button.IsUnityNull())
                 return null;
 
-            // Place the button in the mask
-            button.transform.SetParent(_transformMask);
+            // Place the button in the group object
+            button.transform.SetParent(_levelsGroup);
             
             button.transform.localPosition = vPosition;
             button.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -79,8 +78,8 @@ namespace UI
         {
             // Getting the level number in sequence of visible levels on the panel and shift it
             // half to the left in order to find the padding relative to the center of the panel
-            var iNumberInSeq = indexLevel % LevelsOnPanel;
-            var iHalfLevelsOnPanel = Convert.ToInt32(Math.Floor(Convert.ToDouble(LevelsOnPanel) / 2.0));
+            var iNumberInSeq = indexLevel % CommonKeys.LevelsOnPanel;
+            var iHalfLevelsOnPanel = Convert.ToInt32(Math.Floor(Convert.ToDouble(CommonKeys.LevelsOnPanel) / 2.0));
             iNumberInSeq -= iHalfLevelsOnPanel;
 
             var fPadding = iNumberInSeq * PaddingButton;
@@ -100,7 +99,7 @@ namespace UI
             
             for (var i = 0; i < LevelParametersMap.LevelInfo.Count; i++)
             {
-                var iSeqNumber = Convert.ToInt32(i / LevelsOnPanel);
+                var iSeqNumber = Convert.ToInt32(i / CommonKeys.LevelsOnPanel);
                 var fRelativePadding = CalculatePadding(i);
 
                 var fResPadding = fRelativePadding + fPanelWidth * iSeqNumber;

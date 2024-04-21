@@ -28,9 +28,9 @@ namespace LevelsController
         }
 
         // Returns or created static class
-        public LevelInfoTransfer GetInstance() =>  _levelInfoTransferKeeper ??= new LevelInfoTransfer();
+        public static LevelInfoTransfer GetInstance() =>  _levelInfoTransferKeeper ??= new LevelInfoTransfer();
         
-        public LevelInfoTransfer GetInstance(int lvlNumber, Tuple<int, int> gridSize, IEnumerable<string> imageNameList)
+        public static LevelInfoTransfer GetInstance(int lvlNumber, Tuple<int, int> gridSize, IEnumerable<string> imageNameList)
         {
             _levelInfoTransferKeeper = new LevelInfoTransfer(lvlNumber, gridSize, imageNameList);
             return _levelInfoTransferKeeper;

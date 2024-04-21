@@ -1,33 +1,34 @@
+using System;
+using System.Collections.Generic;
+using LevelsController;
 using Sequence = PrimeTween.Sequence;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 using PrimeTween;
+using TMPro;
 
 namespace UI
 {
     ///  ButtonsController is responsible for events when interacting with buttons in the game's GUI
     public class ButtonsController : MonoBehaviour
     {
-        /// Types of canvas panels for navigating menus
-        private const string StrStartGame = "StartGame";
-        private const string StrMainMenu = "MainMenu";
-        private float _rPosition;                           /// Position for animation
+        protected float Position;                           /// Position for animation
 
-        [SerializeField] private GameObject objCalled;      /// Object that caused the click
-        private GameObject _objThisPanel;                   /// Current panel on which the button is located
-        private Button _btnThis;                            /// Current button
+        [SerializeField] protected GameObject objCalled;    /// Object that caused the click
+        protected GameObject ObjThisPanel;                   /// Current panel on which the button is located
+        protected Button ButtonThis;                            /// Current button
 
-        private void Start()
+        protected virtual void Start()
         {
             // Creating a Button Click Listener
-            _btnThis = GetComponent<Button>();
-            _btnThis.onClick.AddListener(OnClickButton);
+            ButtonThis = GetComponent<Button>();
+            ButtonThis.onClick.AddListener(OnClickButton);
             
             // Getting the current panel GUI
-            _objThisPanel = gameObject.transform.parent.parent.gameObject;
-            if (_objThisPanel.IsUnityNull())
+            ObjThisPanel = GetCurrentPanel();
+            if (ObjThisPanel.IsUnityNull())
             {
                 Debug.Log("Could not find current panel");
                 return;
@@ -36,11 +37,11 @@ namespace UI
             // Getting of the distance from the called panel to the current
             if (objCalled.IsUnityNull())
                 return;
-            _rPosition = objCalled.transform.localPosition.y;
+            Position = objCalled.transform.localPosition.y;
             // If the current panel is not the main one (it is not located at the zero coordinate),
             // then we take the position value from it
-            if (_rPosition < 0.00001)
-                _rPosition = _objThisPanel.transform.localPosition.y;
+            if (Position < 0.00001)
+                Position = ObjThisPanel.transform.localPosition.y;
         }
         
         /// <summary>
@@ -48,7 +49,7 @@ namespace UI
         /// </summary>
         private void GoToPanel()
         {
-            if(_objThisPanel.IsUnityNull())
+            if(ObjThisPanel.IsUnityNull())
                 return;
             
             // Animations
@@ -59,11 +60,11 @@ namespace UI
                 objCalled.SetActive(true);
                 
                 Sequence.Create()
-                    .Group(HidePanel(_objThisPanel))
+                    .Group(HidePanel(ObjThisPanel))
                     .Group(ShowPanel(objCalled));
             }
             else
-                Sequence.Create(HidePanel(_objThisPanel));
+                Sequence.Create(HidePanel(ObjThisPanel));
         }
         
         /// <summary>
@@ -84,12 +85,15 @@ namespace UI
         }
 
         /// Listener triggered when a button is clicked in the UI
-        public void OnClickButton()
+        protected virtual void OnClickButton()
         {
-            if (_btnThis.IsUnityNull())
+            if (ButtonThis.IsUnityNull())
                 return;
             
-            switch (_btnThis.name)
+            if(ButtonThis.name.Contains(CommonKeys.StrButtonNames.LevelButton))
+                ActivateSelectedLevel();
+
+            switch (ButtonThis.name)
             {
                 case CommonKeys.StrButtonNames.StartGame:
                 case CommonKeys.StrButtonNames.GoToMenu:
@@ -99,13 +103,13 @@ namespace UI
                     break;
                 case CommonKeys.StrButtonNames.ExitToMenu:
                 case CommonKeys.StrButtonNames.ExitToMenuWinPanel:
-                    ChangeScene(StrMainMenu);
+                    ChangeScene(CommonKeys.Names.MainMenu);
                     break;
                 case CommonKeys.StrButtonNames.QuitGame:
                     QuitGame();
                     break;
                 default:
-                    Debug.Log("Unknown button detected: " + _btnThis.name);
+                    Debug.Log("Unknown button detected: " + ButtonThis.name);
                     return;
             }
         }
@@ -129,7 +133,7 @@ namespace UI
         /// <param name="fDuration">Animation duration</param>
         private Tween HidePanel(GameObject objHide, float fDuration = 0.8f)
         {
-            return Tween.LocalPositionY(objHide.transform, -_rPosition, fDuration, Ease.InQuad)
+            return Tween.LocalPositionY(objHide.transform, -Position, fDuration, Ease.InQuad)
                 .OnUpdate(target: objHide, (obj, tween) => 
                     ChangeAlphaPanel(obj.GetComponent<CanvasGroup>(), 1 - tween.progress))
                 .OnComplete(target: this, _ =>
@@ -139,7 +143,7 @@ namespace UI
                     ChangeAlphaPanel(objHide.GetComponent<CanvasGroup>(), 1.0f);
                     
                     // Raise the panel two positions higher from the current one so that the animation works correctly again
-                    objHide.transform.localPosition += new Vector3(0.0f, _rPosition * 2.0f, 0.0f);
+                    objHide.transform.localPosition += new Vector3(0.0f, Position * 2.0f, 0.0f);
                     
                     // If the player go to a new panel before the previous animation ends, we will re-enable
                     // the called panel to avoid all panels disappearing
@@ -158,6 +162,38 @@ namespace UI
                 return;
 
             canvasGroup.alpha = fAlpha;
+        }
+
+        /// <summary>
+        /// Returns the currently active UI panel
+        /// </summary>
+        /// <returns>Returns the current panel's GameObject if found, otherwise returns null</returns>
+        private GameObject GetCurrentPanel() =>
+            ButtonThis.name.Equals(CommonKeys.StrButtonNames.LevelButton)
+                ? ButtonThis.transform.parent.parent.parent.gameObject
+                : ButtonThis.transform.parent.parent.gameObject;
+
+        /// <summary>
+        /// Loads the necessary data for the level into a static class and loads the scene
+        /// </summary>
+        private void ActivateSelectedLevel()
+        {
+            var strButtonText = ButtonThis.GetComponentInChildren<TMP_Text>();
+            var iLevelNumber = Convert.ToInt32(strButtonText.text);
+
+            if (!LevelParametersMap.LevelInfo.ContainsKey(iLevelNumber))
+            {
+                Debug.Log("The key is not contained in LevelInfo");
+                return;
+            }
+
+            var gridSize = LevelParametersMap.LevelInfo[iLevelNumber].GridSize;
+            var imageNameList = new List<string>(LevelParametersMap.LevelInfo[iLevelNumber].ImageNameList);
+            var sceneName = CommonKeys.Names.SceneNature;       // TODO: Selecting location
+            
+            LevelInfoTransfer.GetInstance(iLevelNumber, gridSize, imageNameList);
+            
+            ChangeScene(sceneName);
         }
     }
 }
