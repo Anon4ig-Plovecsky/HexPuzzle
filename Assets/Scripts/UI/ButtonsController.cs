@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using LevelsController;
 using Sequence = PrimeTween.Sequence;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using LevelsController;
 using UnityEngine.UI;
 using UnityEngine;
 using PrimeTween;
+using System;
 using TMPro;
 
 namespace UI
@@ -17,8 +17,8 @@ namespace UI
         protected float Position;                           /// Position for animation
 
         [SerializeField] protected GameObject objCalled;    /// Object that caused the click
-        protected GameObject ObjThisPanel;                   /// Current panel on which the button is located
-        protected Button ButtonThis;                            /// Current button
+        protected GameObject ObjThisPanel;                  /// Current panel on which the button is located
+        protected Button ButtonThis;                        /// Current button
 
         protected virtual void Start()
         {

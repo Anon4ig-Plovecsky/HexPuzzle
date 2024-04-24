@@ -11,11 +11,14 @@ namespace LevelsController
 {
     public class CubeGenerator : MonoBehaviour
     {
+        // Receiving level information from another scene
+        private LevelInfoTransfer _levelInfo;
+        
         // Input data
         [SerializeField] private AssetLabelReference assetLabelReferenceNormalMap;
         [SerializeField] private AssetLabelReference assetLabelReferenceTexture;
         [SerializeField] private GameObject pauseController;
-        private readonly Tuple<int, int> _cubeQty = new(3, 2);      //[SerializeField]
+        private Tuple<int, int> _gridSize;                                          // Grid size
     
         private GameObject _cubesParent;
     
@@ -34,14 +37,22 @@ namespace LevelsController
         private HashSet<int> _paintingIndexes = new();
         private bool _mainPaintingIsCrop;
         private List<Sprite> _normalMaps; //[0] - mainPainting
-        private List<Sprite> _paintings; //[0] - mainNormalMap
+        private List<Sprite> _paintings;  //[0] - mainNormalMap
         private void Start()
         {
             _cubesParent = GameObject.Find("Cubes");
             _cubeShader = Shader.Find("Standard");
+            
+            _levelInfo = LevelInfoTransfer.GetInstance();
+            _gridSize = _levelInfo.GridSize;
         
-            _cubesPrefab = new GameObject[_cubeQty.Item1 * _cubeQty.Item2];
+            _cubesPrefab = new GameObject[_gridSize.Item1 * _gridSize.Item2];
             _cubesGameObjects = new GameObject[_cubesPrefab.Length];
+            
+            if (_gridSize is null)
+            {
+                Debug.Log("Failed to get grid size");
+            }
         
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.PartOfPainting);
             asyncOperationHandle.Completed += delegate
@@ -68,11 +79,13 @@ namespace LevelsController
         }
         private void Update()
         {
-            if (CanvasController.ClassCanvasController is null || _mainPaintingIsCrop) return;
+            if (CanvasController.ClassCanvasController is null || _mainPaintingIsCrop) 
+                return;
+            
             _mainPaintingIsCrop = true;
             var mainSprite = _partsOfPaintings[0].Item1.CropEntirePainting();
-            StartCoroutine(CanvasController.ClassCanvasController.ShowImage(mainSprite,
-                _partsOfPaintings[0].Item1.Dimension));
+            StartCoroutine(CanvasController.ClassCanvasController.
+                ShowImage(mainSprite, _partsOfPaintings[0].Item1.Dimension));
         }
         private void OnLoadDone(AsyncOperationHandle<IList<Sprite>> asyncOperationHandle)
         {
@@ -87,21 +100,58 @@ namespace LevelsController
             else 
                 Debug.Log("Failed to load paintings!");
         }
+        
+        /// <summary>
+        /// Loads images specified from LevelInfoTransfer; if missing or insufficient, randomly loads them from resources
+        /// </summary>
         private void ChooseImages()
         {
-            _paintingIndexes = GenerateNumbers(_paintingIndexes, CommonKeys.CubeSides, _paintings.Count);
-            for (var i = 0; i < CommonKeys.CubeSides; i++)
+            var iCounter = 0;
+
+            // Adding images by given names when loading the scene
+            var listStrImagesNames = _levelInfo.ImageNameList;
+            if (listStrImagesNames is null || listStrImagesNames.Count == 0)
+                Debug.Log("The ImageNameList array in LevelInfoTransfer is empty or not initialized");
+            else
+                foreach (var iFoundRes in listStrImagesNames
+                             .Select(imageName => _paintings.FindIndex(
+                                 sprite => sprite.name.Equals(imageName)))
+                             .Where(iFoundRes => iFoundRes != -1))
+                    _partsOfPaintings[iCounter++] = CreatePartOfPainting(_paintings[iFoundRes],
+                        _normalMaps[iFoundRes]);
+
+            // Removing from the set textures that have already been used
+            if(listStrImagesNames != null && listStrImagesNames.Count != 0)
             {
-                _partsOfPaintings[i] = new Tuple<ImageCreator, ImageCreator>(
-                    new ImageCreator(_paintings[_paintingIndexes.ToArray()[i]], _cubeQty),
-                    new ImageCreator(_normalMaps[_paintingIndexes.ToArray()[i]], _cubeQty));
-                _partsOfPaintings[i].Item1.CropPaintingByParts();
-                _partsOfPaintings[i].Item2.CropPaintingByParts();
+                _paintings.RemoveAll(sprite => listStrImagesNames.Contains(sprite.name));
+                _normalMaps.RemoveAll(sprite => listStrImagesNames.Contains(sprite.name));
             }
+
+            _paintingIndexes = GenerateNumbers( CommonKeys.CubeSides - iCounter, _paintings.Count);
+            for (var i = iCounter; i < CommonKeys.CubeSides; i++)
+                _partsOfPaintings[i] = CreatePartOfPainting(_paintings[_paintingIndexes.ToArray()[i - iCounter]],
+                    _normalMaps[_paintingIndexes.ToArray()[i - iCounter]]);
         }
+        
+        /// <summary>
+        /// Creates fragments of the selected image and normal maps
+        /// </summary>
+        /// <param name="painting">Sprite image texture</param>
+        /// <param name="normalMap">Sprite image normal map</param>
+        /// <returns>Returns a pair of sets of image tiles and a normal map</returns>
+        private Tuple<ImageCreator, ImageCreator> CreatePartOfPainting(Sprite painting, Sprite normalMap)
+        {
+            var partsOfPainting = new Tuple<ImageCreator, ImageCreator>(
+                new ImageCreator(painting, _gridSize),
+                new ImageCreator(normalMap, _gridSize));
+            partsOfPainting.Item1.CropPaintingByParts();
+            partsOfPainting.Item2.CropPaintingByParts();
+            return partsOfPainting;
+        }
+        
         private void SpawnCubes()
         {
-            _hashIndexesOfSpawn = GenerateNumbers(_hashIndexesOfSpawn, _cubeQty.Item1 * _cubeQty.Item2, _pointsOfSpawn.Count);
+            _hashIndexesOfSpawn = GenerateNumbers(_gridSize.Item1 * _gridSize.Item2, _pointsOfSpawn.Count);
             for (var cubeIndex = 0; cubeIndex < _cubesPrefab.Length; cubeIndex++)
             {
                 SetTexture(cubeIndex);
@@ -128,8 +178,9 @@ namespace LevelsController
                     imageMaterial;
             }
         }
-        private static HashSet<int> GenerateNumbers(ISet<int> hashSet, int size, int range)
+        private static HashSet<int> GenerateNumbers(int size, int range)
         {
+            var hashSet = new HashSet<int>();
             while (hashSet.Count < size)
                 hashSet.Add(Random.Range(0, range));
             return new HashSet<int>(hashSet);

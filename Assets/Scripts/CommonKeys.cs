@@ -90,7 +90,9 @@ public abstract record CommonKeys
         public const string MainLevelButton = "LevelButton";
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
+        public const string Grid = "Grid";
 
+        // Panels
         public const string MainLevels = "MainLevels";
         public const string MainMenu = "MainMenu";
         

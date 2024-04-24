@@ -9,34 +9,34 @@ namespace LevelsController
         private int _intervalWidth;
         private readonly Sprite _painting;
         private readonly int _height, _width;
-        private readonly Tuple<int, int> _cubeQty;
+        private readonly Tuple<int, int> _gridSize;
         private int _offsetByWidth, _offsetByHeight;
-        private readonly Sprite[] _partsOfPainting;
-        public ImageCreator(Sprite mainPainting, Tuple<int, int> cubeQty)
+        private readonly Sprite[] _arrPartsOfPainting;
+        public ImageCreator(Sprite painting, Tuple<int, int> gridSize)
         {
-            _painting = mainPainting;
+            _painting = painting;
             _height = _painting.texture.height;
             _width = _painting.texture.width;
-            _partsOfPainting = new Sprite[cubeQty.Item1 * cubeQty.Item2];
-            _cubeQty = cubeQty;
+            _arrPartsOfPainting = new Sprite[gridSize.Item1 * gridSize.Item2];
+            _gridSize = gridSize;
             CalculateWidth();
         }
         private void CalculateWidth()
         {
-            _intervalWidth = Convert.ToInt32(Math.Min(_height / _cubeQty.Item2, _width / _cubeQty.Item1));
-            _offsetByWidth = (_width - _intervalWidth * _cubeQty.Item1) / 2;
-            _offsetByHeight = (_height - _intervalWidth * _cubeQty.Item2) / 2;
+            _intervalWidth = Convert.ToInt32(Math.Min(_height / _gridSize.Item1, _width / _gridSize.Item2));
+            _offsetByWidth = (_width - _intervalWidth * _gridSize.Item2) / 2;
+            _offsetByHeight = (_height - _intervalWidth * _gridSize.Item1) / 2;
         }
         public void CropPaintingByParts()
         {
-            for (var i = 0; i < _cubeQty.Item2; i++)
-            for (var j = 0; j < _cubeQty.Item1; j++)
-                _partsOfPainting[i * _cubeQty.Item1 + j] = CropImage(_offsetByWidth + j * _intervalWidth,
-                    _offsetByHeight + i * _intervalWidth, _intervalWidth, _intervalWidth);
+            for (var i = 0; i < _gridSize.Item1; i++)
+                for (var j = 0; j < _gridSize.Item2; j++)
+                    _arrPartsOfPainting[i * _gridSize.Item2 + j] = CropImage(_offsetByWidth + j * _intervalWidth,
+                        _offsetByHeight + i * _intervalWidth, _intervalWidth, _intervalWidth);
         }
         public Sprite CropEntirePainting()
         {
-            Dimension = new Vector2(_intervalWidth * _cubeQty.Item1, _intervalWidth * _cubeQty.Item2);
+            Dimension = new Vector2(_intervalWidth * _gridSize.Item2, _intervalWidth * _gridSize.Item1);
             var sprite = CropImage(_offsetByWidth, _offsetByHeight, 
                 Convert.ToInt32(Dimension.x), Convert.ToInt32(Dimension.y));
             return sprite;
@@ -50,9 +50,6 @@ namespace LevelsController
                 new Vector2(0.5f, 0.5f));
             return sprite;
         } 
-        public Sprite[] GetPartsOfPainting()
-        {
-            return _partsOfPainting;
-        }
+        public Sprite[] GetPartsOfPainting() => _arrPartsOfPainting;
     }
 }

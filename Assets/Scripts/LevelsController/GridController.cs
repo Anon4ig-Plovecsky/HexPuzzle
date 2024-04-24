@@ -15,14 +15,14 @@ namespace LevelsController
         }
         private void Update()
         {
-            if (_cubes.transform.childCount != CubeQty.Item1 * CubeQty.Item2 || _isWin) return;
+            if (_cubes.transform.childCount != GridSize.Item1 * GridSize.Item2 || _isWin) return;
             CheckCorrectly();
         }
         private void CheckCorrectly()
         {
             var isCorrectly = true;
-            for(var i = 0; i < CubeQty.Item1 * CubeQty.Item2; i++)
-                if (!GridGameObject.transform.GetChild(i).name.Contains(CorrectlyString))
+            for(var i = 0; i < GridSize.Item1 * GridSize.Item2; i++)
+                if (!GameObjectGrid.transform.GetChild(i).name.Contains(CorrectlyString))
                     isCorrectly = false;
             if (!isCorrectly) return;
             _isWin = true;
