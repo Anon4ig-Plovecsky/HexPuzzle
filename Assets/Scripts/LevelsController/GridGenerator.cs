@@ -58,8 +58,8 @@ namespace LevelsController
             for (var i = 0; i < GridSize.Item1; i++)
                 for (var j = 0; j < GridSize.Item2; j++)
                 {
-                    var coord = new Tuple<float, float>(_endOfGrid.Item2 - j * _cellSize.x - j * Space,
-                        _endOfGrid.Item1 - i * _cellSize.z - i * Space);
+                    var coord = new Tuple<float, float>(_endOfGrid.Item1 - j * _cellSize.x - j * Space,
+                        _endOfGrid.Item2 - i * _cellSize.z - i * Space);
                     var index = i * GridSize.Item2 + j;
                     _arrGameObjCells[index] = Instantiate(_cellPrefab,
                         new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
