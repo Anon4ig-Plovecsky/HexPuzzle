@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 5990175981684863452}
   - component: {fileID: 3953615612957621165}
   m_Layer: 0
-  m_Name: ChooseImage
+  m_Name: ChooseImageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

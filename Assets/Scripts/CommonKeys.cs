@@ -31,7 +31,12 @@ public abstract record CommonKeys
         // Main Levels
         LeftArrow,
         RightArrow,
-        LevelButton
+        LevelButton,
+        
+        // CustomLevel
+        UpArrow,
+        DownArrow,
+        ChooseImage
     }
 
     public static class StrButtonNames
@@ -63,31 +68,39 @@ public abstract record CommonKeys
         public const string MinuteDownButton = "MinuteDownButton";
         public const string SecondUpButton = "SecondUpButton";
         public const string SecondDownButton = "SecondDownButton";
+        public const string ChooseImage = "ChooseImageButton";
     }
 
-    public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
+    public static readonly Dictionary<string, UiKeys> UiButtonNames = new()
     {
         // MainMenu
-        { UiKeys.StartGame, StrButtonNames.StartGame },
-        { UiKeys.Results, StrButtonNames.Results },
-        { UiKeys.Settings, StrButtonNames.Settings },
-        { UiKeys.QuitGame, StrButtonNames.QuitGame },
-        { UiKeys.Continue,  StrButtonNames.Continue },
-        { UiKeys.ExitToMenu, StrButtonNames.ExitToMenu },
-        { UiKeys.ExitToMenuWinPanel, StrButtonNames.ExitToMenuWinPanel },
+        { StrButtonNames.StartGame, UiKeys.StartGame },
+        { StrButtonNames.Results, UiKeys.Results },
+        { StrButtonNames.Settings, UiKeys.Settings },
+        { StrButtonNames.QuitGame, UiKeys.QuitGame },
+        { StrButtonNames.Continue, UiKeys.Continue },
+        { StrButtonNames.ExitToMenu, UiKeys.ExitToMenu },
+        { StrButtonNames.ExitToMenuWinPanel, UiKeys.ExitToMenuWinPanel },
         
         // Common
-        { UiKeys.GoToMenu, StrButtonNames.GoToMenu },
-        { UiKeys.MainLevels, StrButtonNames.MainLevels },
+        { StrButtonNames.GoToMenu, UiKeys.GoToMenu },
+        { StrButtonNames.MainLevels, UiKeys.MainLevels },
         
         // Start Game
-        { UiKeys.CustomLevel, StrButtonNames.CustomLevel },
-        { UiKeys.BackToMenu, StrButtonNames.BackToMenu },
+        { StrButtonNames.CustomLevel, UiKeys.CustomLevel },
+        { StrButtonNames.BackToMenu, UiKeys.BackToMenu },
         
         // MainLevels
-        { UiKeys.LeftArrow, StrButtonNames.LeftArrow },
-        { UiKeys.RightArrow, StrButtonNames.RightArrow },
-        { UiKeys.LevelButton, StrButtonNames.LevelButton }
+        { StrButtonNames.LeftArrow, UiKeys.LeftArrow },
+        { StrButtonNames.RightArrow, UiKeys.RightArrow },
+        { StrButtonNames.LevelButton, UiKeys.LevelButton },
+        
+        // CustomLevel
+        { StrButtonNames.MinuteUpButton, UiKeys.UpArrow },
+        { StrButtonNames.SecondUpButton, UiKeys.UpArrow },
+        { StrButtonNames.MinuteDownButton, UiKeys.DownArrow },
+        { StrButtonNames.SecondDownButton, UiKeys.DownArrow },
+        { StrButtonNames.ChooseImage, UiKeys.ChooseImage }
     };
     
     // Names
@@ -141,6 +154,10 @@ public abstract record CommonKeys
             public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png");
             public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png");
             public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
+            
+            // CustomLevel
+            public static readonly ButtonImagePaths UpArrow = new("Assets/Images/UI/CustomLevel/ArrowUpButton/ArrowUpButton.png");
+            public static readonly ButtonImagePaths DownArrow = new("Assets/Images/UI/CustomLevel/ArrowDownButton/ArrowDownButton.png");
         }
     }
 }

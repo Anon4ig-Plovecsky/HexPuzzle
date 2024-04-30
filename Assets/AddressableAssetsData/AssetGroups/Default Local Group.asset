@@ -21,136 +21,189 @@ MonoBehaviour:
     m_Address: Assets/Images/UI/MainMenu/QuitButton/QuitGameButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a095f21ef9a854c8d986ab679879ce50
     m_Address: Assets/Images/UI/MainMenu/QuitButton/QuitGameButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 525d43215a46c8bd8a05f0a7ed1f21da
     m_Address: Assets/Images/UI/MainMenu/StartGameButton/StartGameButtonSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5147162e6dec2fb5a8710dfe98ebfac5
     m_Address: Assets/Images/UI/MainMenu/StartGameButton/StartGameButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ef5fe54b2a6f7a84aa959b0a64610fc7
     m_Address: Assets/Images/UI/MainMenu/ResultsButton/ResultsButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2de8b2419b47c73c0933ed2ee42b5e8f
     m_Address: Assets/Images/UI/MainMenu/ResultsButton/ResultsButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d8a785bdc44ec879966bc71f59c1b63
     m_Address: Assets/Images/UI/MainMenu/SettingsButton/SettingsButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a13ba8a3f817b76b4b92532fdf16e328
     m_Address: Assets/Images/UI/MainMenu/SettingsButton/SettingsButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 113d1e016cb8bca4a8a01dcaec775d16
     m_Address: Assets/Images/Paintings/Textures
     m_ReadOnly: 0
     m_SerializedLabels:
     - Paintings
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 883b2f7610fb24f1cba9ffa02fde8628
     m_Address: Assets/Prefabs/PartOfPainting.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 334e295d02d79c030a76bcca8f6766ce
     m_Address: Assets/Prefabs/Cell.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1969aca621dc40ce6ae0549feab25517
     m_Address: Assets/Images/Paintings/NormalMaps
     m_ReadOnly: 0
     m_SerializedLabels:
     - NormalMaps
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3bf754a6e5b634d999b6dd3e40e72d2d
     m_Address: Assets/Images/UI/MainMenu/ContinueButton/ContinueButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a0b3b239aaba4b516af893d1b50fa5c5
     m_Address: Assets/Images/UI/MainMenu/ContinueButton/ContinueButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1b8ef01ffb6d9d40a929a1f8f9e3ae01
     m_Address: Assets/Images/UI/MainMenu/ExitToMenuButton/ExitToMenuButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3561e2e970748845e838f5f0cba500e4
     m_Address: Assets/Images/UI/MainMenu/ExitToMenuButton/ExitToMenuButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2173955a4c2baf1b68aa1f03f40196c0
     m_Address: Assets/Images/UI/MainMenu/ExitToMenuInWinPanelButton/ExitToMenuInWinPanelButtonImage.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77754e06d35ace40cbe90f9b52a0f5df
     m_Address: Assets/Images/UI/MainMenu/ExitToMenuInWinPanelButton/ExitToMenuInWinPanelButtonImageSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: acc52e632769c354388150d8ecc5b86d
     m_Address: Assets/Images/UI/GoToMenuButton/GoToMenu.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74d0c61fc2c9e0a4fbbdb146ce455569
     m_Address: Assets/Images/UI/GoToMenuButton/GoToMenuSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 044b00432e5c93f45a7c6b83e752f5be
     m_Address: Assets/Images/UI/StartGame/CustomLevel/CustomLevels.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b0b0df244447ed4185139e6ff6cf4ab
     m_Address: Assets/Images/UI/StartGame/CustomLevel/CustomLevelsSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a27d80bdb209c5458c50ac20bde5e72
     m_Address: Assets/Images/UI/StartGame/MainLevels/MainLevels.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58e5b9ab8fa7a364c8b284e96367125c
     m_Address: Assets/Images/UI/StartGame/MainLevels/MainLevelsSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 04239046a3e49b4469e717c864c85f94
     m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 26c1aece41ade214193d40289ebb5258
     m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrowSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 169d411d196bc2341bc7cbafa81a767c
     m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: acb562be126f0f34f8eedc4e3d6feaae
     m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrowSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24794bf0202da8a439380955456daaee
     m_Address: Assets/Images/UI/BackToMenuButton/BackToMenu.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b2fd5d2ac1940847a74b533f949f815
     m_Address: Assets/Images/UI/BackToMenuButton/BackToMenuSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b15dfc388ee04d44c8da1558e8a0f199
     m_Address: Assets/Images/UI/MainLevels/LevelButton/LevelButton.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bafaaf9e502688e43b93606325d0f11b
     m_Address: Assets/Images/UI/MainLevels/LevelButton/LevelButtonSelected.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f2b242ca0548a184dbe4b820fe2835ae
     m_Address: Assets/Prefabs/UI/LevelButton.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a6abee6f4cbef246a4777df76596604
+    m_Address: Assets/Images/UI/CustomLevel/ArrowDownButton/ArrowDownButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7394c302e453f4b4280f06d360c4d57a
+    m_Address: Assets/Images/UI/CustomLevel/ArrowDownButton/ArrowDownButtonSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cefc9adf95a0e7e4ea46e864d17478ce
+    m_Address: Assets/Images/UI/CustomLevel/ArrowUpButton/ArrowUpButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e38d3e492e6eac24a9716671480dba3d
+    m_Address: Assets/Images/UI/CustomLevel/ArrowUpButton/ArrowUpButtonSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:

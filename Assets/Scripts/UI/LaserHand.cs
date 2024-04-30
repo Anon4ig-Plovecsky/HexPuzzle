@@ -16,7 +16,7 @@ namespace UI
     
         // Maps
         private Dictionary<CommonKeys.UiKeys, Image> _mapImages;
-        private Dictionary<CommonKeys.UiKeys, Button> _mapButtons;
+        // private Dictionary<CommonKeys.UiKeys, Button> _mapButtons;
         private Dictionary<CommonKeys.UiKeys, ButtonImageSprites> _mapBtnImgSpritesMap;
         private readonly Dictionary<CommonKeys.UiKeys, ButtonImagePaths> _mapBtnImgStrPaths = new()
         {
@@ -40,7 +40,11 @@ namespace UI
             // Main Levels
             { CommonKeys.UiKeys.LeftArrow, CommonKeys.Addressable.ButtonImages.LeftArrow },
             { CommonKeys.UiKeys.RightArrow, CommonKeys.Addressable.ButtonImages.RightArrow },
-            { CommonKeys.UiKeys.LevelButton, CommonKeys.Addressable.ButtonImages.LevelButtonPath }
+            { CommonKeys.UiKeys.LevelButton, CommonKeys.Addressable.ButtonImages.LevelButtonPath },
+            
+            // Custom Level
+            { CommonKeys.UiKeys.UpArrow, CommonKeys.Addressable.ButtonImages.UpArrow },
+            { CommonKeys.UiKeys.DownArrow, CommonKeys.Addressable.ButtonImages.DownArrow }
         };
 
         private bool _isSorted;
@@ -49,11 +53,11 @@ namespace UI
             // base.Start();
         
             // Getting buttons and images by names
-            foreach(CommonKeys.UiKeys buttonKey in Enum.GetValues(typeof(CommonKeys.UiKeys)))
-            {
-                _mapButtons.Add(buttonKey, GameObject.Find(CommonKeys.UiButtonNames[buttonKey]).GetComponent<Button>());
-                _mapImages.Add(buttonKey, _mapButtons[buttonKey].GetComponent<Image>());
-            }
+            // foreach(CommonKeys.UiKeys buttonKey in Enum.GetValues(typeof(CommonKeys.UiKeys)))
+            // {
+            //     _mapButtons.Add(buttonKey, GameObject.Find(CommonKeys.UiButtonNames[buttonKey]).GetComponent<Button>());
+            //     _mapImages.Add(buttonKey, _mapButtons[buttonKey].GetComponent<Image>());
+            // }
         
             FindGoToMainMenuButtonWinPanel();
         
@@ -74,19 +78,24 @@ namespace UI
             if (!e.target.CompareTag("ButtonUI"))
                 return;
 
-            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
-                return;
+            // if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
+            //     return;
 
             var btnTarget = e.target.GetComponent<Button>();
             if (btnTarget.IsUnityNull() || !btnTarget.enabled)
                 return;
 
             // Finding the button key
-            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
-                => uiName.Value.Equals(e.target.name)).Key;
+            if (!CommonKeys.UiButtonNames.TryGetValue(e.target.name, out var uiKey))
+                return;
 
+            // TODO: Need optimization
+            
             // Replacing button sprite with selected sprite
-            _mapImages[uiKey].sprite = _mapBtnImgSpritesMap[uiKey].Selected;
+            var imageThis = btnTarget.GetComponent<Image>();
+            imageThis.sprite = _mapBtnImgSpritesMap[uiKey].Selected;
+
+            // _mapImages[uiKey].sprite = _mapBtnImgSpritesMap[uiKey].Selected;
         }
         public override void OnPointerClick(PointerEventArgs e)
         {
@@ -100,15 +109,19 @@ namespace UI
             if (btnTarget.IsUnityNull() || !btnTarget.enabled)
                 return;
             
-            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
-                return;
-
-            // Finding the button key
-            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
-                => uiName.Value.Equals(e.target.name)).Key;
-
-            // Activating button using the found uiKey
-            _mapButtons[uiKey].onClick.Invoke();
+            // if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
+            //     return;
+            //
+            // // Finding the button key
+            // var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
+            //     => uiName.Value.Equals(e.target.name)).Key;
+            //
+            // // Activating button using the found uiKey
+            // _mapButtons[uiKey].onClick.Invoke();
+            
+            // Immediately cause the button to be pressed, because checking whether the button
+            // can be processed is already inside the methods
+            btnTarget.onClick.Invoke();
         }
         public override void OnPointerOut(PointerEventArgs e)
         {
@@ -117,16 +130,25 @@ namespace UI
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
                 return;
-            
-            if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
+
+            // if (!CommonKeys.UiButtonNames.ContainsValue(e.target.name))
+            //     return;
+
+            var btnTarget = e.target.GetComponent<Button>();
+            if (btnTarget.IsUnityNull() || !btnTarget.enabled)
                 return;
 
             // Finding the button key
-            var uiKey = CommonKeys.UiButtonNames.FirstOrDefault(uiName
-                => uiName.Value.Equals(e.target.name)).Key;
+            if (!CommonKeys.UiButtonNames.TryGetValue(e.target.name, out var uiKey))
+                return;
 
-            // Replacing button sprite with standard sprite
-            _mapImages[uiKey].sprite = _mapBtnImgSpritesMap[uiKey].Standard;
+            // TODO: Need optimization
+            
+            // Replacing button sprite with selected sprite
+            var imageThis = btnTarget.GetComponent<Image>();
+            imageThis.sprite = _mapBtnImgSpritesMap[uiKey].Standard;
+
+            // _mapImages[uiKey].sprite = _mapBtnImgSpritesMap[uiKey].Selected;
         }
         private void FindGoToMainMenuButtonWinPanel()
         {
@@ -136,9 +158,7 @@ namespace UI
             // _goToMainMenuButtonWinPanel = GameObject.Find(CommonKeys.Names.GoToMainMenuButtonWinPanel).GetComponent<Button>();
             // _goToMainMenuButtonWinPanelImage = _goToMainMenuButtonWinPanel.GetComponent<Image>();
         }
-        private void OnLoadDone(
-            AsyncOperationHandle<Sprite> asyncOperationHandle
-        )
+        private void OnLoadDone(AsyncOperationHandle<Sprite> asyncOperationHandle)
         {
             if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
                 _spriteResult = asyncOperationHandle.Result;

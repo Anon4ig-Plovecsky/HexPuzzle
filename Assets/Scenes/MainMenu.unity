@@ -2542,6 +2542,10 @@ PrefabInstance:
       propertyPath: m_VerticalScrollbar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 126375649165315145, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
+      propertyPath: m_Name
+      value: ChooseImageButton
+      objectReference: {fileID: 0}
     - target: {fileID: 5868426606224370552, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
