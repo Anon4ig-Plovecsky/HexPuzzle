@@ -51,12 +51,18 @@ public abstract record CommonKeys
         
         // Start Game
         public const string MainLevels = "MainLevelsButton";
-        public const string CustomLevel = "CustomLevelButton";
+        public const string CustomLevel = "CustomPanelButton";
         
         // Main Levels
         public const string LeftArrow = "LeftArrowButton";
         public const string RightArrow = "RightArrowButton";
         public const string LevelButton = "LevelButton";
+        
+        // Custom Level
+        public const string MinuteUpButton = "MinuteUpButton";
+        public const string MinuteDownButton = "MinuteDownButton";
+        public const string SecondUpButton = "SecondUpButton";
+        public const string SecondDownButton = "SecondDownButton";
     }
 
     public static readonly Dictionary<UiKeys, string> UiButtonNames = new()
@@ -91,6 +97,10 @@ public abstract record CommonKeys
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
         public const string Grid = "Grid";
+        public const string Minute = "Minute";
+        public const string Second = "Second";
+        public const string MinuteText = "Timer/Minute/MinuteTextImage/MinuteText";
+        public const string SecondText = "Timer/Second/SecondTextImage/SecondText";
 
         // Panels
         public const string MainLevels = "MainLevels";

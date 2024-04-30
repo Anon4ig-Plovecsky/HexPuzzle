@@ -36,7 +36,7 @@ namespace UI
             }
             
             // Getting panel length
-            var transformPanel = ObjThisPanel.GetComponent<RectTransform>();
+            var transformPanel = objThisPanel.GetComponent<RectTransform>();
             if (transformPanel.IsUnityNull())
             {
                 Debug.Log("Failed to get RectTransform of current panel");
@@ -44,7 +44,7 @@ namespace UI
             }
             _panelWidth = transformPanel.rect.width;
             
-            _levelsGroup = ObjThisPanel.transform.Find(CommonKeys.Names.LevelsGroup);
+            _levelsGroup = objThisPanel.transform.Find(CommonKeys.Names.LevelsGroup);
             if (_levelsGroup.IsUnityNull())
                 Debug.Log("Could not find levelsGroup");
         }
@@ -94,11 +94,10 @@ namespace UI
             }
 
             // Enable the second navigation button if it is disabled
-            if(!_buttonSecondArrow.enabled)
-            {
-                _buttonSecondArrow.enabled = true;
-                _buttonSecondArrow.interactable = true;
-            }
+            if (_buttonSecondArrow.enabled) 
+                return;
+            _buttonSecondArrow.enabled = true;
+            _buttonSecondArrow.interactable = true;
         }
     }
 }

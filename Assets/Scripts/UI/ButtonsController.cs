@@ -17,7 +17,7 @@ namespace UI
         protected float Position;                           /// Position for animation
 
         [SerializeField] protected GameObject objCalled;    /// Object that caused the click
-        protected GameObject ObjThisPanel;                  /// Current panel on which the button is located
+        [SerializeField] protected GameObject objThisPanel; /// Current panel on which the button is located
         protected Button ButtonThis;                        /// Current button
 
         protected virtual void Start()
@@ -27,8 +27,9 @@ namespace UI
             ButtonThis.onClick.AddListener(OnClickButton);
             
             // Getting the current panel GUI
-            ObjThisPanel = GetCurrentPanel();
-            if (ObjThisPanel.IsUnityNull())
+            if(objThisPanel.IsUnityNull())
+                objThisPanel = GetCurrentPanel();
+            if (objThisPanel.IsUnityNull())
             {
                 Debug.Log("Could not find current panel");
                 return;
@@ -41,7 +42,7 @@ namespace UI
             // If the current panel is not the main one (it is not located at the zero coordinate),
             // then we take the position value from it
             if (Position < 0.00001)
-                Position = ObjThisPanel.transform.localPosition.y;
+                Position = objThisPanel.transform.localPosition.y;
         }
         
         /// <summary>
@@ -49,7 +50,7 @@ namespace UI
         /// </summary>
         private void GoToPanel()
         {
-            if(ObjThisPanel.IsUnityNull())
+            if(objThisPanel.IsUnityNull())
                 return;
             
             // Animations
@@ -60,11 +61,11 @@ namespace UI
                 objCalled.SetActive(true);
                 
                 Sequence.Create()
-                    .Group(HidePanel(ObjThisPanel))
+                    .Group(HidePanel(objThisPanel))
                     .Group(ShowPanel(objCalled));
             }
             else
-                Sequence.Create(HidePanel(ObjThisPanel));
+                Sequence.Create(HidePanel(objThisPanel));
         }
         
         /// <summary>
@@ -99,6 +100,7 @@ namespace UI
                 case CommonKeys.StrButtonNames.GoToMenu:
                 case CommonKeys.StrButtonNames.MainLevels:
                 case CommonKeys.StrButtonNames.BackToMenu:
+                case CommonKeys.StrButtonNames.CustomLevel:
                     GoToPanel();
                     break;
                 case CommonKeys.StrButtonNames.ExitToMenu:
