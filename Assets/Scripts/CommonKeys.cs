@@ -110,10 +110,6 @@ public abstract record CommonKeys
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
         public const string Grid = "Grid";
-        public const string Minute = "Minute";
-        public const string Second = "Second";
-        public const string MinuteText = "Timer/Minute/MinuteTextImage/MinuteText";
-        public const string SecondText = "Timer/Second/SecondTextImage/SecondText";
 
         // Panels
         public const string MainLevels = "MainLevels";
@@ -121,6 +117,17 @@ public abstract record CommonKeys
         
         // Scenes
         public const string SceneNature = "Nature";
+        
+        // CustomLevel
+        public const string TimerToggle = "CustomLevelPanel/Timer/TimerToggle";
+        public const string MinuteTextImage = "CustomLevelPanel/Timer/Minute/MinuteTextImage";
+        public const string SecondTextImage = "CustomLevelPanel/Timer/Second/SecondTextImage";
+        public const string MinuteText = "Timer/Minute/MinuteTextImage/MinuteText";
+        public const string SecondText = "Timer/Second/SecondTextImage/SecondText";
+        public const string MinuteUpButton = "CustomLevelPanel/Timer/Minute/MinuteUpButton";
+        public const string MinuteDownButton = "CustomLevelPanel/Timer/Minute/MinuteDownButton";
+        public const string SecondUpButton = "CustomLevelPanel/Timer/Second/SecondUpButton";
+        public const string SecondDownButton = "CustomLevelPanel/Timer/Second/SecondDownButton";
     }
     
     // Addressable paths
@@ -129,6 +136,7 @@ public abstract record CommonKeys
         public const string PartOfPainting = "Assets/Prefabs/PartOfPainting.prefab";
         public const string LevelButtonPrefab = "Assets/Prefabs/UI/LevelButton.prefab";
         public const string CellPrefab = "Assets/Prefabs/Cell.prefab";
+        public const string MainLevelDisabled = "Assets/Images/UI/MainLevels/LevelButton/MainLevelDisabled.png";
 
         // Addressable paths to button images
         public static class ButtonImages

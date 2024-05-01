@@ -1,9 +1,10 @@
 ﻿using Unity.VisualScripting;
 using System.Globalization;
 using UnityEngine.UI;
+using UnityEngine;
+// using UnityEditor;
 using System;
 using TMPro;
-using UnityEngine;
 
 namespace UI
 {
@@ -43,6 +44,9 @@ namespace UI
                     break;
                 case CommonKeys.StrButtonNames.SecondUpButton:
                     ChangeTime(TimeType.Second, true);
+                    break;
+                case CommonKeys.StrButtonNames.ChooseImage:
+                    LoadImage();
                     break;
                 default:
                     base.OnClickButton();
@@ -97,6 +101,13 @@ namespace UI
             
             timeText.SetText(rTime.ToString(CultureInfo.InvariantCulture));
         }
+
+        private void LoadImage()
+        {
+            // OpenFilePanelExample.Apply();
+
+            
+        }
     }
 
     public enum TimeType
@@ -105,3 +116,22 @@ namespace UI
         Second
     }
 }
+// public class OpenFilePanelExample : EditorWindow
+// {
+//     [MenuItem( "Example/Overwrite Texture" )]
+//     public static void Apply()
+//     {
+//         // var texture = Selection.activeObject as Texture2D;
+//         // if( texture == null )
+//         // {
+//         //     EditorUtility.DisplayDialog( "Select Texture", "You must select a texture first!", "OK" );
+//         //     return;
+//         // }
+//     
+//         var path = EditorUtility.OpenFilePanel( "Overwrite with png", "", "png" );
+//         if (path.Length == 0) return;
+//         var www = new WWW( "file:///" + path );
+//         // www.LoadImageIntoTexture( texture );
+//     }
+//     
+// }

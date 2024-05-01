@@ -1951,6 +1951,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5868426606224370552, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
   m_PrefabInstance: {fileID: 8533314189370993717}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1874661220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874661218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a589c024b17a43258176066e3e696121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1935876692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2869070298844501476, guid: 281bb3aea27bee540aea95f70679be2c, type: 3}
@@ -2546,6 +2558,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseImageButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4557638570216041794, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
+      propertyPath: objThisPanel
+      value: 
+      objectReference: {fileID: 910966476}
     - target: {fileID: 5868426606224370552, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2646,11 +2662,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 8756216293700249860, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
+      propertyPath: m_Name
+      value: TimerToggle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4977048701413484669, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8002759306198509125, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874661220}
     - targetCorrespondingSourceObject: {fileID: 6815114454798027295, guid: d89cbfb4d50097a4b94fae003291e920, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1162349265}

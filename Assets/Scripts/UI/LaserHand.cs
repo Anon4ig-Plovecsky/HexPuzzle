@@ -6,7 +6,6 @@ using Valve.VR.Extras;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
-using System;
 
 namespace UI
 {

@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 2064928649789796282}
   - component: {fileID: 5990175981684863452}
   - component: {fileID: 3953615612957621165}
+  - component: {fileID: 4557638570216041794}
   m_Layer: 0
   m_Name: ChooseImageButton
   m_TagString: Untagged
@@ -285,6 +286,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.245, y: 0.033, z: 0.007076458}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4557638570216041794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126375649165315145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b4b8046eb846c0a572e6cea9b5adbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objCalled: {fileID: 0}
+  objThisPanel: {fileID: 0}
 --- !u!1 &422932798632879538
 GameObject:
   m_ObjectHideFlags: 0
@@ -3445,7 +3460,7 @@ GameObject:
   - component: {fileID: 3517647203330657257}
   - component: {fileID: 953498124287929915}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: TimerToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
