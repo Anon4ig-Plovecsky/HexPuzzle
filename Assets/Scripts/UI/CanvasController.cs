@@ -43,7 +43,7 @@ namespace UI
             pausePanel.SetActive(isPaused);
             imagePanel.SetActive(isPaused);
             laserHand.enabled = true;
-            laserHand.active = isPaused;
+            laserHand.Active = isPaused;
         }
         public IEnumerator ShowImage(Sprite sprite, Vector2 dimension)
         {
@@ -66,7 +66,7 @@ namespace UI
             StopTime(true);
             winPanel.SetActive(true);
             laserHand.enabled = true;
-            laserHand.active = true;
+            laserHand.Active = true;
         }
         private void StopTime(bool isStop)
         {

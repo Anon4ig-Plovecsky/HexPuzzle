@@ -128,6 +128,9 @@ public abstract record CommonKeys
         public const string MinuteDownButton = "CustomLevelPanel/Timer/Minute/MinuteDownButton";
         public const string SecondUpButton = "CustomLevelPanel/Timer/Second/SecondUpButton";
         public const string SecondDownButton = "CustomLevelPanel/Timer/Second/SecondDownButton";
+        
+        // ImageChooser
+        public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";
     }
     
     // Addressable paths
@@ -137,6 +140,7 @@ public abstract record CommonKeys
         public const string LevelButtonPrefab = "Assets/Prefabs/UI/LevelButton.prefab";
         public const string CellPrefab = "Assets/Prefabs/Cell.prefab";
         public const string MainLevelDisabled = "Assets/Images/UI/MainLevels/LevelButton/MainLevelDisabled.png";
+        public const string ImageItem = "Assets/Prefabs/UI/ImageItem.prefab";
 
         // Addressable paths to button images
         public static class ButtonImages
@@ -159,8 +163,8 @@ public abstract record CommonKeys
             public static readonly ButtonImagePaths CustomLevel = new("Assets/Images/UI/StartGame/CustomLevel/CustomLevels.png");
             
             // MainLevels
-            public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png");
-            public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png");
+            public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrow.png");
+            public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrow.png");
             public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
             
             // CustomLevel

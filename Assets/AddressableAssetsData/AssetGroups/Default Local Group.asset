@@ -33,7 +33,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5147162e6dec2fb5a8710dfe98ebfac5
-    m_Address: Assets/Images/UI/MainMenu/StartGameButton/StartGameButtonImage.png
+    m_Address: Assets/Images/UI/MainMenu/StartGameButton/StartGameButton.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 04239046a3e49b4469e717c864c85f94
-    m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrowStandard.png
+    m_Address: Assets/Images/UI/MainLevels/LeftArrow/LeftArrow.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 169d411d196bc2341bc7cbafa81a767c
-    m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrowStandard.png
+    m_Address: Assets/Images/UI/MainLevels/RightArrow/RightArrow.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -201,6 +201,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e38d3e492e6eac24a9716671480dba3d
     m_Address: Assets/Images/UI/CustomLevel/ArrowUpButton/ArrowUpButtonSelected.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b615988c026747c4ebc29d016658a34b
+    m_Address: Assets/Prefabs/UI/ImageItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

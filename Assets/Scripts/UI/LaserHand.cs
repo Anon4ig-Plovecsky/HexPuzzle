@@ -1,22 +1,24 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using Valve.VR.Extras;
 using UnityEngine.UI;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 namespace UI
 {
-    public class LaserHand : SteamVR_LaserPointer
+    public class LaserHand : MonoBehaviour
     {
-        private Sprite _spriteResult;
+        // private Sprite _spriteResult;
     
         // Maps
-        private Dictionary<CommonKeys.UiKeys, Image> _mapImages;
+        private Dictionary<CommonKeys.UiKeys, Image> _mapImages = new();
         // private Dictionary<CommonKeys.UiKeys, Button> _mapButtons;
-        private Dictionary<CommonKeys.UiKeys, ButtonImageSprites> _mapBtnImgSpritesMap;
+        private readonly Dictionary<CommonKeys.UiKeys, ButtonImageSprites> _mapBtnImgSpritesMap = new();
         private readonly Dictionary<CommonKeys.UiKeys, ButtonImagePaths> _mapBtnImgStrPaths = new()
         {
             // MainMenu
@@ -45,9 +47,24 @@ namespace UI
             { CommonKeys.UiKeys.UpArrow, CommonKeys.Addressable.ButtonImages.UpArrow },
             { CommonKeys.UiKeys.DownArrow, CommonKeys.Addressable.ButtonImages.DownArrow }
         };
+        
+        private SteamVR_LaserPointer _steamVrLaserPointer;
+
+        public bool Active
+        {
+            set => _steamVrLaserPointer.active = value;
+        }
+
+        private void Awake()
+        {
+            _steamVrLaserPointer = gameObject.GetComponent<SteamVR_LaserPointer>();
+            _steamVrLaserPointer.PointerIn += OnPointerIn;
+            _steamVrLaserPointer.PointerOut += OnPointerOut;
+            _steamVrLaserPointer.PointerClick += OnPointerClick;
+        }
 
         private bool _isSorted;
-        protected /*override*/ void Start()
+        protected /*override*/ async void Start()
         {
             // base.Start();
         
@@ -63,15 +80,29 @@ namespace UI
             // Adding sprites to the map
             foreach (var path in _mapBtnImgStrPaths.ToArray())
             {
-                var spriteStandard = GetSpriteFromAddressables(path.Value.Name);
-                var spriteSelected = GetSpriteFromAddressables(path.Value.Selected);
-            
-                _mapBtnImgSpritesMap.Add(path.Key, new ButtonImageSprites(spriteStandard, spriteSelected));
+                var taskSpriteStandard = Addressables.LoadAssetAsync<Sprite>(path.Value.Name);
+                var taskSpriteSelected = Addressables.LoadAssetAsync<Sprite>(path.Value.Selected);
+
+                await taskSpriteStandard.Task;
+                // var spriteStandard = taskSpriteStandard.Result;
+                await taskSpriteSelected.Task;
+                // var spriteSelected = taskSpriteSelected.Result;
+                if(taskSpriteSelected.Status == taskSpriteStandard.Status && taskSpriteSelected.Status == AsyncOperationStatus.Succeeded)
+                    _mapBtnImgSpritesMap.Add(path.Key, new ButtonImageSprites(taskSpriteStandard.Result, taskSpriteSelected.Result));
             }
         }
-        public override void OnPointerIn(PointerEventArgs e)
+        private void OnPointerIn(object sender, PointerEventArgs e)
         {
-            base.OnPointerIn(e);
+            var pointerEnterHandler = e.target.GetComponent<IPointerEnterHandler>();
+            if (pointerEnterHandler == null)
+            {
+                return;
+            }
+
+            pointerEnterHandler.OnPointerEnter(new PointerEventData(EventSystem.current));
+
+            if (true)
+                return;
         
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
@@ -96,10 +127,8 @@ namespace UI
 
             // _mapImages[uiKey].sprite = _mapBtnImgSpritesMap[uiKey].Selected;
         }
-        public override void OnPointerClick(PointerEventArgs e)
+        private void OnPointerClick(object sender, PointerEventArgs e)
         {
-            base.OnPointerClick(e);
-        
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
                 return;
@@ -122,10 +151,8 @@ namespace UI
             // can be processed is already inside the methods
             btnTarget.onClick.Invoke();
         }
-        public override void OnPointerOut(PointerEventArgs e)
+        private void OnPointerOut(object sender, PointerEventArgs e)
         {
-            base.OnPointerOut(e);
-        
             // Checking that a given sprite exists
             if (!e.target.CompareTag("ButtonUI"))
                 return;
@@ -157,23 +184,23 @@ namespace UI
             // _goToMainMenuButtonWinPanel = GameObject.Find(CommonKeys.Names.GoToMainMenuButtonWinPanel).GetComponent<Button>();
             // _goToMainMenuButtonWinPanelImage = _goToMainMenuButtonWinPanel.GetComponent<Image>();
         }
-        private void OnLoadDone(AsyncOperationHandle<Sprite> asyncOperationHandle)
-        {
-            if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
-                _spriteResult = asyncOperationHandle.Result;
-            else 
-                Debug.Log("Failed to load!");
-        }
 
-        private Sprite GetSpriteFromAddressables(string strPath)
+        private Task<Sprite> GetSpriteFromAddressables(string strPath)
         {
+            Sprite? spriteResult = null;
             var asyncOperationHandle = Addressables.LoadAssetAsync<Sprite>(strPath);
+
+            // await asyncOperationHandle.Task;
+            
             asyncOperationHandle.Completed += delegate
             {
-                OnLoadDone(asyncOperationHandle);
+                if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+                    spriteResult = asyncOperationHandle.Result;
+                else 
+                    Debug.Log("Failed to load!");
             };
 
-            return _spriteResult;
+            return asyncOperationHandle.Task;
         }
     }
 }

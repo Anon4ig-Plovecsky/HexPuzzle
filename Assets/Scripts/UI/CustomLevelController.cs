@@ -23,7 +23,7 @@ namespace UI
         
         private void Start()
         {
-            // gameObject.SetActive(false);
+            gameObject.SetActive(false);
             
             var transformToggle = transform.Find(CommonKeys.Names.TimerToggle);
             if (transformToggle.IsUnityNull())
