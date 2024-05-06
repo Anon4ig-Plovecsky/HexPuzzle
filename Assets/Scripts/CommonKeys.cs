@@ -131,6 +131,8 @@ public abstract record CommonKeys
         
         // ImageChooser
         public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";
+        public const string ImageName = "ImageName";
+        public const string Image = "Image";
     }
     
     // Addressable paths

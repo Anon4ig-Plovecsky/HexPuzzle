@@ -1,10 +1,12 @@
-﻿using UnityEngine.AddressableAssets;
+﻿using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
+using LevelsController;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
+using TMPro;
 
 namespace UI
 {
@@ -74,13 +76,33 @@ namespace UI
                 return;
             
             // Adding ImageItem to ImageContent
-            foreach (var imageItem in _listSpriteImages.Select(_ =>
-                         Instantiate(_prefabImageItem, Vector3.zero, 
-                         Quaternion.Euler(0.0f, 0.0f, 0.0f))))
+            foreach (var spriteImage in _listSpriteImages)
             {
+                var imageItem = Instantiate(_prefabImageItem, Vector3.zero, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+                
                 imageItem.transform.SetParent(_imageContent.transform);
                 imageItem.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                 imageItem.transform.localPosition = Vector3.zero;
+                
+                // Adding an image and text to a template
+                var imageCreator = new ImageCreator(spriteImage, new Tuple<int, int>(1, 1));
+                var transformImage = imageItem.transform.Find(CommonKeys.Names.Image);
+                var image = transformImage.GetComponent<Image>();
+                if (image.IsUnityNull())
+                {
+                    Debug.Log("Failed to get image of imageItem");
+                    continue;
+                }
+                image.sprite = imageCreator.CropEntirePainting();
+
+                var transformImageName = imageItem.transform.Find(CommonKeys.Names.ImageName);
+                var imageName = transformImageName.GetComponent<TMP_Text>();
+                if (imageName.IsUnityNull())
+                {
+                    Debug.Log("Failed to get imageName of imageItem");
+                    continue;
+                }
+                imageName.text = spriteImage.name;
                 
                 _listImageItems.Add(imageItem);
             }
@@ -91,9 +113,7 @@ namespace UI
             
             var rectTransformContent = _imageContent.GetComponent<RectTransform>();
             rectTransformContent.sizeDelta = new Vector2(0, fHeight);
-            
-            // var rectContent = rectTransformContent.rect;
-            // rectContent.Set(rectContent.x, rectContent.y, rectContent.width, fHeight);
+
             
         }
     }
