@@ -69,6 +69,10 @@ public abstract record CommonKeys
         public const string SecondUpButton = "SecondUpButton";
         public const string SecondDownButton = "SecondDownButton";
         public const string ChooseImage = "ChooseImageButton";
+        
+        // ImageChooser
+        public const string SelectButton = "SelectButton";
+        public const string CancelButton = "CancelButton";
     }
 
     public static readonly Dictionary<string, UiKeys> UiButtonNames = new()

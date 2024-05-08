@@ -6,6 +6,7 @@ using LevelsController;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using System.Linq;
 using TMPro;
 
 namespace UI
@@ -19,12 +20,14 @@ namespace UI
     {
         [SerializeField] private AssetLabelReference assetLabelReferenceImages;
 
-        private List<GameObject> _listImageItems = new();
+        private readonly List<GameObject> _listImageItems = new();
         private List<Sprite> _listSpriteImages = new();
         private GameObject _prefabImageItem;
         private GameObject _imageContent;
         private GameObject _thisPanel;
-        
+        private Button _buttonSelect;
+        private Button _buttonCancel;
+
         private void Start()
         {
             _thisPanel = GameObject.Find("ImageChooserPanel");
@@ -41,6 +44,25 @@ namespace UI
                 return;
             }
             
+            var objButtonSelect = GameObject.Find(CommonKeys.StrButtonNames.SelectButton);
+            if (objButtonSelect.IsUnityNull())
+            {
+                Debug.Log("Failed to get ButtonSelect");
+                return;
+            }
+            _buttonSelect = objButtonSelect.GetComponent<Button>();
+            _buttonSelect.onClick.AddListener(delegate { ButtonOnClick(_buttonSelect.name); });
+
+            var objButtonCancel = GameObject.Find(CommonKeys.StrButtonNames.CancelButton);
+            if (objButtonCancel.IsUnityNull())
+            {
+                Debug.Log("Failed to get ButtonCancel");
+                return;
+            }
+            _buttonCancel = objButtonCancel.GetComponent<Button>();
+            _buttonCancel.onClick.AddListener(delegate { ButtonOnClick(_buttonCancel.name); });
+            
+            // Getting images and _imageItem template
             var asyncOperationHandleList = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceImages, _ => {});
             asyncOperationHandleList.Completed += delegate
             {
@@ -103,6 +125,14 @@ namespace UI
                     continue;
                 }
                 imageName.text = spriteImage.name;
+
+                var toggleImageItem = imageItem.GetComponent<Toggle>();
+                if (toggleImageItem.IsUnityNull())
+                {
+                    Debug.Log("Failed to get toggleImageItem");
+                    continue;
+                }
+                toggleImageItem.onValueChanged.AddListener(delegate { ToggleImageItemOnChanged(toggleImageItem); });
                 
                 _listImageItems.Add(imageItem);
             }
@@ -113,8 +143,72 @@ namespace UI
             
             var rectTransformContent = _imageContent.GetComponent<RectTransform>();
             rectTransformContent.sizeDelta = new Vector2(0, fHeight);
+        }
 
-            
+        /// <summary>
+        /// When selected ToggleImageItem disables all others toggle
+        /// </summary>
+        private void ToggleImageItemOnChanged(Toggle thisToggle)
+        {
+            _buttonSelect.interactable = false;
+
+            if (!thisToggle.isOn)
+            {
+                if (CheckSelectedItem())
+                    _buttonSelect.interactable = true;
+                return;
+            }
+            // no comment (Disable all other toggleButtons except the current one)
+            foreach (var imageItem in _listImageItems)
+            {
+                var toggleImageItem = imageItem.GetComponent<Toggle>();
+                if (toggleImageItem.IsUnityNull())
+                    continue;
+
+                if (!toggleImageItem.Equals(thisToggle))
+                    toggleImageItem.isOn = false;
+            }
+
+            if (CheckSelectedItem())
+                _buttonSelect.interactable = true;
+        }
+
+        /// <summary>
+        /// Checks whether the selected object is in the ImageChooserPanel list
+        /// </summary>
+        /// <returns>true - if at least one element was selected, otherwise - false</returns>
+        private bool CheckSelectedItem()
+        {
+            foreach (var toggleImageItem in _listImageItems.
+                         Select(imageItem => imageItem.GetComponent<Toggle>()))
+            {
+                if (toggleImageItem.IsUnityNull())
+                    return false;
+
+                if (toggleImageItem.isOn)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Listener that fires when ImageChooserPanel buttons are clicked
+        /// </summary>
+        /// <param name="strButtonName">Name of the button pressed</param>
+        private void ButtonOnClick(string strButtonName)
+        {
+            switch (strButtonName)
+            {
+                case CommonKeys.StrButtonNames.SelectButton:
+                    
+                    break;
+                case CommonKeys.StrButtonNames.CancelButton:
+                    
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }
