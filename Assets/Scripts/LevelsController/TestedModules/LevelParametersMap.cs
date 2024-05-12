@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace LevelsController
+namespace LevelsController.TestedModules
 {
     public abstract record LevelParametersMap
     {

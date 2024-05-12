@@ -1,5 +1,5 @@
+using UI.TestedModules;
 using UnityEngine;
-using UI;
 
 namespace LevelsController
 {
@@ -15,7 +15,11 @@ namespace LevelsController
         }
         private void Update()
         {
-            if (_cubes.transform.childCount != GridSize.Item1 * GridSize.Item2 || _isWin) return;
+            if (_cubes.transform.childCount == 0
+                || _cubes.transform.childCount != GridSize.Item1 * GridSize.Item2
+                || _isWin)
+                return;
+            
             CheckCorrectly();
         }
         private void CheckCorrectly()

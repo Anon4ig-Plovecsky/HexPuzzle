@@ -1,11 +1,12 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
+using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
+using UI.TestedModules;
 using System.Linq;
 using UnityEngine;
 using System;
-using UI;
 
 namespace LevelsController
 {
@@ -38,13 +39,15 @@ namespace LevelsController
         private bool _mainPaintingIsCrop;
         private List<Sprite> _normalMaps; //[0] - mainPainting
         private List<Sprite> _paintings;  //[0] - mainNormalMap
-        private void Start()
+        private async void Start()
         {
             _cubesParent = GameObject.Find("Cubes");
             _cubeShader = Shader.Find("Standard");
             
             _levelInfo = LevelInfoTransfer.GetInstance();
             _gridSize = _levelInfo.GridSize;
+            if (_gridSize.Item1 == 0 || _gridSize.Item2 == 0)
+                _gridSize = new Tuple<int, int>(2, 3);
         
             _cubesPrefab = new GameObject[_gridSize.Item1 * _gridSize.Item2];
             _cubesGameObjects = new GameObject[_cubesPrefab.Length];
@@ -63,6 +66,9 @@ namespace LevelsController
                 for (var i = 0; i < _cubesPrefab.Length; i++)
                     _cubesPrefab[i] = asyncOperationHandle.Result;
             };
+
+            await asyncOperationHandle.Task;
+            
             var asyncOperationListHandleNormalMap = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceNormalMap, _ => {});
             asyncOperationListHandleNormalMap.Completed += delegate
             {
@@ -71,6 +77,9 @@ namespace LevelsController
                 else 
                     Debug.Log("Failed to load Normal Maps!");
             };
+
+            await asyncOperationListHandleNormalMap.Task;
+            
             var pointsOfSpawnParent = GameObject.Find("PointsOfSpawn");
             for(var i = 0; i < pointsOfSpawnParent.transform.childCount; i++)
                 _pointsOfSpawn.Add(pointsOfSpawnParent.transform.GetChild(i));
@@ -92,13 +101,20 @@ namespace LevelsController
             if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
             {
                 _paintings = new List<Sprite>(asyncOperationHandle.Result.ToArray());
-                while (_normalMaps.Count != _paintings.Count || _cubesPrefab[^1] == null) {}
+                if (_normalMaps == null || _paintings == null || 
+                    _normalMaps.Count != _paintings.Count || _cubesPrefab[^1] == null)
+                {
+                    Debug.Log("Insufficient resources to spawn cubes");
+                    return;
+                }
+
                 ChooseImages();
                 SpawnCubes();
                 pauseController.SetActive(true);
+                return;
             }
-            else 
-                Debug.Log("Failed to load paintings!");
+            
+            Debug.Log("Failed to load paintings!");
         }
         
         /// <summary>
@@ -120,7 +136,11 @@ namespace LevelsController
                     _partsOfPaintings[iCounter++] = CreatePartOfPainting(_paintings[iFoundRes],
                         _normalMaps[iFoundRes]);
 
-            // Removing from the set textures that have already been used
+            // If the array is completely full - return
+            if(CommonKeys.CubeSides == iCounter)
+                return;
+            
+            // Removing from the list textures that have already been used
             if(listStrImagesNames != null && listStrImagesNames.Count != 0)
             {
                 _paintings.RemoveAll(sprite => listStrImagesNames.Contains(sprite.name));

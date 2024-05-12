@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace LevelsController
+namespace LevelsController.TestedModules
 {
     public class ImageCreator
     {

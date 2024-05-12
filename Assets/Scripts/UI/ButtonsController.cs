@@ -1,8 +1,9 @@
+using LevelsController.TestedModules;
 using Sequence = PrimeTween.Sequence;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using LevelsController;
+using UI.TestedModules;
 using UnityEngine.UI;
 using UnityEngine;
 using PrimeTween;
@@ -14,7 +15,7 @@ namespace UI
     ///  ButtonsController is responsible for events when interacting with buttons in the game's GUI
     public class ButtonsController : MonoBehaviour
     {
-        protected float Position;                           /// Position for animation
+        private float _position;                            /// Position for animation
 
         [SerializeField] protected GameObject objCalled;    /// Object that caused the click
         [SerializeField] protected GameObject objThisPanel; /// Current panel on which the button is located
@@ -38,11 +39,11 @@ namespace UI
             // Getting of the distance from the called panel to the current
             if (objCalled.IsUnityNull())
                 return;
-            Position = objCalled.transform.localPosition.y;
+            _position = objCalled.transform.localPosition.y;
             // If the current panel is not the main one (it is not located at the zero coordinate),
             // then we take the position value from it
-            if (Position < 0.00001)
-                Position = objThisPanel.transform.localPosition.y;
+            if (_position < 0.00001)
+                _position = objThisPanel.transform.localPosition.y;
         }
         
         /// <summary>
@@ -125,7 +126,7 @@ namespace UI
         {
             return Tween.LocalPositionY(objShow.transform, 0.0f, fDuration, Ease.OutQuad)
                 .OnUpdate(target: objShow, (_, tween) =>
-                    ChangeAlphaPanel(objShow.GetComponent<CanvasGroup>(), tween.progress));
+                    ChangeAlphaPanel(objShow.GetComponent<CanvasGroup>(), EaseOutQuad(tween.progress)));
         }
 
         /// <summary>
@@ -135,9 +136,9 @@ namespace UI
         /// <param name="fDuration">Animation duration</param>
         private Tween HidePanel(GameObject objHide, float fDuration = 0.8f)
         {
-            return Tween.LocalPositionY(objHide.transform, -Position, fDuration, Ease.InQuad)
+            return Tween.LocalPositionY(objHide.transform, -_position, fDuration, Ease.InQuad)
                 .OnUpdate(target: objHide, (obj, tween) => 
-                    ChangeAlphaPanel(obj.GetComponent<CanvasGroup>(), 1 - tween.progress))
+                    ChangeAlphaPanel(obj.GetComponent<CanvasGroup>(), 1 - EaseInQuad(tween.progress)))
                 .OnComplete(target: this, _ =>
                 {
                     // Changing the position of hidden window
@@ -145,7 +146,7 @@ namespace UI
                     ChangeAlphaPanel(objHide.GetComponent<CanvasGroup>(), 1.0f);
                     
                     // Raise the panel two positions higher from the current one so that the animation works correctly again
-                    objHide.transform.localPosition += new Vector3(0.0f, Position * 2.0f, 0.0f);
+                    objHide.transform.localPosition += new Vector3(0.0f, _position * 2.0f, 0.0f);
                     
                     // If the player go to a new panel before the previous animation ends, we will re-enable
                     // the called panel to avoid all panels disappearing
@@ -197,5 +198,11 @@ namespace UI
             
             ChangeScene(sceneName);
         }
+
+        private static float EaseOutQuad(float x) =>
+            1.0f - MathF.Pow(1.0f - x, 2.0f);
+
+        private static float EaseInQuad(float x) =>
+            MathF.Pow(x, 2.0f);
     }
 }

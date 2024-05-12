@@ -443,6 +443,17 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &151665465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114000011957598740, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+  m_PrefabInstance: {fileID: 151665461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211137901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &175960052 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1866148564011438083, guid: e0cefb1628586d8488de4292bc28bd9f, type: 3}
@@ -1469,7 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f511c1adaa1e94ebe7ca97bbcabd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pose: {fileID: 0}
+  pose: {fileID: 151665465}
   interactWithUI:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
@@ -2588,7 +2599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087318170253050425, guid: 9e4900cc0b7a12d4387ca443b7a24bdd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0009652078
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6097226626402919907, guid: 9e4900cc0b7a12d4387ca443b7a24bdd, type: 3}
       propertyPath: m_PresetInfoIsWorld

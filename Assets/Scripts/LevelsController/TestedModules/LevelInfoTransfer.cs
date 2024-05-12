@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace LevelsController
+namespace LevelsController.TestedModules
 {
     public class LevelInfoTransfer
     {
@@ -29,6 +29,16 @@ namespace LevelsController
 
         // Returns or created static class
         public static LevelInfoTransfer GetInstance() =>  _levelInfoTransferKeeper ??= new LevelInfoTransfer();
+
+        public static LevelInfoTransfer GetInstance(LevelInfoTransfer levelInfoTransfer)
+        {
+            _levelInfoTransferKeeper = new LevelInfoTransfer(
+                levelInfoTransfer.LvlNumber,
+                levelInfoTransfer.GridSize,
+                levelInfoTransfer.ImageNameList
+            );
+            return _levelInfoTransferKeeper;
+        }
         
         public static LevelInfoTransfer GetInstance(int lvlNumber, Tuple<int, int> gridSize, IEnumerable<string> imageNameList)
         {

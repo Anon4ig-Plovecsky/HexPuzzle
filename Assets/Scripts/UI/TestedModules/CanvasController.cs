@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
-namespace UI
+namespace UI.TestedModules
 {
     /// CanvasController is responsible for the behavior of the game's GUI panels,
     /// as well as their interaction with the game environment
