@@ -1,43 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public abstract record CommonKeys
+﻿public abstract record CommonKeys
 {
     // Number of visible main level buttons on the panel
     public const int LevelsOnPanel = 5;
     
     public const int CubeSides = 6;
-
-    // Enumerated type for UI buttons value map
-    public enum UiKeys
-    {
-        // Main Menu
-        StartGame,
-        Results,
-        Settings,
-        QuitGame,
-        Continue,
-        ExitToMenu,
-        ExitToMenuWinPanel,
-
-        // Common
-        BackToMenu,
-        GoToMenu,
-
-        // Start Game
-        MainLevels,
-        CustomLevel,
-        
-        // Main Levels
-        LeftArrow,
-        RightArrow,
-        LevelButton,
-        
-        // CustomLevel
-        UpArrow,
-        DownArrow,
-        ChooseImage
-    }
 
     public static class StrButtonNames
     {
@@ -74,38 +40,6 @@ public abstract record CommonKeys
         public const string SelectButton = "SelectButton";
         public const string CancelButton = "CancelButton";
     }
-
-    public static readonly Dictionary<string, UiKeys> UiButtonNames = new()
-    {
-        // MainMenu
-        { StrButtonNames.StartGame, UiKeys.StartGame },
-        { StrButtonNames.Results, UiKeys.Results },
-        { StrButtonNames.Settings, UiKeys.Settings },
-        { StrButtonNames.QuitGame, UiKeys.QuitGame },
-        { StrButtonNames.Continue, UiKeys.Continue },
-        { StrButtonNames.ExitToMenu, UiKeys.ExitToMenu },
-        { StrButtonNames.ExitToMenuWinPanel, UiKeys.ExitToMenuWinPanel },
-        
-        // Common
-        { StrButtonNames.GoToMenu, UiKeys.GoToMenu },
-        { StrButtonNames.MainLevels, UiKeys.MainLevels },
-        
-        // Start Game
-        { StrButtonNames.CustomLevel, UiKeys.CustomLevel },
-        { StrButtonNames.BackToMenu, UiKeys.BackToMenu },
-        
-        // MainLevels
-        { StrButtonNames.LeftArrow, UiKeys.LeftArrow },
-        { StrButtonNames.RightArrow, UiKeys.RightArrow },
-        { StrButtonNames.LevelButton, UiKeys.LevelButton },
-        
-        // CustomLevel
-        { StrButtonNames.MinuteUpButton, UiKeys.UpArrow },
-        { StrButtonNames.SecondUpButton, UiKeys.UpArrow },
-        { StrButtonNames.MinuteDownButton, UiKeys.DownArrow },
-        { StrButtonNames.SecondDownButton, UiKeys.DownArrow },
-        { StrButtonNames.ChooseImage, UiKeys.ChooseImage }
-    };
     
     // Names
     public static class Names
@@ -149,36 +83,7 @@ public abstract record CommonKeys
         public const string CellPrefab = "Assets/Prefabs/Cell.prefab";
         public const string MainLevelDisabled = "Assets/Images/UI/MainLevels/LevelButton/MainLevelDisabled.png";
         public const string ImageItem = "Assets/Prefabs/UI/ImageItem.prefab";
-
-        // Addressable paths to button images
-        public static class ButtonImages
-        {
-            // Main menu
-            public static readonly ButtonImagePaths Continue = new("Assets/Images/UI/MainMenu/ContinueButton/ContinueButtonImage.png");
-            public static readonly ButtonImagePaths QuitGame = new("Assets/Images/UI/MainMenu/QuitButton/QuitGameButtonImage.png");
-            public static readonly ButtonImagePaths ExitToMenu = new("Assets/Images/UI/MainMenu/ExitToMenuButton/ExitToMenuButtonImage.png");
-            public static readonly ButtonImagePaths ExitToMenuWinPanel = new("Assets/Images/UI/MainMenu/ExitToMenuInWinPanelButton/ExitToMenuInWinPanelButtonImage.png");
-            public static readonly ButtonImagePaths StartGame = new("Assets/Images/UI/MainMenu/StartGameButton/StartGameButtonImage.png");
-            public static readonly ButtonImagePaths Results = new("Assets/Images/UI/MainMenu/ResultsButton/ResultsButtonImage.png");
-            public static readonly ButtonImagePaths Settings = new("Assets/Images/UI/MainMenu/SettingsButton/SettingsButtonImage.png");
-            
-            // Common
-            public static readonly ButtonImagePaths GoToMainMenu = new("Assets/Images/UI/GoToMenuButton/GoToMenu.png");
-            public static readonly ButtonImagePaths BackToMenu = new("Assets/Images/UI/BackToMenuButton/BackToMenu.png");
-
-            // Start Game
-            public static readonly ButtonImagePaths MainLevels = new("Assets/Images/UI/StartGame/MainLevels/MainLevels.png");
-            public static readonly ButtonImagePaths CustomLevel = new("Assets/Images/UI/StartGame/CustomLevel/CustomLevels.png");
-            
-            // MainLevels
-            public static readonly ButtonImagePaths LeftArrow = new("Assets/Images/UI/MainLevels/LeftArrow/LeftArrow.png");
-            public static readonly ButtonImagePaths RightArrow = new("Assets/Images/UI/MainLevels/RightArrow/RightArrow.png");
-            public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
-            
-            // CustomLevel
-            public static readonly ButtonImagePaths UpArrow = new("Assets/Images/UI/CustomLevel/ArrowUpButton/ArrowUpButton.png");
-            public static readonly ButtonImagePaths DownArrow = new("Assets/Images/UI/CustomLevel/ArrowDownButton/ArrowDownButton.png");
-        }
+        public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
     }
 }
 
@@ -205,19 +110,6 @@ public class ButtonImagePaths
     public ButtonImagePaths(string name)
     {
         Name = name;
-    }
-}
-
-// Button sprites
-public class ButtonImageSprites
-{
-    public Sprite Standard { get; }
-    public Sprite Selected { get; }
-
-    public ButtonImageSprites(Sprite standard, Sprite selected)
-    {
-        Standard = standard;
-        Selected = selected;
     }
 }
 

@@ -81,7 +81,7 @@ namespace UI
                     _timeImageDisabled = asyncOperationHandleImageDisabled.Result;
 
                     var asyncOperationHandleImageDefault =
-                        Addressables.LoadAssetAsync<Sprite>(CommonKeys.Addressable.ButtonImages.LevelButtonPath.Name);
+                        Addressables.LoadAssetAsync<Sprite>(CommonKeys.Addressable.LevelButtonPath.Name);
                     asyncOperationHandleImageDefault.Completed += delegate
                     {
                         if (asyncOperationHandleImageDefault.Status == AsyncOperationStatus.Succeeded)

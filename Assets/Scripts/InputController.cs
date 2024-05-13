@@ -1,8 +1,8 @@
+using Unity.VisualScripting;
 using UI.TestedModules;
 using UnityEngine;
 using Valve.VR;
 using System;
-using Unity.VisualScripting;
 
 public class InputController : MonoBehaviour
 {
