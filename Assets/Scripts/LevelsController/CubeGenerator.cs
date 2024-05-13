@@ -3,6 +3,7 @@ using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UI.TestedModules;
 using System.Linq;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace LevelsController
         private HashSet<int> _hashIndexesOfSpawn = new();           // Indexes of spawn points to be used
     
         private GameObject[] _cubesGameObjects;                     
-        private GameObject[] _cubesPrefab;
+        private GameObject _prefabCube;
     
         private Shader _cubeShader;
     
@@ -49,8 +50,7 @@ namespace LevelsController
             if (_gridSize.Item1 == 0 || _gridSize.Item2 == 0)
                 _gridSize = new Tuple<int, int>(2, 3);
         
-            _cubesPrefab = new GameObject[_gridSize.Item1 * _gridSize.Item2];
-            _cubesGameObjects = new GameObject[_cubesPrefab.Length];
+            _cubesGameObjects = new GameObject[_gridSize.Item1 * _gridSize.Item2];
             
             if (_gridSize is null)
             {
@@ -62,9 +62,7 @@ namespace LevelsController
             {
                 if (asyncOperationHandle.Status != AsyncOperationStatus.Succeeded)
                     return;
-                
-                for (var i = 0; i < _cubesPrefab.Length; i++)
-                    _cubesPrefab[i] = asyncOperationHandle.Result;
+                _prefabCube = asyncOperationHandle.Result;
             };
 
             await asyncOperationHandle.Task;
@@ -102,7 +100,7 @@ namespace LevelsController
             {
                 _paintings = new List<Sprite>(asyncOperationHandle.Result.ToArray());
                 if (_normalMaps == null || _paintings == null || 
-                    _normalMaps.Count != _paintings.Count || _cubesPrefab[^1] == null)
+                    _normalMaps.Count != _paintings.Count || _prefabCube.IsUnityNull())
                 {
                     Debug.Log("Insufficient resources to spawn cubes");
                     return;
@@ -172,11 +170,11 @@ namespace LevelsController
         private void SpawnCubes()
         {
             _hashIndexesOfSpawn = GenerateNumbers(_gridSize.Item1 * _gridSize.Item2, _pointsOfSpawn.Count);
-            for (var cubeIndex = 0; cubeIndex < _cubesPrefab.Length; cubeIndex++)
+            for (var cubeIndex = 0; cubeIndex < _cubesGameObjects.Length; cubeIndex++)
             {
-                SetTexture(cubeIndex);
-                _cubesGameObjects[cubeIndex] = Instantiate(_cubesPrefab[cubeIndex], _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].position, 
+                _cubesGameObjects[cubeIndex] = Instantiate(_prefabCube, _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].position, 
                     _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].rotation);
+                SetTexture(cubeIndex);
                 _cubesGameObjects[cubeIndex].transform.Rotate(
                     Random.Range(0, 4) * 90, Random.Range(0, 4) * 90, Random.Range(0, 4) * 90
                 );
@@ -194,7 +192,7 @@ namespace LevelsController
                 };
                 imageMaterial.EnableKeyword("_NORMALMAP");
                 imageMaterial.SetTexture(BumpMap, _partsOfPaintings[side].Item2.GetPartsOfPainting()[cubeIndex].texture);
-                _cubesPrefab[cubeIndex].transform.GetChild(0).GetChild(side).GetComponent<Renderer>().material =
+                _cubesGameObjects[cubeIndex].transform.GetChild(0).GetChild(side).GetComponent<Renderer>().material =
                     imageMaterial;
             }
         }
