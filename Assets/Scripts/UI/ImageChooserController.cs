@@ -16,7 +16,7 @@ namespace UI
     /// the selection of an image and, when Select is pressed,
     /// transfers the image to the CustomLevelController panel
     /// </summary>
-    public class ImageChooserController : MonoBehaviour
+    public class ImageChooserController : ButtonsController
     {
         [SerializeField] private AssetLabelReference assetLabelReferenceImages;
 
@@ -28,8 +28,10 @@ namespace UI
         private Button _buttonSelect;
         private Button _buttonCancel;
 
-        private void Start()
+        protected override void Start()
         {
+            InitPanels();
+            
             _thisPanel = GameObject.Find("ImageChooserPanel");
             if (_thisPanel.IsUnityNull())
             {
@@ -87,6 +89,8 @@ namespace UI
                     Debug.Log("Failed to get images");
                 }
             };
+            
+            objThisCanvas.SetActive(false);
         }
 
         /// <summary>
@@ -198,17 +202,26 @@ namespace UI
         /// <param name="strButtonName">Name of the button pressed</param>
         private void ButtonOnClick(string strButtonName)
         {
-            switch (strButtonName)
+            // Put the name of the selected element into a static variable
+            if (strButtonName.Equals(CommonKeys.StrButtonNames.SelectButton))
             {
-                case CommonKeys.StrButtonNames.SelectButton:
-                    
-                    break;
-                case CommonKeys.StrButtonNames.CancelButton:
-                    
-                    break;
-                default:
+                var selectedImageItem = _listImageItems.FirstOrDefault(imageItem =>
+                {
+                    var toggleItem = imageItem.GetComponent<Toggle>();
+                    return !imageItem.IsUnityNull() && toggleItem.isOn;
+                });
+
+                if (selectedImageItem == null)
                     return;
+
+                var imageItemText = selectedImageItem.GetComponentInChildren<TMP_Text>();
+                if (imageItemText.IsUnityNull())
+                    Debug.Log("Failed to get name of selectedItem from list");
+                else
+                    CustomLevelController.SelectedImage = imageItemText.text;
             }
+            
+            GoToPanel();
         }
     }
 }

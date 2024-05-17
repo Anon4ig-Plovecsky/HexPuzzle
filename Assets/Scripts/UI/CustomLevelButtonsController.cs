@@ -13,16 +13,6 @@ namespace UI
     public class CustomLevelButtonsController : ButtonsController
     {
         /// <summary>
-        /// 
-        /// </summary>
-        protected override void Start()
-        {
-            base.Start();
-            
-            
-        }
-
-        /// <summary>
         /// Overridable method responsible for the logic of the CustomLevelPanel buttons
         /// </summary>
         protected override void OnClickButton()
@@ -44,8 +34,12 @@ namespace UI
                 case CommonKeys.StrButtonNames.SecondUpButton:
                     ChangeTime(TimeType.Second, true);
                     break;
+                case CommonKeys.StrButtonNames.BackToMenu:
+                    CustomLevelController.SelectedImage = CommonKeys.DefaultChooseImageName;
+                    GoToPanel();
+                    break;
                 case CommonKeys.StrButtonNames.ChooseImage:
-                    LoadImage();
+                    GoToPanel();
                     break;
                 default:
                     base.OnClickButton();
@@ -62,8 +56,8 @@ namespace UI
         {
             var timeText = timeType switch
             {
-                TimeType.Minute => objThisPanel.transform.Find(CommonKeys.Names.MinuteText).GetComponent<TMP_Text>(),
-                TimeType.Second => objThisPanel.transform.Find(CommonKeys.Names.SecondText).GetComponent<TMP_Text>(),
+                TimeType.Minute => objThisCanvas.transform.Find(CommonKeys.Names.MinuteText).GetComponent<TMP_Text>(),
+                TimeType.Second => objThisCanvas.transform.Find(CommonKeys.Names.SecondText).GetComponent<TMP_Text>(),
                 _ => throw new ArgumentOutOfRangeException(nameof(timeType), timeType, null)
             };
 
@@ -100,13 +94,6 @@ namespace UI
             
             timeText.SetText(rTime.ToString(CultureInfo.InvariantCulture));
         }
-
-        private void LoadImage()
-        {
-            // OpenFilePanelExample.Apply();
-
-            
-        }
     }
 
     public enum TimeType
@@ -115,22 +102,3 @@ namespace UI
         Second
     }
 }
-// public class OpenFilePanelExample : EditorWindow
-// {
-//     [MenuItem( "Example/Overwrite Texture" )]
-//     public static void Apply()
-//     {
-//         // var texture = Selection.activeObject as Texture2D;
-//         // if( texture == null )
-//         // {
-//         //     EditorUtility.DisplayDialog( "Select Texture", "You must select a texture first!", "OK" );
-//         //     return;
-//         // }
-//     
-//         var path = EditorUtility.OpenFilePanel( "Overwrite with png", "", "png" );
-//         if (path.Length == 0) return;
-//         var www = new WWW( "file:///" + path );
-//         // www.LoadImageIntoTexture( texture );
-//     }
-//     
-// }

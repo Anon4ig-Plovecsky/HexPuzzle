@@ -15,11 +15,11 @@ namespace UI
     ///  ButtonsController is responsible for events when interacting with buttons in the game's GUI
     public class ButtonsController : MonoBehaviour
     {
-        private float _position;                            /// Position for animation
+        private float _position;                                /// Position for animation
 
-        [SerializeField] protected GameObject objCalled;    /// Object that caused the click
-        [SerializeField] protected GameObject objThisPanel; /// Current panel on which the button is located
-        protected Button ButtonThis;                        /// Current button
+        [SerializeField] protected GameObject objCalled;        /// Object that caused the click
+        [SerializeField] protected GameObject objThisCanvas;    /// Current panel or canvas on which the button is located
+        protected Button ButtonThis;                            /// Current button
 
         protected virtual void Start()
         {
@@ -27,10 +27,18 @@ namespace UI
             ButtonThis = GetComponent<Button>();
             ButtonThis.onClick.AddListener(OnClickButton);
             
+            InitPanels();
+        }
+
+        /// <summary>
+        /// Initializes panels for interaction with them
+        /// </summary>
+        protected void InitPanels()
+        {
             // Getting the current panel GUI
-            if(objThisPanel.IsUnityNull())
-                objThisPanel = GetCurrentPanel();
-            if (objThisPanel.IsUnityNull())
+            if(objThisCanvas.IsUnityNull())
+                objThisCanvas = GetCurrentPanel();
+            if (objThisCanvas.IsUnityNull())
             {
                 Debug.Log("Could not find current panel");
                 return;
@@ -43,15 +51,15 @@ namespace UI
             // If the current panel is not the main one (it is not located at the zero coordinate),
             // then we take the position value from it
             if (_position < 0.00001)
-                _position = objThisPanel.transform.localPosition.y;
+                _position = objThisCanvas.transform.localPosition.y;
         }
         
         /// <summary>
         /// Activates the specified object and disables the current one, playing an animation
         /// </summary>
-        private void GoToPanel()
+        protected void GoToPanel()
         {
-            if(objThisPanel.IsUnityNull())
+            if(objThisCanvas.IsUnityNull())
                 return;
             
             // Animations
@@ -62,11 +70,11 @@ namespace UI
                 objCalled.SetActive(true);
                 
                 Sequence.Create()
-                    .Group(HidePanel(objThisPanel))
+                    .Group(HidePanel(objThisCanvas))
                     .Group(ShowPanel(objCalled));
             }
             else
-                Sequence.Create(HidePanel(objThisPanel));
+                Sequence.Create(HidePanel(objThisCanvas));
         }
         
         /// <summary>

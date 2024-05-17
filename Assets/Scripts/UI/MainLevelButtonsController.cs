@@ -36,7 +36,7 @@ namespace UI
             }
             
             // Getting panel length
-            var transformPanel = objThisPanel.GetComponent<RectTransform>();
+            var transformPanel = objThisCanvas.GetComponent<RectTransform>();
             if (transformPanel.IsUnityNull())
             {
                 Debug.Log("Failed to get RectTransform of current panel");
@@ -44,7 +44,7 @@ namespace UI
             }
             _panelWidth = transformPanel.rect.width;
             
-            _levelsGroup = objThisPanel.transform.Find(CommonKeys.Names.LevelsGroup);
+            _levelsGroup = objThisCanvas.transform.Find(CommonKeys.Names.LevelsGroup);
             if (_levelsGroup.IsUnityNull())
                 Debug.Log("Could not find levelsGroup");
         }

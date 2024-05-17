@@ -1,9 +1,14 @@
-﻿public abstract record CommonKeys
+﻿using Unity.VisualScripting;
+using UnityEngine;
+
+public abstract record CommonKeys
 {
     // Number of visible main level buttons on the panel
     public const int LevelsOnPanel = 5;
     
     public const int CubeSides = 6;
+
+    public const string DefaultChooseImageName = "Выберите файл";
 
     public static class StrButtonNames
     {
@@ -66,6 +71,8 @@
         public const string MinuteDownButton = "CustomLevelPanel/Timer/Minute/MinuteDownButton";
         public const string SecondUpButton = "CustomLevelPanel/Timer/Second/SecondUpButton";
         public const string SecondDownButton = "CustomLevelPanel/Timer/Second/SecondDownButton";
+        public const string ChooseImageButtonText = "CustomLevelPanel/MainImage/ChooseImageButton/ChooseImageText";
+        public const string StartLevelButton = "CustomLevelPanel/StartLevelButton";
         
         // ImageChooser
         public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";
@@ -73,6 +80,30 @@
         public const string Image = "Image";
 
         public const string Player = "Player";
+    }
+
+    /// <summary>
+    /// Gets a component of an object obtained along the path from the Transform of the current object with log output
+    /// </summary>
+    /// <param name="transformThis">Transform the current object</param>
+    /// <param name="strObjPath">Path to the object to be found, starting from the current object</param>
+    /// <typeparam name="T">Type of component you are looking for</typeparam>
+    /// <returns>If an object of type T is found, then returns a reference to it, otherwise null</returns>
+    public static T GetComponentFromTransformOfType<T>(Transform transformThis, string strObjPath) where T : Component
+    {
+        var tfmFound = transformThis.Find(strObjPath);
+        if (tfmFound.IsUnityNull())
+        {
+            Debug.Log($"Failed to get transform of {strObjPath}");
+            return null;
+        }
+
+        var component = tfmFound.GetComponent<T>();
+        if (!component.IsUnityNull())
+            return component;
+        
+        Debug.Log($"Failed to get {nameof(T)} from {strObjPath}");
+        return null;
     }
     
     // Addressable paths

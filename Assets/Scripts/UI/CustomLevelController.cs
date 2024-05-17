@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using TMPro;
 
 namespace UI
 {
@@ -12,6 +13,9 @@ namespace UI
     /// </summary>
     public class CustomLevelController : MonoBehaviour
     {
+        public static string SelectedImage = "";
+        private TMP_Text _chooseImageButtonText;
+        
         private Sprite _timeImageDefault;
         private Sprite _timeImageDisabled;
         
@@ -20,10 +24,29 @@ namespace UI
         // until the toggleButton is turned off
         private readonly Tuple<Button, bool>[] _pairButtonStages = new Tuple<Button, bool>[4];
         private readonly Image[] _arrTimeImages = new Image[2];
+
+        private Button _buttonStartGame;
         
         private void Start()
         {
             gameObject.SetActive(false);
+
+            var transformChooseImageButtonText = transform.Find(CommonKeys.Names.ChooseImageButtonText);
+            if (transformChooseImageButtonText.IsUnityNull())
+                return;
+            _chooseImageButtonText = transformChooseImageButtonText.GetComponent<TMP_Text>();
+            if (_chooseImageButtonText.IsUnityNull())
+            {
+                Debug.Log("Failed to get TextMeshPro");
+                return;
+            }
+
+            var transformButtonStartGame = transform.Find(CommonKeys.Names.StartLevelButton);
+            if (transformButtonStartGame.IsUnityNull())
+            {
+                Debug.Log($"Failed to get {nameof(transformButtonStartGame)}");
+                return;
+            }
             
             var transformToggle = transform.Find(CommonKeys.Names.TimerToggle);
             if (transformToggle.IsUnityNull())
@@ -101,6 +124,18 @@ namespace UI
         }
 
         /// <summary>
+        /// Changes the selected image in ChooseImageButton
+        /// </summary>
+        private void OnEnable()
+        {
+            if (SelectedImage == "" || _chooseImageButtonText.IsUnityNull()) 
+                return;
+            
+            _chooseImageButtonText.text = SelectedImage;
+            SelectedImage = "";
+        }
+
+        /// <summary>
         /// Disables/enables timer control buttons
         /// <param name="isOn">true - disables all timerButtons, false - enables</param>
         /// </summary>
@@ -114,7 +149,6 @@ namespace UI
                     _pairButtonStages[i] = new Tuple<Button, bool>(_pairButtonStages[i].Item1,
                         _pairButtonStages[i].Item1.interactable);
                     _pairButtonStages[i].Item1.interactable = false;
-                    
                 }
             }
             else
