@@ -31,30 +31,19 @@ namespace UI
         {
             gameObject.SetActive(false);
 
-            var transformChooseImageButtonText = transform.Find(CommonKeys.Names.ChooseImageButtonText);
-            if (transformChooseImageButtonText.IsUnityNull())
-                return;
-            _chooseImageButtonText = transformChooseImageButtonText.GetComponent<TMP_Text>();
+            _chooseImageButtonText =
+                CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform, CommonKeys.Names.ChooseImageButtonText);
             if (_chooseImageButtonText.IsUnityNull())
-            {
-                Debug.Log("Failed to get TextMeshPro");
                 return;
-            }
 
-            var transformButtonStartGame = transform.Find(CommonKeys.Names.StartLevelButton);
-            if (transformButtonStartGame.IsUnityNull())
-            {
-                Debug.Log($"Failed to get {nameof(transformButtonStartGame)}");
+            _buttonStartGame =
+                CommonKeys.GetComponentFromTransformOfType<Button>(transform, CommonKeys.Names.StartLevelButton);
+            if (_buttonStartGame.IsUnityNull())
                 return;
-            }
-            
-            var transformToggle = transform.Find(CommonKeys.Names.TimerToggle);
-            if (transformToggle.IsUnityNull())
-            {
-                Debug.Log("Failed to get gameObjToggle");
+
+            _toggleTimer = CommonKeys.GetComponentFromTransformOfType<Toggle>(transform, CommonKeys.Names.TimerToggle);
+            if (_toggleTimer.IsUnityNull())
                 return;
-            }
-            _toggleTimer = transformToggle.GetComponent<Toggle>();
 
             // Getting TimerButtons
             var arrStrButtonNames = new[]
@@ -66,14 +55,9 @@ namespace UI
             };
             for (var i = 0; i < arrStrButtonNames.Length; i++)
             {
-                var transformButton = transform.Find(arrStrButtonNames[i]);
-                if (transformButton.IsUnityNull())
-                {
-                    Debug.Log("Failed to get " + arrStrButtonNames[i]);
+                var button = CommonKeys.GetComponentFromTransformOfType<Button>(transform, arrStrButtonNames[i]);
+                if (button.IsUnityNull())
                     return;
-                }
-
-                var button = transformButton.GetComponent<Button>();
                 _pairButtonStages[i] = new Tuple<Button, bool>(button, button.interactable);
             }
             
@@ -85,14 +69,9 @@ namespace UI
             };
             for (var i = 0; i < _arrTimeImages.Length; i++)
             {
-                var transformImage = transform.Find(arrStrImageNames[i]);
-                if (transformImage.IsUnityNull())
-                {
-                    Debug.Log("Failed to get " + arrStrImageNames[i]);
+                _arrTimeImages[i] = CommonKeys.GetComponentFromTransformOfType<Image>(transform, arrStrImageNames[i]);
+                if(_arrTimeImages[i].IsUnityNull())
                     return;
-                }
-
-                _arrTimeImages[i] = transformImage.GetComponent<Image>();
             }
 
             // Getting sprites for timeImage
