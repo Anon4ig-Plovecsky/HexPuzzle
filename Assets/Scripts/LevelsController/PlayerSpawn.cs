@@ -1,4 +1,6 @@
 ﻿using Unity.VisualScripting;
+using System.Linq;
+using LevelsController.TestedModules;
 using UnityEngine;
 
 namespace LevelsController
@@ -14,6 +16,16 @@ namespace LevelsController
             if (objPlayer.IsUnityNull())
             {
                 Debug.Log("Player not found, failed to move player to starting position");
+
+                var levelInfoTransfer = LevelInfoTransfer.GetInstance();
+                if (levelInfoTransfer.IsTestMode)
+                    return;
+                
+                var objPlayerDebug = FindObjectsOfType<GameObject>(true).First(obj => 
+                    obj.name.Equals(CommonKeys.Names.PlayerDebug));
+                if(!objPlayerDebug.IsUnityNull())
+                    objPlayerDebug.SetActive(true);
+                
                 return;
             }
 

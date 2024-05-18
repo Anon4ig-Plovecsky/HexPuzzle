@@ -109,7 +109,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: 9dac3a157b005af4c88d05668440b773, type: 3}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 71e5a5d5b0459fa408a59ab18219ae7f, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objCalled: {fileID: 0}
-  objThisPanel: {fileID: 0}
+  objThisCanvas: {fileID: 0}
 --- !u!1 &422932798632879538
 GameObject:
   m_ObjectHideFlags: 0

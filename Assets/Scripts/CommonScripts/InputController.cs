@@ -26,15 +26,12 @@ public class InputController : MonoBehaviour
         try
         {
             if (Input.GetKeyDown(KeyCode.Escape) ||
-                !_objPlayer.IsUnityNull() && SteamVR_Actions._default.InteractUI.GetStateDown(SteamVR_Input_Sources.Any)
+                !_objPlayer.IsUnityNull() && actionBoolean.GetStateDown(InputSource)
                 && pauseController.activeSelf)
             {
                 _isPaused = Time.timeScale != 0;
                 CanvasController.ClassCanvasController.SetPause(_isPaused);
             }
-            
-            if (!_objPlayer.IsUnityNull() && actionBoolean.GetStateDown(InputSource))
-                Debug.Log("InteractUI");
         }
         catch (NullReferenceException e)
         {

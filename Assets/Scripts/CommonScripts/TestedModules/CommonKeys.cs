@@ -53,6 +53,10 @@ public abstract record CommonKeys
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
         public const string Grid = "Grid";
+        public const string Cubes = "Cubes";
+        
+        // Images
+        public const string Paintings = "Paintings";
 
         // Panels
         public const string MainLevels = "MainLevels";
@@ -80,6 +84,10 @@ public abstract record CommonKeys
         public const string Image = "Image";
 
         public const string Player = "Player";
+        public const string PlayerDebug= "PlayerDebug";
+        
+        // PausePanel
+        public const string TextTimer = "TextTimer";
     }
 
     /// <summary>
@@ -94,7 +102,7 @@ public abstract record CommonKeys
         var tfmFound = transformThis.Find(strObjPath);
         if (tfmFound.IsUnityNull())
         {
-            Debug.Log($"Failed to get transform of {strObjPath}");
+            Debug.LogError($"Failed to get transform of {strObjPath}");
             return null;
         }
 
@@ -102,7 +110,7 @@ public abstract record CommonKeys
         if (!component.IsUnityNull())
             return component;
         
-        Debug.Log($"Failed to get {nameof(T)} from {strObjPath}");
+        Debug.LogError($"Failed to get {nameof(T)} from {strObjPath}");
         return null;
     }
     

@@ -1,8 +1,12 @@
+using LevelsController.TestedModules;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using System.Globalization;
+using TMPro;
+using UnityEngine.Serialization;
 
 namespace UI.TestedModules
 {
@@ -16,6 +20,12 @@ namespace UI.TestedModules
         [SerializeField] private LaserHand laserHand;
         public static CanvasController ClassCanvasController { get; private set; }
         private readonly List<Renderer> _gameObjectsRenderer = new();
+
+        // Timer
+        private float _rTimer = 0.0f;
+        private bool _isCountdown = false;
+        private bool _isTimerEnable = false;
+        [SerializeField] private TMP_Text textTimer;
         
         //ImagePanel
         private RawImage _rawImageOfImagePanel;
@@ -36,15 +46,42 @@ namespace UI.TestedModules
                     _gameObjectsRenderer.Add(gameObjectRenderer);
             });
             _rawImageOfImagePanel = imagePanel.transform.GetChild(0).GetChild(0).GetComponent<RawImage>();
+
+            // Enable countdown if the timer is set when starting the level
+            var levelInfoTransfer = LevelInfoTransfer.GetInstance();
+            if (!(levelInfoTransfer.Timer > 0)) 
+                return;
+            _rTimer = levelInfoTransfer.Timer;
+            _isCountdown = true;
         }
+
+        /// <summary>
+        /// Increases/decreases the timer when enabled, if the timer reaches zero, activates the damage panel
+        /// </summary>
+        private void Update()
+        {
+            if (_isTimerEnable)
+                _rTimer += _isCountdown ? -Time.deltaTime : Time.deltaTime;
+        }
+        
         public void SetPause(bool isPaused)
         {
             StopTime(isPaused);
+
+            textTimer.text = Convert.ToString(_rTimer, CultureInfo.InvariantCulture);
+            
             pausePanel.SetActive(isPaused);
             imagePanel.SetActive(isPaused);
             laserHand.enabled = true;
             laserHand.Active = isPaused;
         }
+        
+        /// <summary>
+        /// Pauses the game by showing the player an image that he needs to collect
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="dimension">Image size in one part of the cube</param>
+        /// <returns></returns>
         public IEnumerator ShowImage(Sprite sprite, Vector2 dimension)
         {
             imagePanel.SetActive(true);
@@ -54,8 +91,10 @@ namespace UI.TestedModules
             yield return new WaitForSecondsRealtime(4.0f);
             StopTime(false);
             imagePanel.SetActive(false);
+
+            _isTimerEnable = true;
         }
-        private Vector2 GetImageDimension(Vector2 dimension)
+        private static Vector2 GetImageDimension(Vector2 dimension)
         {
             var scale = Math.Max(Math.Floor(dimension.y / MaxDimensions.y),
                 Math.Floor(dimension.x / MaxDimensions.x));

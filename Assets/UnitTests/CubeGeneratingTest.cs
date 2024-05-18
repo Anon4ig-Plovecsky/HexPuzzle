@@ -15,7 +15,6 @@ namespace UnitTests
     /// </summary>
     public class CubeGeneratingTest
     {
-        private const string SceneName = "Nature";
         private string _currentScene;
 
         public static IEnumerable<TestCaseData> CubeGeneratingUnityTestCases
@@ -39,19 +38,20 @@ namespace UnitTests
         public IEnumerator CubeGeneratingUnityTest(LevelInfoTransfer levelInfo)
         {
             _currentScene = SceneManager.GetActiveScene().name;
-            LevelInfoTransfer.GetInstance(levelInfo);
+            var levelInfoTransfer = LevelInfoTransfer.SetInstance(levelInfo);
+            levelInfoTransfer.IsTestMode = true;
             
             // Change scene
             Time.timeScale = 1;
             if (CanvasController.ClassCanvasController != null)
                 CanvasController.DestroyClass();
-            SceneManager.LoadScene(SceneName);
+            SceneManager.LoadScene(CommonKeys.Names.SceneNature);
 
             // Waiting for the scene switch to complete
             const int maxCount = 10000;
             var iCounter = 0;
             while (CanvasController.ClassCanvasController == null || Time.timeScale == 0
-                   || !SceneManager.GetActiveScene().name.Equals(SceneName))
+                   || !SceneManager.GetActiveScene().name.Equals(CommonKeys.Names.SceneNature))
             {
                 if(iCounter++ == maxCount)
                     Assert.Fail("Scene change error");
@@ -59,7 +59,7 @@ namespace UnitTests
             }
 
             // Check for cube creation
-            var objCubesParent = GameObject.Find("Cubes");
+            var objCubesParent = GameObject.Find(CommonKeys.Names.Cubes);
             if (objCubesParent is null)
                 Assert.Fail("Failed to get Cubes");
             if(objCubesParent.transform.childCount != levelInfo.GridSize.Item1 * levelInfo.GridSize.Item2)

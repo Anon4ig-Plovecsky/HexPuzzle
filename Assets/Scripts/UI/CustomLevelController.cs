@@ -107,10 +107,17 @@ namespace UI
         /// </summary>
         private void OnEnable()
         {
-            if (SelectedImage == "" || _chooseImageButtonText.IsUnityNull()) 
+            if (_buttonStartGame.IsUnityNull())
                 return;
             
+            if (SelectedImage == "" || _chooseImageButtonText.IsUnityNull())
+            {
+                _buttonStartGame.interactable = false;
+                return;
+            }
+            
             _chooseImageButtonText.text = SelectedImage;
+            _buttonStartGame.interactable = true;
             SelectedImage = "";
         }
 

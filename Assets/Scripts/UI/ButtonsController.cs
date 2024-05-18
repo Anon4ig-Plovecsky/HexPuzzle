@@ -202,7 +202,7 @@ namespace UI
             var imageNameList = new List<string>(LevelParametersMap.LevelInfo[iLevelNumber].ImageNameList);
             var sceneName = CommonKeys.Names.SceneNature;       // TODO: Selecting location
             
-            LevelInfoTransfer.GetInstance(iLevelNumber, gridSize, imageNameList);
+            LevelInfoTransfer.SetInstance(iLevelNumber, gridSize, imageNameList);
             
             ChangeScene(sceneName);
         }

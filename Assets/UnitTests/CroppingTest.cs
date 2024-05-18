@@ -16,8 +16,6 @@ namespace UnitTests
     /// </summary>
     public class CroppingTest
     {
-        private const string TexturePath = "Paintings";
-
         private List<Sprite> _listSpriteImages = new();
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace UnitTests
         {
             var texturesLabelReference = new AssetLabelReference
             {
-                labelString = TexturePath
+                labelString = CommonKeys.Names.Paintings
             };
             var asyncOperationHandleListTextures = Addressables.LoadAssetsAsync<Sprite>(texturesLabelReference, _ => {});
             asyncOperationHandleListTextures.Completed += delegate
