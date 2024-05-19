@@ -1,12 +1,11 @@
 using LevelsController.TestedModules;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
-using System.Globalization;
 using TMPro;
-using UnityEngine.Serialization;
 
 namespace UI.TestedModules
 {
@@ -22,9 +21,9 @@ namespace UI.TestedModules
         private readonly List<Renderer> _gameObjectsRenderer = new();
 
         // Timer
-        private float _rTimer = 0.0f;
-        private bool _isCountdown = false;
-        private bool _isTimerEnable = false;
+        private float _rTimer;
+        private bool _isCountdown;
+        private bool _isTimerEnable;
         [SerializeField] private TMP_Text textTimer;
         
         //ImagePanel
@@ -68,10 +67,11 @@ namespace UI.TestedModules
         {
             StopTime(isPaused);
 
-            textTimer.text = Convert.ToString(_rTimer, CultureInfo.InvariantCulture);
-            
+            textTimer.text = GetStrTime();
             pausePanel.SetActive(isPaused);
+            
             imagePanel.SetActive(isPaused);
+            
             laserHand.enabled = true;
             laserHand.Active = isPaused;
         }
@@ -116,6 +116,34 @@ namespace UI.TestedModules
         public static void DestroyClass()
         {
             ClassCanvasController = null;
+        }
+
+        /// <summary>
+        /// Returns the string time format "00:00:000" of the timer
+        /// </summary>
+        private string GetStrTime()
+        {
+            // Getting string minutes of format "00"
+            var strMinute = Convert.ToInt32(Math.Floor(_rTimer / 60)).ToString();
+            strMinute = strMinute.Length < 2 ? "0" + strMinute : strMinute;
+
+            // Getting string seconds of format "00"
+            var strSecond = Convert.ToInt32(Math.Floor(_rTimer % 60)).ToString();
+            strSecond = strSecond.Length < 2 ? "0" + strSecond : strSecond;
+
+            // Getting string millisecond of format "000"
+            var strMillisecond = "";
+            var strMillisecondFull = Convert.ToString(Math.Round(_rTimer - (int)_rTimer, 3), CultureInfo.InvariantCulture);
+            var arrTimer = strMillisecondFull.Split('.', ',');
+            if (arrTimer.Length > 1)
+                strMillisecond = arrTimer[1].Length > 3 ? arrTimer[1][..3] : arrTimer[1];
+            for (var i = strMillisecond.Length; i < 3; i++)
+                strMillisecond += '0';
+
+            // Creating the format "00:00:000"
+            var strTime = $"{strMinute}:{strSecond}:{strMillisecond}";
+            
+            return strTime;
         }
     }
 }
