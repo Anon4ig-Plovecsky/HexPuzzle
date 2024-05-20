@@ -101,7 +101,10 @@ namespace UI
                 return;
             
             if(ButtonThis.name.Contains(CommonKeys.StrButtonNames.LevelButton))
+            {
                 ActivateSelectedLevel();
+                return;
+            }
 
             switch (ButtonThis.name)
             {

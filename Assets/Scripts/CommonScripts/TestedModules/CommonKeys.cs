@@ -10,6 +10,8 @@ public abstract record CommonKeys
 
     public const string DefaultChooseImageName = "Выберите файл";
 
+    public const string SavedResultsFile = "/results.bin";
+
     public static class StrButtonNames
     {
         // Main Menu
@@ -88,6 +90,10 @@ public abstract record CommonKeys
         
         // PausePanel
         public const string TextTimer = "TextTimer";
+        
+        // StatusPanel
+        public const string TimeResult = "TimeResult";
+        public const string TextResultTime = "TextResultTime";
     }
 
     /// <summary>

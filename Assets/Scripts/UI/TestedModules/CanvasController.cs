@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.Serialization;
 
 namespace UI.TestedModules
 {
@@ -15,7 +16,7 @@ namespace UI.TestedModules
     {
         [SerializeField] private GameObject pausePanel;
         [SerializeField] private GameObject imagePanel;
-        [SerializeField] private GameObject winPanel;
+        [SerializeField] private GameObject statusPanel;
         [SerializeField] private LaserHand laserHand;
         public static CanvasController ClassCanvasController { get; private set; }
         private readonly List<Renderer> _gameObjectsRenderer = new();
@@ -26,9 +27,13 @@ namespace UI.TestedModules
         private bool _isTimerEnable;
         [SerializeField] private TMP_Text textTimer;
         
-        //ImagePanel
+        // ImagePanel
         private RawImage _rawImageOfImagePanel;
         private static readonly Vector2 MaxDimensions = new(0.6f, 0.3f);
+        
+        // StatusPanel
+        private TMP_Text _textResultTime;
+        private TMP_Text _textStatus;
 
         private Color _defaultColor;
         private Color _grayColor;
@@ -52,6 +57,13 @@ namespace UI.TestedModules
                 return;
             _rTimer = levelInfoTransfer.Timer;
             _isCountdown = true;
+            
+            statusPanel.SetActive(true);
+            _textStatus = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform, 
+                CommonKeys.Names.TimeResult);
+            _textResultTime = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform,
+                CommonKeys.Names.TextResultTime);
+            statusPanel.SetActive(false);
         }
 
         /// <summary>
@@ -67,7 +79,7 @@ namespace UI.TestedModules
         {
             StopTime(isPaused);
 
-            textTimer.text = GetStrTime();
+            textTimer.text = GetStrTime(_rTimer);
             pausePanel.SetActive(isPaused);
             
             imagePanel.SetActive(isPaused);
@@ -103,7 +115,12 @@ namespace UI.TestedModules
         public void ShowWinPanel()
         {
             StopTime(true);
-            winPanel.SetActive(true);
+            statusPanel.SetActive(true);
+
+            _isTimerEnable = false;
+            _textResultTime.text = GetStrTime(_rTimer);
+            // TODO: Add saving result
+            
             laserHand.enabled = true;
             laserHand.Active = true;
         }
@@ -121,19 +138,19 @@ namespace UI.TestedModules
         /// <summary>
         /// Returns the string time format "00:00:000" of the timer
         /// </summary>
-        private string GetStrTime()
+        private static string GetStrTime(float rTime)
         {
             // Getting string minutes of format "00"
-            var strMinute = Convert.ToInt32(Math.Floor(_rTimer / 60)).ToString();
+            var strMinute = Convert.ToInt32(Math.Floor(rTime / 60)).ToString();
             strMinute = strMinute.Length < 2 ? "0" + strMinute : strMinute;
 
             // Getting string seconds of format "00"
-            var strSecond = Convert.ToInt32(Math.Floor(_rTimer % 60)).ToString();
+            var strSecond = Convert.ToInt32(Math.Floor(rTime % 60)).ToString();
             strSecond = strSecond.Length < 2 ? "0" + strSecond : strSecond;
 
             // Getting string millisecond of format "000"
             var strMillisecond = "";
-            var strMillisecondFull = Convert.ToString(Math.Round(_rTimer - (int)_rTimer, 3), CultureInfo.InvariantCulture);
+            var strMillisecondFull = Convert.ToString(Math.Round(rTime - (int)rTime, 3), CultureInfo.InvariantCulture);
             var arrTimer = strMillisecondFull.Split('.', ',');
             if (arrTimer.Length > 1)
                 strMillisecond = arrTimer[1].Length > 3 ? arrTimer[1][..3] : arrTimer[1];

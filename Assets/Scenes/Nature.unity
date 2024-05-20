@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 962760978}
   imagePanel: {fileID: 505462077}
-  winPanel: {fileID: 1386719684}
+  statusPanel: {fileID: 1386719684}
   laserHand: {fileID: 1562472328}
   textTimer: {fileID: 1685626992657340969}
 --- !u!1001 &1436857023
