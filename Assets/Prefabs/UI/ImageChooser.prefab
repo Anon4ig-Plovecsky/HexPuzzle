@@ -62,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -434,7 +434,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.205, y: 0.06, z: 0.007076458}
+  m_Size: {x: 0.205, y: 0.06, z: 0.008}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4984651685081779217
 GameObject:
@@ -702,7 +702,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.205, y: 0.06, z: 0.007076458}
+  m_Size: {x: 0.205, y: 0.06, z: 0.008}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6598472565286646748
 GameObject:
@@ -820,7 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objCalled: {fileID: 0}
-  objThisPanel: {fileID: 0}
+  objThisCanvas: {fileID: 0}
   assetLabelReferenceImages:
     m_LabelString: Paintings
 --- !u!1 &6615334925853162281
@@ -942,6 +942,7 @@ GameObject:
   - component: {fileID: 6498825004990360757}
   - component: {fileID: 3304423148712333907}
   - component: {fileID: 5137815935069743559}
+  - component: {fileID: 8124679845282186717}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -1006,6 +1007,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!65 &8124679845282186717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630349816425639911}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.07, y: 0.55, z: 0.008}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7867445847557180262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1064,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000017911196}
+  m_AnchoredPosition: {x: 0, y: 0.00077185035}
   m_SizeDelta: {x: 0, y: 0.55}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8409887199798444434

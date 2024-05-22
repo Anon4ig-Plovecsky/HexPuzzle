@@ -13,7 +13,7 @@ namespace UI.TestedModules
             set => _steamVrLaserPointer.active = value;
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             _steamVrLaserPointer = gameObject.GetComponent<SteamVR_LaserPointer>();
             if (_steamVrLaserPointer is null)
@@ -42,6 +42,13 @@ namespace UI.TestedModules
             var pointerExitHandler = e.target.GetComponent<IPointerExitHandler>();
 
             pointerExitHandler?.OnPointerExit(new PointerEventData(EventSystem.current));
+        }
+
+        private void OnDisable()
+        {
+            _steamVrLaserPointer.PointerClick -= OnPointerClick;
+            _steamVrLaserPointer.PointerOut -= OnPointerOut;
+            _steamVrLaserPointer.PointerIn -= OnPointerIn;
         }
     }
 }
