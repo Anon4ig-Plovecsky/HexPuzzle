@@ -4,11 +4,13 @@ using UnityEngine;
 public abstract record CommonKeys
 {
     // Number of visible main level buttons on the panel
+    public const int CustomLevel = -1;
     public const int LevelsOnPanel = 5;
     
     public const int CubeSides = 6;
 
     public const string DefaultChooseImageName = "Выберите файл";
+    public const string TimeIsOver = "Время вышло!";
 
     public const string SavedResultsFile = "/results.bin";
 
@@ -79,6 +81,7 @@ public abstract record CommonKeys
         public const string SecondDownButton = "CustomLevelPanel/Timer/Second/SecondDownButton";
         public const string ChooseImageButtonText = "CustomLevelPanel/MainImage/ChooseImageButton/ChooseImageText";
         public const string StartLevelButton = "CustomLevelPanel/StartLevelButton";
+        public const string DropdownDifficult = "CustomLevelPanel/Difficult/Dropdown";
         
         // ImageChooser
         public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";
@@ -92,8 +95,9 @@ public abstract record CommonKeys
         public const string TextTimer = "TextTimer";
         
         // StatusPanel
-        public const string TimeResult = "TimeResult";
-        public const string TextResultTime = "TextResultTime";
+        public const string TimeResult = "StatusPanel/TimeResult";
+        public const string TextResultTime = TimeResult + "/TextResultTime";
+        public const string StatusText = "StatusPanel/StatusText";
     }
 
     /// <summary>
@@ -116,7 +120,7 @@ public abstract record CommonKeys
         if (!component.IsUnityNull())
             return component;
         
-        Debug.LogError($"Failed to get {nameof(T)} from {strObjPath}");
+        Debug.LogError($"Failed to get {typeof(T).FullName} from {strObjPath}");
         return null;
     }
     

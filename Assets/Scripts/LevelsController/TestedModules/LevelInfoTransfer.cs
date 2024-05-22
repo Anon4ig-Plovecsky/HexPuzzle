@@ -47,9 +47,10 @@ namespace LevelsController.TestedModules
             return _levelInfoTransferKeeper;
         }
         
-        public static void SetInstance(int lvlNumber, Tuple<int, int> gridSize, IEnumerable<string> imageNameList)
+        public static LevelInfoTransfer SetInstance(int lvlNumber, Tuple<int, int> gridSize, IEnumerable<string> imageNameList)
         {
             _levelInfoTransferKeeper = new LevelInfoTransfer(lvlNumber, gridSize, imageNameList);
+            return _levelInfoTransferKeeper;
         }
     }
 }

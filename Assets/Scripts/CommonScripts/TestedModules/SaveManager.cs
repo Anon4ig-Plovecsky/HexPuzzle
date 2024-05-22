@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.IO;
+using System;
 
 namespace CommonScripts.TestedModules
 {
@@ -48,9 +49,58 @@ namespace CommonScripts.TestedModules
 
             return savedResultOfLevel.LvlNumber == 0 ? null : savedResultOfLevel;
         }
+
+        /// <summary>
+        /// Saves data to a file in binary form
+        /// </summary>
+        /// <param name="listSavedResults">Game results data about level</param>
+        /// <returns>true - If the data was successfully saved, otherwise - false</returns>
+        public static bool WriteData(List<SavedResults> listSavedResults)
+        {
+            var binaryFormatter = new BinaryFormatter();
+            try
+            {
+                var fileStream = new FileStream(StrSaveFilePath, FileMode.Create);
+                binaryFormatter.Serialize(fileStream, listSavedResults);
+                fileStream.Close();
+                return true;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified data to all saves, replacing previous data of that level (if any)
+        /// </summary>
+        /// <param name="savedResult"></param>
+        /// <returns>true - If the data was successfully saved, otherwise - false</returns>
+        public static bool WriteData(SavedResults savedResult)
+        {
+            try
+            {
+                var listSavedResults = ReadData();
+                listSavedResults ??= new List<SavedResults>();
+
+                // Replacing the previous save
+                var lvlNumber = savedResult.LvlNumber;
+                listSavedResults.RemoveAll(sr => sr.LvlNumber == lvlNumber);
+                listSavedResults.Add(savedResult);
+
+                var bRes = WriteData(listSavedResults);
+                return bRes;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class SavedResults
     {
         public int LvlNumber { get; private init; }

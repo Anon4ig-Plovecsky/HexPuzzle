@@ -1,12 +1,13 @@
 using LevelsController.TestedModules;
+using CommonScripts.TestedModules;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 using System.Globalization;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
 using TMPro;
-using UnityEngine.Serialization;
 
 namespace UI.TestedModules
 {
@@ -21,6 +22,8 @@ namespace UI.TestedModules
         public static CanvasController ClassCanvasController { get; private set; }
         private readonly List<Renderer> _gameObjectsRenderer = new();
 
+        private LevelInfoTransfer _levelInfoTransfer;
+
         // Timer
         private float _rTimer;
         private bool _isCountdown;
@@ -33,7 +36,8 @@ namespace UI.TestedModules
         
         // StatusPanel
         private TMP_Text _textResultTime;
-        private TMP_Text _textStatus;
+        private GameObject _timeResult;
+        private TMP_Text _statusText;
 
         private Color _defaultColor;
         private Color _grayColor;
@@ -51,18 +55,22 @@ namespace UI.TestedModules
             });
             _rawImageOfImagePanel = imagePanel.transform.GetChild(0).GetChild(0).GetComponent<RawImage>();
 
+            _levelInfoTransfer = LevelInfoTransfer.GetInstance();
+            
             // Enable countdown if the timer is set when starting the level
-            var levelInfoTransfer = LevelInfoTransfer.GetInstance();
-            if (!(levelInfoTransfer.Timer > 0)) 
-                return;
-            _rTimer = levelInfoTransfer.Timer;
-            _isCountdown = true;
+            if (_levelInfoTransfer.Timer > 0)
+            {
+                _rTimer = _levelInfoTransfer.Timer;
+                _isCountdown = true;
+            }
             
             statusPanel.SetActive(true);
-            _textStatus = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform, 
-                CommonKeys.Names.TimeResult);
+            _timeResult = CommonKeys.GetComponentFromTransformOfType<Transform>(statusPanel.transform, 
+                CommonKeys.Names.TimeResult)?.gameObject;
             _textResultTime = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform,
                 CommonKeys.Names.TextResultTime);
+            _statusText = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform,
+                CommonKeys.Names.StatusText);
             statusPanel.SetActive(false);
         }
 
@@ -73,10 +81,16 @@ namespace UI.TestedModules
         {
             if (_isTimerEnable)
                 _rTimer += _isCountdown ? -Time.deltaTime : Time.deltaTime;
+                    
+            if(_rTimer < 10e-3 && _isTimerEnable && _isCountdown)
+                ShowLosePanel();
         }
         
         public void SetPause(bool isPaused)
         {
+            if (Time.timeScale == 0 && isPaused)
+                return;
+            
             StopTime(isPaused);
 
             textTimer.text = GetStrTime(_rTimer);
@@ -118,12 +132,43 @@ namespace UI.TestedModules
             statusPanel.SetActive(true);
 
             _isTimerEnable = false;
-            _textResultTime.text = GetStrTime(_rTimer);
-            // TODO: Add saving result
+            
+            _textResultTime.text = GetStrTime(_isCountdown ? _levelInfoTransfer.Timer - _rTimer : _rTimer);
+
+            // Save Result
+            if(_levelInfoTransfer.LvlNumber != CommonKeys.CustomLevel)
+            {
+                var savedResult = SaveManager.ReadData(_levelInfoTransfer.LvlNumber);
+                if (savedResult != null)
+                    savedResult.TimeRecent = _rTimer;
+                else
+                    savedResult = new SavedResults(_levelInfoTransfer.LvlNumber, _rTimer, _rTimer);
+                var bRes = SaveManager.WriteData(savedResult);
+                if (!bRes)
+                    Debug.Log("Failed to save data");
+            }
             
             laserHand.enabled = true;
             laserHand.Active = true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowLosePanel()
+        {
+            StopTime(true);
+            statusPanel.SetActive(true);
+            
+            _isTimerEnable = false;
+            
+            _timeResult.SetActive(false);
+            _statusText.text = CommonKeys.TimeIsOver;
+
+            laserHand.enabled = true;
+            laserHand.Active = true;
+        }
+
         private void StopTime(bool isStop)
         {
             Time.timeScale = isStop ? 0 : 1;

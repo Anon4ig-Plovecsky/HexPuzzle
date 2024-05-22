@@ -1,10 +1,14 @@
 ﻿using UnityEngine.ResourceManagement.AsyncOperations;
+using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
 using TMPro;
+using UI.TestedModules;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -14,18 +18,21 @@ namespace UI
     public class CustomLevelController : MonoBehaviour
     {
         public static string SelectedImage = "";
-        private TMP_Text _chooseImageButtonText;
-        
         private Sprite _timeImageDefault;
         private Sprite _timeImageDisabled;
         
-        private Toggle _toggleTimer;
         // Pair with arrow buttons that control the timer, the second item maintains the position of the button
         // until the toggleButton is turned off
         private readonly Tuple<Button, bool>[] _pairButtonStages = new Tuple<Button, bool>[4];
         private readonly Image[] _arrTimeImages = new Image[2];
 
+        // UI Elements
+        private Toggle _toggleTimer;
+        private TMP_Text _textMinutes;
+        private TMP_Text _textSeconds;
         private Button _buttonStartGame;
+        private TMP_Dropdown _dropdownDifficult;
+        private TMP_Text _chooseImageButtonText;
         
         private void Start()
         {
@@ -43,6 +50,21 @@ namespace UI
 
             _toggleTimer = CommonKeys.GetComponentFromTransformOfType<Toggle>(transform, CommonKeys.Names.TimerToggle);
             if (_toggleTimer.IsUnityNull())
+                return;
+
+            _dropdownDifficult = CommonKeys.GetComponentFromTransformOfType<TMP_Dropdown>(transform,
+                CommonKeys.Names.DropdownDifficult);
+            if (_dropdownDifficult.IsUnityNull())
+                return;
+
+            _textMinutes = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform, 
+                CommonKeys.Names.MinuteTextImage + "/MinuteText");
+            if (_textMinutes.IsUnityNull())
+                return;
+            
+            _textSeconds = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform,
+                CommonKeys.Names.SecondTextImage + "/SecondText");
+            if (_textSeconds.IsUnityNull())
                 return;
 
             // Getting TimerButtons
@@ -90,8 +112,9 @@ namespace UI
                         {
                             _timeImageDefault = asyncOperationHandleImageDefault.Result;
                             
-                            // After receiving all the necessary sprites, add a listener for the ToggleButton
+                            // After receiving all the necessary sprites, add a listener for the ToggleButton and StartButton
                             _toggleTimer.onValueChanged.AddListener(ToggleButtonChanged);
+                            _buttonStartGame.onClick.AddListener(ButtonStartGameClicked);
                         }
                         else
                             Debug.Log("Failed to get MainLevelDefault Sprite");
@@ -144,6 +167,47 @@ namespace UI
             // Disable/enable timeImage
             foreach (var timeImage in _arrTimeImages)
                 timeImage.sprite = isOn ? _timeImageDefault : _timeImageDisabled;
+        }
+
+        /// <summary>
+        /// Runs the created user level
+        /// </summary>
+        private void ButtonStartGameClicked()
+        {
+            const int lvlNumber = CommonKeys.CustomLevel;
+            var gridSize = new Tuple<int, int>(2, 3);
+            switch (_dropdownDifficult.value)
+            {
+                case 0:
+                    gridSize = new Tuple<int, int>(2, 3);
+                    break;
+                case 1:
+                    gridSize = new Tuple<int, int>(3, 4);
+                    break;
+                case 2:
+                    gridSize = new Tuple<int, int>(4, 5);
+                    break;
+                default:
+                    Debug.Log("Unknown difficulty value");
+                    break;
+            }
+            var listImageNames = new List<string>(1) { _chooseImageButtonText.text };
+            var levelInfoTransfer = LevelInfoTransfer.SetInstance(lvlNumber, gridSize, listImageNames);
+
+            // Add the timer value if the timer is enabled
+            if (_toggleTimer.isOn)
+            {
+                if (_textMinutes.text == "" || _textSeconds.text == "")
+                    return;
+                var rTimer = Convert.ToSingle(_textMinutes.text) * 60.0f + Convert.ToSingle(_textSeconds.text);
+                levelInfoTransfer.Timer = rTimer;
+            }
+            
+            // Start level
+            Time.timeScale = 1;
+            if (CanvasController.ClassCanvasController != null)
+                CanvasController.DestroyClass();
+            SceneManager.LoadScene(CommonKeys.Names.SceneNature); //TODO: 1) Change to selected location; 2) Copy-paste from ButtonsController
         }
     }
 }
