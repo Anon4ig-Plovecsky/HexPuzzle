@@ -85,7 +85,7 @@ namespace UI.TestedModules
             if (_bIsDrag && !actionBooleanClick.GetState(InputSource))
                 _bIsDrag = false;
             
-            // If leaves the boundaries of the ScrollView, then drag is disabled. 
+            // Note: If leaves the boundaries of the ScrollView, then drag is not disabled. 
             // P.S. It seems like everything works without disabling drag, because
             // objects do not physically disappear and laserPoint continues to catch
             // them even after they disappear beyond the mask
@@ -101,7 +101,7 @@ namespace UI.TestedModules
                 _firstPosition = actionPoseHand.GetLocalPosition(InputSource);
 
             // If you have moved the active cursor a sufficient number of millimeters, then enable ScrollView dragging
-            if (Mathf.Abs(_firstPosition.y - actionPoseHand.GetLocalPosition(InputSource).y) > CommonKeys.DragLength)
+            if (!_bIsDrag && Mathf.Abs(_firstPosition.y - actionPoseHand.GetLocalPosition(InputSource).y) > CommonKeys.DragLength)
                 _bIsDrag = true;
 
             // Scrolling
