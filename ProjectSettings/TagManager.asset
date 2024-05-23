@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - ButtonUI
+  - UI
+  - ScrollElement
   layers:
   - Default
   - TransparentFX

@@ -174,7 +174,7 @@ namespace UI
         /// </summary>
         private void ButtonStartGameClicked()
         {
-            const int lvlNumber = CommonKeys.CustomLevel;
+            const int lvlNumber = CommonKeys.CustomLevelNumber;
             var gridSize = new Tuple<int, int>(2, 3);
             switch (_dropdownDifficult.value)
             {

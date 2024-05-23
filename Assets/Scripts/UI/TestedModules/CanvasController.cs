@@ -136,7 +136,7 @@ namespace UI.TestedModules
             _textResultTime.text = GetStrTime(_isCountdown ? _levelInfoTransfer.Timer - _rTimer : _rTimer);
 
             // Save Result
-            if(_levelInfoTransfer.LvlNumber != CommonKeys.CustomLevel)
+            if(_levelInfoTransfer.LvlNumber != CommonKeys.CustomLevelNumber)
             {
                 var savedResult = SaveManager.ReadData(_levelInfoTransfer.LvlNumber);
                 if (savedResult != null)

@@ -3,8 +3,11 @@ using UnityEngine;
 
 public abstract record CommonKeys
 {
+    // Controller shift at which ScrollView drag is considered
+    public const float DragLength = 0.015f;
+    
     // Number of visible main level buttons on the panel
-    public const int CustomLevel = -1;
+    public const int CustomLevelNumber = -1;
     public const int LevelsOnPanel = 5;
     
     public const int CubeSides = 6;
@@ -53,6 +56,9 @@ public abstract record CommonKeys
     // Names
     public static class Names
     {
+        // Tags
+        public const string ScrollElement = "ScrollElement";
+        
         public const string MainLevelButton = "LevelButton";
         public const string MaskLevels = "MainLevelsPanel/MaskLevels";
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
@@ -87,6 +93,7 @@ public abstract record CommonKeys
         public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";
         public const string ImageName = "ImageName";
         public const string Image = "Image";
+        public const string ScrollbarVertical = "Scrollbar Vertical";
 
         public const string Player = "Player";
         public const string PlayerDebug= "PlayerDebug";
