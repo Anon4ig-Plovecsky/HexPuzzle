@@ -14,6 +14,8 @@ namespace CommonScripts
         [SerializeField] private GameObject pauseController;
         private bool _isPaused;
 
+        [SerializeField] private GameObject objTeleport;
+        [SerializeField] private GameObject objTpPlanes;
         [SerializeField] private SteamVR_Action_Boolean actionBoolean;
         private const SteamVR_Input_Sources InputSource = SteamVR_Input_Sources.LeftHand;
 
@@ -21,9 +23,12 @@ namespace CommonScripts
 
         private void Start()
         {
-            Teleport.instance.CancelTeleportHint();
-        
             _objPlayer = GameObject.Find("Player");
+            if (_objPlayer.IsUnityNull()) 
+                return;
+            objTeleport.SetActive(true);
+            objTpPlanes.SetActive(true);
+            Teleport.instance.CancelTeleportHint();
         }
     
         private void Update()

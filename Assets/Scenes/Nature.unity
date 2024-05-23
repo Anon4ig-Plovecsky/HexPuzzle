@@ -794,7 +794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &591054297
 Transform:
   m_ObjectHideFlags: 0
@@ -1616,7 +1616,7 @@ Transform:
   m_GameObject: {fileID: 1325890360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9933, y: 0.0456, z: 1.527}
+  m_LocalPosition: {x: 0.9672, y: 0.0542, z: 1.527}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2201,6 +2201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleporting
       objectReference: {fileID: 0}
+    - target: {fileID: 153878, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 475244, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2249,6 +2253,11 @@ PrefabInstance:
 --- !u!4 &1481003518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 475244, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
+  m_PrefabInstance: {fileID: 1481003517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1481003519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 153878, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
   m_PrefabInstance: {fileID: 1481003517}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1561804474
@@ -2758,6 +2767,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseController: {fileID: 1415973513}
+  objTeleport: {fileID: 1481003519}
+  objTpPlanes: {fileID: 591054296}
   actionBoolean:
     actionPath: /actions/default/in/PauseButton
     needsReinit: 0
