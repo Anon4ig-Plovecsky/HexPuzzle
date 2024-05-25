@@ -139,33 +139,7 @@ public abstract record CommonKeys
         public const string CellPrefab = "Assets/Prefabs/Cell.prefab";
         public const string MainLevelDisabled = "Assets/Images/UI/MainLevels/LevelButton/MainLevelDisabled.png";
         public const string ImageItem = "Assets/Prefabs/UI/ImageItem.prefab";
-        public static readonly ButtonImagePaths LevelButtonPath = new("Assets/Images/UI/MainLevels/LevelButton/LevelButton.png");
-    }
-}
-
-// Class template for address paths of button images
-public class ButtonImagePaths
-{
-    // Path of a button with a standard name
-    private readonly string _name;
-    public string Name
-    {
-        private init
-        {
-            _name = value;
-
-            var arrSplitPath = _name.Split(".png");
-            Selected = arrSplitPath[0] + "Selected.png";
-        }
-        get => _name;
-    }
-
-    // Path to the highlighted button
-    public string Selected { get; private set; }
-
-    public ButtonImagePaths(string name)
-    {
-        Name = name;
+        public const string LevelButtonPath = "Assets/Images/UI/MainLevels/LevelButton/LevelButton.png";
     }
 }
 

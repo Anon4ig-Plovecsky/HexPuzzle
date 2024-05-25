@@ -113,6 +113,7 @@ namespace UI
                 case CommonKeys.StrButtonNames.MainLevels:
                 case CommonKeys.StrButtonNames.BackToMenu:
                 case CommonKeys.StrButtonNames.CustomLevel:
+                case CommonKeys.StrButtonNames.Results:
                     GoToPanel();
                     break;
                 case CommonKeys.StrButtonNames.ExitToMenu:
