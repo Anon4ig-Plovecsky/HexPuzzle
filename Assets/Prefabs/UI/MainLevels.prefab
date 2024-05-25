@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 2869070297886175188}
   - component: {fileID: 2869070297886175187}
   - component: {fileID: 2869070297886175186}
-  - component: {fileID: 2425930326846254788}
   m_Layer: 0
   m_Name: LeftArrowButton
   m_TagString: ButtonUI
@@ -241,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -293,20 +292,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08, y: 0.08, z: 0.007076458}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2425930326846254788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2869070297886175184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522553e3faf89d444a822f68e2f538be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objCalled: {fileID: 2869070298395059247}
-  objThisCanvas: {fileID: 0}
 --- !u!1 &2869070298291438711
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +384,6 @@ GameObject:
   - component: {fileID: 2869070298395059219}
   - component: {fileID: 2869070298395059218}
   - component: {fileID: 2869070298395059217}
-  - component: {fileID: 2924137942397759520}
   m_Layer: 0
   m_Name: RightArrowButton
   m_TagString: ButtonUI
@@ -477,7 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -529,20 +513,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08, y: 0.08, z: 0.007076458}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2924137942397759520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2869070298395059247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522553e3faf89d444a822f68e2f538be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objCalled: {fileID: 2869070297886175184}
-  objThisCanvas: {fileID: 0}
 --- !u!1 &2869070298844501476
 GameObject:
   m_ObjectHideFlags: 0

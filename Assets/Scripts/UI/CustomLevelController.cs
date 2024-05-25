@@ -1,14 +1,14 @@
 ﻿using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UI.TestedModules;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
 using TMPro;
-using UI.TestedModules;
-using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -17,7 +17,7 @@ namespace UI
     /// </summary>
     public class CustomLevelController : MonoBehaviour
     {
-        public static string SelectedImage = "";
+        public static string SelectedImage = CommonKeys.DefaultChooseImageName;
         private Sprite _timeImageDefault;
         private Sprite _timeImageDisabled;
         
@@ -132,16 +132,11 @@ namespace UI
         {
             if (_buttonStartGame.IsUnityNull())
                 return;
-            
-            if (SelectedImage == "" || _chooseImageButtonText.IsUnityNull())
-            {
-                _buttonStartGame.interactable = false;
-                return;
-            }
-            
-            _chooseImageButtonText.text = SelectedImage;
-            _buttonStartGame.interactable = true;
-            SelectedImage = "";
+
+            var bIsSelected = !SelectedImage.Equals(CommonKeys.DefaultChooseImageName)
+                              && !_chooseImageButtonText.IsUnityNull();
+            _chooseImageButtonText?.SetText(SelectedImage);
+            _buttonStartGame.interactable = bIsSelected;
         }
 
         /// <summary>

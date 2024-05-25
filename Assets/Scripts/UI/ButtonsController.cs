@@ -123,6 +123,19 @@ namespace UI
                 case CommonKeys.StrButtonNames.QuitGame:
                     QuitGame();
                     break;
+                case CommonKeys.StrButtonNames.LeftArrow:
+                case CommonKeys.StrButtonNames.RightArrow:
+                    var pageTab = objThisCanvas.GetComponent<IPageTab>();
+                    if (pageTab.IsUnityNull())
+                    {
+                        Debug.Log($"Failed to get PageTab from {objThisCanvas.name}");
+                        return;
+                    }
+                    var arrowDirection = ButtonThis.name.Equals(CommonKeys.StrButtonNames.LeftArrow)
+                        ? ArrowDirection.LeftArrow
+                        : ArrowDirection.RightArrow;
+                    pageTab.NavigationButtonPressed(arrowDirection);
+                    break;
                 default:
                     Debug.Log("Unknown button detected: " + ButtonThis.name);
                     return;

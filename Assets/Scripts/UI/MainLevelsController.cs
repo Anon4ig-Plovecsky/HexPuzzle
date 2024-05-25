@@ -10,7 +10,7 @@ using TMPro;
 namespace UI
 {
     /// Special class for buttons in the MainLevels panel
-    public class MainLevelsController : MonoBehaviour
+    public class MainLevelsController : AbstractPageTabHorizontalSwitcher<Button[]>
     {
         // Array of main game buttons
         private Button[] _arrMainLevelButtons = new Button[LevelParametersMap.LevelInfo.Count];
@@ -19,20 +19,16 @@ namespace UI
         // Button offset relative to the center of the previous button
         private const float PaddingButton = 0.09f;
         
-        private Transform _levelsGroup;
-        
         // Start is called before the first frame update
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+            
+            MaxPage = Convert.ToInt32(Math.Ceiling(LevelParametersMap.LevelInfo.Count /
+                                                   Convert.ToDouble(CommonKeys.LevelsOnPanel))) - 1;
+            
             // Initially, leave the panel active in order to load all levels into the panel in advance
             gameObject.SetActive(false);
-
-            _levelsGroup = transform.Find(CommonKeys.Names.LevelsGroup);
-            if (_levelsGroup.IsUnityNull())
-            {
-                Debug.Log("Couldn't find levels group");
-                return;
-            }
 
             // Getting the game's main level button prefab
             var asyncOperation = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.LevelButtonPrefab);
@@ -41,7 +37,7 @@ namespace UI
                 if (asyncOperation.Status != AsyncOperationStatus.Succeeded) 
                     return;
                 _levelButtonPrefab = asyncOperation.Result;
-                _arrMainLevelButtons = PlaceLevelsButton();
+                _arrMainLevelButtons = CreatePages();
             };
         }
 
@@ -54,7 +50,7 @@ namespace UI
                 return null;
 
             // Place the button in the group object
-            button.transform.SetParent(_levelsGroup);
+            button.transform.SetParent(tfmPage);
             
             button.transform.localPosition = vPosition;
             button.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -90,19 +86,16 @@ namespace UI
         /// Places all levels specified in LevelParametersMap into the MainLevels panel.
         /// Each sequence of LevelsOnPanel is placed at a distance of MainPanel.width.
         /// </summary>
-        private Button[] PlaceLevelsButton()
+        public override Button[] CreatePages()
         {
             var arrButtons = new Button[LevelParametersMap.LevelInfo.Count];
-            
-            var rectTransform = GetComponent<RectTransform>();
-            var fPanelWidth = rectTransform.rect.width;
             
             for (var i = 0; i < LevelParametersMap.LevelInfo.Count; i++)
             {
                 var iSeqNumber = Convert.ToInt32(i / CommonKeys.LevelsOnPanel);
                 var fRelativePadding = CalculatePadding(i);
 
-                var fResPadding = fRelativePadding + fPanelWidth * iSeqNumber;
+                var fResPadding = fRelativePadding + PageDistance * iSeqNumber;
 
                 // Creating a button and adding it to the array
                 var vPosition = new Vector2(fResPadding, 0.0f);
