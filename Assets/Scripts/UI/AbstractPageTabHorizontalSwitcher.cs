@@ -11,7 +11,7 @@ namespace UI
     /// Provides basic logic for switching between horizontal UI tab pages
     /// The MaxPage member is initially 0
     /// </summary>
-    /// /// <typeparam name="T">Type of page elements created and returned</typeparam>
+    /// <typeparam name="T">Type of page elements created and returned</typeparam>
     public abstract class AbstractPageTabHorizontalSwitcher<T> : MonoBehaviour, IPageTab
     {
         /// <summary>
@@ -29,6 +29,9 @@ namespace UI
         protected float PageDistance;
         protected const float PageSpacing = 0.1f;
         protected int MaxPage;              // Maximum number of pages available (INCLUSIVE)
+        // If frequently switch levels, the real position of the object may be lost,
+        // so records it here and update it after each successful animation
+        private Vector2 _controlPosition = Vector2.zero;
         
         protected virtual void Start()
         {
@@ -69,17 +72,20 @@ namespace UI
         
         /// <remarks>The maximum value is specified in the MaxPage member</remarks>
         /// <inheritdoc cref="IPageTab.NavigationButtonPressed"/>
-        public void NavigationButtonPressed(ArrowDirection arrowDirection)
+        public virtual void NavigationButtonPressed(ArrowDirection arrowDirection)
         {
-            var groupPosition = tfmPage.localPosition.x;
-            var iCurrentPage = groupPosition > 0.0
+            var currentPosition = _controlPosition.x;
+            var iCurrentPage = currentPosition > 0.0
                 ? 0
-                : Convert.ToInt32(Math.Abs(Math.Round(groupPosition / PageDistance)));
+                : Convert.ToInt32(Math.Abs(Math.Round(currentPosition / PageDistance)));
 
+            var rShiftPositionX = arrowDirection == ArrowDirection.RightArrow ? -PageDistance : PageDistance;
+            _controlPosition = new Vector2(_controlPosition.x + rShiftPositionX, 0);
+            
             // Go to next/previous page
             Tween.LocalPositionX(
-                tfmPage, groupPosition + 
-                                 (arrowDirection == ArrowDirection.RightArrow ? -PageDistance : PageDistance), 0.2f, Ease.InOutQuad);
+                tfmPage, currentPosition + rShiftPositionX, 0.2f, Ease.InOutQuad)
+                .OnComplete(delegate { tfmPage.localPosition = _controlPosition; });
             iCurrentPage += arrowDirection == ArrowDirection.RightArrow ? 1 : -1;
 
             // Disable the button if the page is the last one

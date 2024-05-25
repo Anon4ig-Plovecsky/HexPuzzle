@@ -14,6 +14,8 @@ public abstract record CommonKeys
 
     public const string DefaultChooseImageName = "Выберите файл";
     public const string TimeIsOver = "Время вышло!";
+    public const string StrBestTime = "Лучшее время................";
+    public const string StrRecentTime = "Последнее время...........";
 
     public const string SavedResultsFile = "/results.bin";
 
@@ -105,6 +107,9 @@ public abstract record CommonKeys
         public const string TimeResult = "StatusPanel/TimeResult";
         public const string TextResultTime = TimeResult + "/TextResultTime";
         public const string StatusText = "StatusPanel/StatusText";
+        
+        // Results
+        public const string TextTimeInfo = "TextTimeInfo";
     }
 
     /// <summary>
@@ -140,6 +145,7 @@ public abstract record CommonKeys
         public const string MainLevelDisabled = "Assets/Images/UI/MainLevels/LevelButton/MainLevelDisabled.png";
         public const string ImageItem = "Assets/Prefabs/UI/ImageItem.prefab";
         public const string LevelButtonPath = "Assets/Images/UI/MainLevels/LevelButton/LevelButton.png";
+        public const string PrefabTimeInfo = "Assets/Prefabs/UI/TimeInfo.prefab";
     }
 }
 

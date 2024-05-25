@@ -183,7 +183,7 @@ namespace UI.TestedModules
         /// <summary>
         /// Returns the string time format "00:00:000" of the timer
         /// </summary>
-        private static string GetStrTime(float rTime)
+        public static string GetStrTime(float rTime)
         {
             // Getting string minutes of format "00"
             var strMinute = Convert.ToInt32(Math.Floor(rTime / 60)).ToString();
