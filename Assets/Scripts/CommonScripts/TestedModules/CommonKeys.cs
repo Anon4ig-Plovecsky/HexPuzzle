@@ -110,6 +110,7 @@ public abstract record CommonKeys
         
         // Results
         public const string TextTimeInfo = "TextTimeInfo";
+        public const string TextLevelInfo = "ResultsPanel/LevelInfo/TextLevelInfo";
     }
 
     /// <summary>

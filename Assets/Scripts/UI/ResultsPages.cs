@@ -3,10 +3,10 @@ using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
 using CommonScripts.TestedModules;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
 using UI.TestedModules;
 using UnityEngine;
+using System.Linq;
 using TMPro;
 
 namespace UI
@@ -15,13 +15,15 @@ namespace UI
     {
         private GameObject[] _arrTimesInfo;
         private List<SavedResults> _listSavedResults;
-        private int _iCurrentLvlInfo = 1;
 
         private GameObject _prefabTimeInfo;
+        private TMP_Text _textLevelInfo;
         
         protected override async void Start()
         {
             base.Start();
+            gameObject.SetActive(false);
+            
             MaxPage = LevelParametersMap.LevelInfo.Count - 1;
 
             _listSavedResults = SaveManager.ReadData();
@@ -42,6 +44,10 @@ namespace UI
             };
             await asyncOperationHandlePrefabTime.Task;
             if (_prefabTimeInfo.IsUnityNull())
+                return;
+
+            _textLevelInfo = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform, CommonKeys.Names.TextLevelInfo);
+            if(_textLevelInfo.IsUnityNull())
                 return;
             
             CreatePages();
@@ -108,8 +114,9 @@ namespace UI
         public override void NavigationButtonPressed(ArrowDirection arrowDirection)
         {
             base.NavigationButtonPressed(arrowDirection);
-            
-            
+
+            var strHeader = _textLevelInfo.text.Split(' ')[0];
+            _textLevelInfo.text = $"{strHeader} {CurrentPage + 1}";
         }
     }
 }

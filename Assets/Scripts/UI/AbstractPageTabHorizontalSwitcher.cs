@@ -29,6 +29,7 @@ namespace UI
         protected float PageDistance;
         protected const float PageSpacing = 0.1f;
         protected int MaxPage;              // Maximum number of pages available (INCLUSIVE)
+        protected int CurrentPage;
         // If frequently switch levels, the real position of the object may be lost,
         // so records it here and update it after each successful animation
         private Vector2 _controlPosition = Vector2.zero;
@@ -75,7 +76,7 @@ namespace UI
         public virtual void NavigationButtonPressed(ArrowDirection arrowDirection)
         {
             var currentPosition = _controlPosition.x;
-            var iCurrentPage = currentPosition > 0.0
+            CurrentPage = currentPosition > 0.0
                 ? 0
                 : Convert.ToInt32(Math.Abs(Math.Round(currentPosition / PageDistance)));
 
@@ -86,11 +87,11 @@ namespace UI
             Tween.LocalPositionX(
                 tfmPage, currentPosition + rShiftPositionX, 0.2f, Ease.InOutQuad)
                 .OnComplete(delegate { tfmPage.localPosition = _controlPosition; });
-            iCurrentPage += arrowDirection == ArrowDirection.RightArrow ? 1 : -1;
+            CurrentPage += arrowDirection == ArrowDirection.RightArrow ? 1 : -1;
 
             // Disable the button if the page is the last one
-            CheckNavigationButton(ButtonLeftArrow, iCurrentPage, 0);
-            CheckNavigationButton(ButtonRightArrow, iCurrentPage, MaxPage);
+            CheckNavigationButton(ButtonLeftArrow, CurrentPage, 0);
+            CheckNavigationButton(ButtonRightArrow, CurrentPage, MaxPage);
         }
 
         /// <summary>
