@@ -97,7 +97,7 @@ public abstract record CommonKeys
         public const string Image = "Image";
         public const string ScrollbarVertical = "Scrollbar Vertical";
 
-        public const string Player = "Player";
+        public const string Player = "Player(Clone)";
         public const string PlayerDebug= "PlayerDebug";
         
         // PausePanel

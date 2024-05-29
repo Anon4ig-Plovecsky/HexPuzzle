@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using System.Linq;
 using TMPro;
 
 namespace UI.TestedModules
@@ -44,6 +45,24 @@ namespace UI.TestedModules
         {
             if (ClassCanvasController == null)
                 ClassCanvasController = this;
+            
+            // Get LaserHand of player, if not debug
+            var objPlayer = GameObject.Find(CommonKeys.Names.Player);
+            if (objPlayer != null)
+            {
+                var objRightHand = objPlayer.transform.GetChild(0).GetChild(2);
+                if (objRightHand is null)
+                    return;
+                laserHand = objRightHand.GetComponent<LaserHand>();
+                if (laserHand is null)
+                {
+                    Debug.Log("Failed to get LaserHand from RightHand");
+                    return;
+                }
+
+                laserHand.Active = false;
+            }
+            
             _defaultColor = new Color(1, 1, 1);
             _grayColor = new Color(0.432f, 0.432f, 0.432f);
             new List<GameObject>(FindObjectsOfType<GameObject>()).ForEach(obj =>
@@ -137,14 +156,22 @@ namespace UI.TestedModules
             // Save Result
             if(_levelInfoTransfer.LvlNumber != CommonKeys.CustomLevelNumber)
             {
+                var numLevels = 0;
+                var completedLevels = SaveManager.ReadData<CompletedLevels>();
+                if (completedLevels != null && completedLevels.Count != 0)
+                    numLevels = completedLevels.First().NumLevels;
+                var bRes = SaveManager.WriteData(new List<CompletedLevels> { new(numLevels) });
+                if (!bRes)
+                    Debug.Log("Failed to save completed levels data");
+                
                 var savedResult = SaveManager.ReadData(_levelInfoTransfer.LvlNumber);
                 if (savedResult != null)
                     savedResult.TimeRecent = _rTimer;
                 else
                     savedResult = new SavedResults(_levelInfoTransfer.LvlNumber, _rTimer, _rTimer);
-                var bRes = SaveManager.WriteData(savedResult);
+                bRes = SaveManager.WriteData(savedResult);
                 if (!bRes)
-                    Debug.Log("Failed to save data");
+                    Debug.Log("Failed to save results data");
             }
             
             laserHand.enabled = true;

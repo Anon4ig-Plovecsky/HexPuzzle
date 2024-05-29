@@ -160,8 +160,10 @@ namespace CommonScripts.TestedModules
     /// </summary>
     public class CompletedLevels : ISerializable
     {
-        public int NumLevels { get; init; }
+        public int NumLevels { get; private init; }
 
+        public CompletedLevels(int numLevels) =>
+            NumLevels = numLevels;
         public CompletedLevels(SerializationInfo info, StreamingContext context) =>
             NumLevels = info.GetInt32(nameof(NumLevels));
         public void GetObjectData(SerializationInfo info, StreamingContext context) =>

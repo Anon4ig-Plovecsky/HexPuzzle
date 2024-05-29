@@ -23,7 +23,11 @@ namespace UI.TestedModules
 
         public bool Active
         {
-            set => _steamVrLaserPointer.active = value;
+            set
+            {
+                if(_steamVrLaserPointer != null)
+                    _steamVrLaserPointer.active = value;  
+            } 
         }
 
         private void OnEnable()

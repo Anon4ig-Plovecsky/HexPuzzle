@@ -10,6 +10,9 @@ namespace LevelsController
     /// </summary>
     public class PlayerSpawn : MonoBehaviour
     {
+        private static bool _isPlayerSpawned;
+        [SerializeField] private GameObject prefabObjPlayer;
+        
         private void Start()
         {
             var objPlayer = GameObject.Find(CommonKeys.Names.Player);
@@ -20,6 +23,14 @@ namespace LevelsController
                 var levelInfoTransfer = LevelInfoTransfer.GetInstance();
                 if (levelInfoTransfer.IsTestMode)
                     return;
+                
+                // When you first start, create a player
+                if (!_isPlayerSpawned)
+                {
+                    Instantiate(prefabObjPlayer, Vector3.zero, Quaternion.identity);
+                    _isPlayerSpawned = true;
+                    return;
+                }
                 
                 var objPlayerDebug = FindObjectsOfType<GameObject>(true).First(obj => 
                     obj.name.Equals(CommonKeys.Names.PlayerDebug));

@@ -23,7 +23,7 @@ namespace CommonScripts
 
         private void Start()
         {
-            _objPlayer = GameObject.Find("Player");
+            _objPlayer = GameObject.Find(CommonKeys.Names.Player);
             if (_objPlayer.IsUnityNull()) 
                 return;
             objTeleport.SetActive(true);

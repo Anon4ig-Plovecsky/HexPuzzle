@@ -44,7 +44,11 @@ namespace UI
             };
             await asyncOperationHandlePrefabTime.Task;
             if (_prefabTimeInfo.IsUnityNull())
-                return;
+            {
+                _prefabTimeInfo = asyncOperationHandlePrefabTime.WaitForCompletion();
+                if (_prefabTimeInfo.IsUnityNull())
+                    return;
+            }
 
             _textLevelInfo = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform, CommonKeys.Names.TextLevelInfo);
             if(_textLevelInfo.IsUnityNull())
