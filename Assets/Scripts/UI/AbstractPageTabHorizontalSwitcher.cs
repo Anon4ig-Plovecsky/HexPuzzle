@@ -27,7 +27,7 @@ namespace UI
 
         // Distance from the center of one page to the adjacent one
         protected float PageDistance;
-        protected const float PageSpacing = 0.1f;
+        private const float PageSpacing = 0.2f;
         protected int MaxPage;              // Maximum number of pages available (INCLUSIVE)
         protected int CurrentPage;
         // If frequently switch levels, the real position of the object may be lost,

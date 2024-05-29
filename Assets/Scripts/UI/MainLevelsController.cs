@@ -1,9 +1,11 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
 using UnityEngine.AddressableAssets;
+using CommonScripts.TestedModules;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Linq;
 using System;
 using TMPro;
 
@@ -18,6 +20,8 @@ namespace UI
         private GameObject _levelButtonPrefab;
         // Button offset relative to the center of the previous button
         private const float PaddingButton = 0.09f;
+        // Number of levels completed
+        private int _numLevels;
         
         // Start is called before the first frame update
         protected override void Start()
@@ -26,6 +30,11 @@ namespace UI
             
             MaxPage = Convert.ToInt32(Math.Ceiling(LevelParametersMap.LevelInfo.Count /
                                                    Convert.ToDouble(CommonKeys.LevelsOnPanel))) - 1;
+
+            // Get the number of levels completed
+            var completedLevels = SaveManager.ReadData<CompletedLevels>();
+            if (completedLevels != null && completedLevels.Count != 0)
+                _numLevels = completedLevels.First().NumLevels;
             
             // Initially, leave the panel active in order to load all levels into the panel in advance
             gameObject.SetActive(false);
@@ -45,24 +54,31 @@ namespace UI
         private GameObject CreateButton(Vector2 vPosition, int numberLevel)
         {
             // Install the created button from the prefab and place it on the panel
-            var button = Instantiate(_levelButtonPrefab, Vector3.zero, Quaternion.Euler(0, 0, 0));
-            if (button.IsUnityNull())
+            var objButton = Instantiate(_levelButtonPrefab, Vector3.zero, Quaternion.Euler(0, 0, 0));
+            if (objButton.IsUnityNull())
                 return null;
 
             // Place the button in the group object
-            button.transform.SetParent(tfmPage);
+            objButton.transform.SetParent(tfmPage);
             
-            button.transform.localPosition = vPosition;
-            button.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            button.name = CommonKeys.Names.MainLevelButton + "(" + Convert.ToString(numberLevel) + ")";
+            objButton.transform.localPosition = vPosition;
+            objButton.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            objButton.name = CommonKeys.Names.MainLevelButton + "(" + Convert.ToString(numberLevel) + ")";
 
-            var strButtonText = button.GetComponentInChildren<TMP_Text>();
+            // We leave only completed levels and the first uncompleted one
+            var button = objButton.GetComponent<Button>();
+            if (button.IsUnityNull())
+                return null;
+            if (numberLevel > _numLevels + 1)
+                button.interactable = false;
+
+            var strButtonText = objButton.GetComponentInChildren<TMP_Text>();
             if (strButtonText.IsUnityNull())
                 return null;
             
             strButtonText.SetText(Convert.ToString(numberLevel));
             
-            return button;
+            return objButton;
         }
         
         /// <summary>

@@ -3356,6 +3356,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8515726429174970786}
     m_Modifications:
+    - target: {fileID: 1611066781109583641, guid: f3186c6b571e9f604a3e40830337aa1a, type: 3}
+      propertyPath: attachmentFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 2843948294829947326, guid: f3186c6b571e9f604a3e40830337aa1a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5192,6 +5196,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 733947930920681382, guid: d854893e8fb3fb175a7b489b72ada577, type: 3}
+      propertyPath: attachmentFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 1060252843256732959, guid: d854893e8fb3fb175a7b489b72ada577, type: 3}
       propertyPath: m_Name
       value: Teapot
@@ -5279,6 +5287,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8515726429174970786}
     m_Modifications:
+    - target: {fileID: 1940799885919951082, guid: e23db6a161a0ec3118acd733662200fe, type: 3}
+      propertyPath: attachmentFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 6106437631590180547, guid: e23db6a161a0ec3118acd733662200fe, type: 3}
       propertyPath: m_Name
       value: SmallerKettle

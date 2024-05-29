@@ -26,7 +26,7 @@ namespace UI
             
             MaxPage = LevelParametersMap.LevelInfo.Count - 1;
 
-            _listSavedResults = SaveManager.ReadData();
+            _listSavedResults = SaveManager.ReadData<SavedResults>();
             if(_listSavedResults is null)
             {
                 Debug.Log("ListSavedResults is empty");

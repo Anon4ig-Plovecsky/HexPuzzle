@@ -17,7 +17,7 @@ public abstract record CommonKeys
     public const string StrBestTime = "Лучшее время................";
     public const string StrRecentTime = "Последнее время...........";
 
-    public const string SavedResultsFile = "/results.bin";
+    public const string SavedFormatFile = ".bin";
 
     public static class StrButtonNames
     {
