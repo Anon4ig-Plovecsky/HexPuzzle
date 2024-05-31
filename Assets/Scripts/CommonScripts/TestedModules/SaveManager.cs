@@ -33,10 +33,20 @@ namespace CommonScripts.TestedModules
 
             var binaryFormatter = new BinaryFormatter();
             var fileStream = new FileStream(strPath, FileMode.Open);
-            var listSavedResults = binaryFormatter.Deserialize(fileStream) as List<T>;
-            fileStream.Close();
-
-            return listSavedResults;
+            try
+            {
+                var listSavedResults = binaryFormatter.Deserialize(fileStream) as List<T>;
+                fileStream.Close();
+                
+                return listSavedResults;
+            }
+            catch (Exception e)
+            {
+                fileStream.Close();
+                
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         
         /// <summary>
@@ -51,13 +61,22 @@ namespace CommonScripts.TestedModules
                 return null;
 
             var savedResultOfLevel = new SavedResults(0, 0, 0);
-
+            
             var binaryFormatter = new BinaryFormatter();
             var fileStream = new FileStream(strPath, FileMode.Open);
-
-            if (binaryFormatter.Deserialize(fileStream) is List<SavedResults> listSavedResults)
-                savedResultOfLevel = listSavedResults.First(savedResult => savedResult.LvlNumber == lvlNumber);
-            fileStream.Close();
+            try
+            {
+                if (binaryFormatter.Deserialize(fileStream) is List<SavedResults> listSavedResults)
+                    savedResultOfLevel = listSavedResults.First(savedResult => savedResult.LvlNumber == lvlNumber);
+                fileStream.Close();
+            }
+            catch (Exception e)
+            {
+                fileStream.Close();
+                
+                Console.WriteLine(e.Message);
+                return null;
+            }
 
             return savedResultOfLevel.LvlNumber == 0 ? null : savedResultOfLevel;
         }
@@ -72,15 +91,17 @@ namespace CommonScripts.TestedModules
         {
             var strPath = GetStrPath(typeof(T).Name);
             var binaryFormatter = new BinaryFormatter();
+            var fileStream = new FileStream(strPath, FileMode.Create);
             try
             {
-                var fileStream = new FileStream(strPath, FileMode.Create);
                 binaryFormatter.Serialize(fileStream, listSavedResults);
                 fileStream.Close();
                 return true;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
+                fileStream.Close();
+                
                 Console.WriteLine(e.Message);
                 return false;
             }
@@ -106,7 +127,7 @@ namespace CommonScripts.TestedModules
                 var bRes = WriteData(listSavedResults);
                 return bRes;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
@@ -130,7 +151,7 @@ namespace CommonScripts.TestedModules
             set
             {
                 _timeRecent = value;
-                if (TimeBest < _timeRecent)
+                if (_timeRecent < TimeBest)
                     TimeBest = _timeRecent;
             }
         }
@@ -158,6 +179,7 @@ namespace CommonScripts.TestedModules
     /// <summary>
     /// Number of levels completed by the player
     /// </summary>
+    [Serializable]
     public class CompletedLevels : ISerializable
     {
         public int NumLevels { get; private init; }

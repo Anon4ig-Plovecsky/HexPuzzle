@@ -28,13 +28,14 @@ namespace CommonScripts
                 return;
             objTeleport.SetActive(true);
             objTpPlanes.SetActive(true);
-            Teleport.instance.CancelTeleportHint();
         }
     
         private void Update()
         {
             try
             {
+                Teleport.instance.CancelTeleportHint();
+                
                 if (Input.GetKeyDown(KeyCode.Escape) ||
                     !_objPlayer.IsUnityNull() && actionBoolean.GetStateDown(InputSource)
                                               && pauseController.activeSelf)

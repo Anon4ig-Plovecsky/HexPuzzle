@@ -12,6 +12,7 @@ namespace UI.TestedModules
         [SerializeField] private SteamVR_Action_Boolean actionBooleanClick;
         [SerializeField] private SteamVR_Action_Pose actionPoseHand;
         private const SteamVR_Input_Sources InputSource = SteamVR_Input_Sources.RightHand;
+        private GameObject _laserPointer;
         private bool _bInScrollView;
         private bool _bIsDrag;
         
@@ -25,8 +26,9 @@ namespace UI.TestedModules
         {
             set
             {
-                if(_steamVrLaserPointer != null)
-                    _steamVrLaserPointer.active = value;  
+                _laserPointer ??= _steamVrLaserPointer.transform.GetChild(5).gameObject;
+                if(_laserPointer != null)
+                    _laserPointer.SetActive(value);
             } 
         }
 
@@ -40,8 +42,6 @@ namespace UI.TestedModules
             _steamVrLaserPointer.PointerOut += OnPointerOut;
             _steamVrLaserPointer.PointerClick += OnPointerClick;
         }
-
-        private bool _isSorted;
         private void OnPointerIn(object sender, PointerEventArgs e)
         {
             var pointerEnterHandler = e.target.GetComponent<IPointerEnterHandler>();

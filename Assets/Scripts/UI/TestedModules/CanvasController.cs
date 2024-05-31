@@ -156,13 +156,18 @@ namespace UI.TestedModules
             // Save Result
             if(_levelInfoTransfer.LvlNumber != CommonKeys.CustomLevelNumber)
             {
+                // If this is the last level completed from the available ones, increase the counter of completed levels
                 var numLevels = 0;
+                bool bRes;
                 var completedLevels = SaveManager.ReadData<CompletedLevels>();
                 if (completedLevels != null && completedLevels.Count != 0)
                     numLevels = completedLevels.First().NumLevels;
-                var bRes = SaveManager.WriteData(new List<CompletedLevels> { new(numLevels) });
-                if (!bRes)
-                    Debug.Log("Failed to save completed levels data");
+                if(numLevels + 1 == _levelInfoTransfer.LvlNumber)
+                {
+                    bRes = SaveManager.WriteData(new List<CompletedLevels> { new(numLevels + 1) });
+                    if (!bRes)
+                        Debug.Log("Failed to save completed levels data");
+                }
                 
                 var savedResult = SaveManager.ReadData(_levelInfoTransfer.LvlNumber);
                 if (savedResult != null)
