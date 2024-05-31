@@ -27,7 +27,8 @@ namespace LevelsController
                 // When you first start, create a player
                 if (!_isPlayerSpawned)
                 {
-                    Instantiate(prefabObjPlayer, Vector3.zero, Quaternion.identity);
+                    var objSpawn = Instantiate(prefabObjPlayer, Vector3.zero, Quaternion.identity);
+                    objSpawn.name = CommonKeys.Names.Player;
                     _isPlayerSpawned = true;
                     return;
                 }

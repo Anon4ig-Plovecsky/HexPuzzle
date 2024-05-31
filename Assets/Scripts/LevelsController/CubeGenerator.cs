@@ -47,15 +47,13 @@ namespace LevelsController
             
             _levelInfo = LevelInfoTransfer.GetInstance();
             _gridSize = _levelInfo.GridSize;
-            if (_gridSize.Item1 == 0 || _gridSize.Item2 == 0)
-                _gridSize = new Tuple<int, int>(2, 3);
-        
-            _cubesGameObjects = new GameObject[_gridSize.Item1 * _gridSize.Item2];
-            
-            if (_gridSize is null)
+            if (_gridSize is null || _gridSize.Item1 == 0 || _gridSize.Item2 == 0)
             {
                 Debug.Log("Failed to get grid size");
+                _gridSize = new Tuple<int, int>(2, 3);
             }
+        
+            _cubesGameObjects = new GameObject[_gridSize.Item1 * _gridSize.Item2];
         
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.PartOfPainting);
             asyncOperationHandle.Completed += delegate
@@ -64,7 +62,6 @@ namespace LevelsController
                     return;
                 _prefabCube = asyncOperationHandle.Result;
             };
-
             await asyncOperationHandle.Task;
             
             var asyncOperationListHandleNormalMap = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceNormalMap, _ => {});
@@ -75,10 +72,9 @@ namespace LevelsController
                 else 
                     Debug.Log("Failed to load Normal Maps!");
             };
-
             await asyncOperationListHandleNormalMap.Task;
             
-            var pointsOfSpawnParent = GameObject.Find("PointsOfSpawn");
+            var pointsOfSpawnParent = GameObject.Find(CommonKeys.Names.PointsOfSpawn);
             for(var i = 0; i < pointsOfSpawnParent.transform.childCount; i++)
                 _pointsOfSpawn.Add(pointsOfSpawnParent.transform.GetChild(i));
             var asyncOperationIListHandleTexture = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceTexture, _ => {});
@@ -196,9 +192,21 @@ namespace LevelsController
                     imageMaterial;
             }
         }
+        
+        /// <summary>
+        /// Returns a set of random numbers in a given range
+        /// </summary>
+        /// <param name="size">Number of random numbers</param>
+        /// <param name="range">Number range from 0 to specified(not inclusive)</param>
+        /// <returns>Set of random non-repeating numbers</returns>
         private static HashSet<int> GenerateNumbers(int size, int range)
         {
             var hashSet = new HashSet<int>();
+            
+            // if the range is less than the size, then there will be an Endless Loop
+            if (range < size)
+                return null;
+            
             while (hashSet.Count < size)
                 hashSet.Add(Random.Range(0, range));
             return new HashSet<int>(hashSet);

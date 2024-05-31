@@ -26,6 +26,8 @@ namespace UI.TestedModules
         {
             set
             {
+                if (_steamVrLaserPointer is null)
+                    return;
                 _laserPointer ??= _steamVrLaserPointer.transform.GetChild(5).gameObject;
                 if(_laserPointer != null)
                     _laserPointer.SetActive(value);

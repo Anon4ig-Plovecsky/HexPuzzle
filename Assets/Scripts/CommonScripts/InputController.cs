@@ -34,8 +34,6 @@ namespace CommonScripts
         {
             try
             {
-                Teleport.instance.CancelTeleportHint();
-                
                 if (Input.GetKeyDown(KeyCode.Escape) ||
                     !_objPlayer.IsUnityNull() && actionBoolean.GetStateDown(InputSource)
                                               && pauseController.activeSelf)
@@ -43,6 +41,8 @@ namespace CommonScripts
                     _isPaused = Time.timeScale != 0;
                     CanvasController.ClassCanvasController.SetPause(_isPaused);
                 }
+                
+                Teleport.instance.CancelTeleportHint();
             }
             catch (NullReferenceException e)
             {

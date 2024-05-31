@@ -66,6 +66,7 @@ public abstract record CommonKeys
         public const string LevelsGroup = "MainLevelsPanel/MaskLevels/LevelsGroup";
         public const string Grid = "Grid";
         public const string Cubes = "Cubes";
+        public const string PointsOfSpawn = "PointsOfSpawn";
         
         // Images
         public const string Paintings = "Paintings";
@@ -97,7 +98,7 @@ public abstract record CommonKeys
         public const string Image = "Image";
         public const string ScrollbarVertical = "Scrollbar Vertical";
 
-        public const string Player = "Player(Clone)";
+        public const string Player = "Player";
         public const string PlayerDebug= "PlayerDebug";
         
         // PausePanel
