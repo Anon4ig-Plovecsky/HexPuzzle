@@ -219,6 +219,37 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc78b15c627636845a7803633818b885
+    m_Address: Assets/Music & Sounds/Music/LevelMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LevelMusic
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32d4b1811dda14a6cb9e059ee8ad17d2
+    m_Address: Assets/Music & Sounds/SFX/DM-CGS-01.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29bde6326b4c34ad8a12da475f79b50a
+    m_Address: Assets/Music & Sounds/SFX/DM-CGS-32.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd2b5a4eab0b39b48baeecbb5743ec2c
+    m_Address: Assets/Music & Sounds/SFX/SFX-impact-simple-03_wav.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b16d41317ffb7f4f963895af69513d8
+    m_Address: Assets/Music & Sounds/SFX/SFX-impact-metal-01_wav.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9ee8b7604669d949a61b73e12444bda
+    m_Address: Assets/Music & Sounds/Music/Neutrin05 - Timeless.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:

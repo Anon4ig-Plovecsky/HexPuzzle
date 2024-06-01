@@ -34,7 +34,7 @@ namespace UI
         private TMP_Dropdown _dropdownDifficult;
         private TMP_Text _chooseImageButtonText;
         
-        private void Start()
+        private async void Start()
         {
             gameObject.SetActive(false);
 
@@ -97,32 +97,17 @@ namespace UI
             }
 
             // Getting sprites for timeImage
-            var asyncOperationHandleImageDisabled = Addressables.LoadAssetAsync<Sprite>(CommonKeys.Addressable.MainLevelDisabled);
-            asyncOperationHandleImageDisabled.Completed += delegate
-            {
-                if (asyncOperationHandleImageDisabled.Status == AsyncOperationStatus.Succeeded)
-                {
-                    _timeImageDisabled = asyncOperationHandleImageDisabled.Result;
+            var asyncTask = CommonKeys.LoadResource<Sprite>(CommonKeys.Addressable.MainLevelDisabled);
+            await asyncTask;
+            _timeImageDisabled = asyncTask.Result;
 
-                    var asyncOperationHandleImageDefault =
-                        Addressables.LoadAssetAsync<Sprite>(CommonKeys.Addressable.LevelButtonPath);
-                    asyncOperationHandleImageDefault.Completed += delegate
-                    {
-                        if (asyncOperationHandleImageDefault.Status == AsyncOperationStatus.Succeeded)
-                        {
-                            _timeImageDefault = asyncOperationHandleImageDefault.Result;
+            asyncTask = CommonKeys.LoadResource<Sprite>(CommonKeys.Addressable.LevelButtonPath);
+            await asyncTask;
+            _timeImageDefault = asyncTask.Result;
                             
-                            // After receiving all the necessary sprites, add a listener for the ToggleButton and StartButton
-                            _toggleTimer.onValueChanged.AddListener(ToggleButtonChanged);
-                            _buttonStartGame.onClick.AddListener(ButtonStartGameClicked);
-                        }
-                        else
-                            Debug.Log("Failed to get MainLevelDefault Sprite");
-                    };
-                }
-                else
-                    Debug.Log("Failed to get MainLevelDisabled Sprite");
-            };
+            // After receiving all the necessary sprites, add a listener for the ToggleButton and StartButton
+            _toggleTimer.onValueChanged.AddListener(ToggleButtonChanged);
+            _buttonStartGame.onClick.AddListener(ButtonStartGameClicked);
         }
 
         /// <summary>

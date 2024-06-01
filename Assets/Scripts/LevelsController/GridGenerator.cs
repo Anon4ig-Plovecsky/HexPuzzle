@@ -1,6 +1,4 @@
-using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
-using UnityEngine.AddressableAssets;
 using UnityEngine;
 using System;
 
@@ -22,7 +20,7 @@ namespace LevelsController
 
         private LevelInfoTransfer _levelInfoTransfer;
         
-        protected virtual void Start()
+        protected virtual async void Start()
         {
             // Loading grid size from a static class
             _levelInfoTransfer = LevelInfoTransfer.GetInstance();
@@ -30,20 +28,13 @@ namespace LevelsController
             
             _arrGameObjCells = new GameObject[GridSize.Item1 * GridSize.Item2];
             GameObjectGrid = GameObject.Find(CommonKeys.Names.Grid);
-            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.CellPrefab);
-            asyncOperationHandle.Completed += delegate { LoadCell(asyncOperationHandle); };
-        }
-        private void LoadCell(AsyncOperationHandle<GameObject> asyncOperationHandle)
-        {
-            if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                _cellPrefab = asyncOperationHandle.Result;
-                _cellSize = _cellPrefab.GetComponent<BoxCollider>().size;
-                CalculateDimensions();
-                GenerateCells();
-            }
-            else
-                Debug.Log("Failed to load prefab cell!");
+
+            var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.CellPrefab);
+            await asyncTask;
+            _cellPrefab = asyncTask.Result;
+            _cellSize = _cellPrefab.GetComponent<BoxCollider>().size;
+            CalculateDimensions();
+            GenerateCells();
         }
         private void CalculateDimensions()
         {

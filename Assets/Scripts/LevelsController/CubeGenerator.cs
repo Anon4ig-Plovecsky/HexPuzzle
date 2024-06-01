@@ -54,15 +54,10 @@ namespace LevelsController
             }
         
             _cubesGameObjects = new GameObject[_gridSize.Item1 * _gridSize.Item2];
-        
-            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.PartOfPainting);
-            asyncOperationHandle.Completed += delegate
-            {
-                if (asyncOperationHandle.Status != AsyncOperationStatus.Succeeded)
-                    return;
-                _prefabCube = asyncOperationHandle.Result;
-            };
-            await asyncOperationHandle.Task;
+
+            var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.PartOfPainting);
+            await asyncTask;
+            _prefabCube = asyncTask.Result;
             
             var asyncOperationListHandleNormalMap = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceNormalMap, _ => {});
             asyncOperationListHandleNormalMap.Completed += delegate

@@ -1,6 +1,4 @@
-using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
-using UnityEngine.AddressableAssets;
 using CommonScripts.TestedModules;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -34,20 +32,13 @@ namespace UI
             }
 
             // Receiving a prefab with information about completing the level
-            var asyncOperationHandlePrefabTime = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.PrefabTimeInfo);
-            asyncOperationHandlePrefabTime.Completed += delegate
-            {
-                if (asyncOperationHandlePrefabTime.Status == AsyncOperationStatus.Succeeded)
-                    _prefabTimeInfo = asyncOperationHandlePrefabTime.Result;
-                else
-                    Debug.Log("Failed to get PrefabTimeInfo");
-            };
-            await asyncOperationHandlePrefabTime.Task;
+            var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.PrefabTimeInfo);
+            await asyncTask;
+            _prefabTimeInfo = asyncTask.Result;
             if (_prefabTimeInfo.IsUnityNull())
             {
-                _prefabTimeInfo = asyncOperationHandlePrefabTime.WaitForCompletion();
-                if (_prefabTimeInfo.IsUnityNull())
-                    return;
+                Debug.Log("Failed to get PrefabTimeInfo");
+                return;
             }
 
             _textLevelInfo = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(transform, CommonKeys.Names.TextLevelInfo);

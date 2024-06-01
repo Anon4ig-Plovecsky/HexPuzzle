@@ -1,5 +1,8 @@
-﻿using Unity.VisualScripting;
+﻿using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public abstract record CommonKeys
 {
@@ -54,6 +57,15 @@ public abstract record CommonKeys
         public const string SelectButton = "SelectButton";
         public const string CancelButton = "CancelButton";
     }
+    public static class StrAudioNames
+    {
+        public const string LaserHover = "Assets/Music & Sounds/SFX/DM-CGS-01.wav";
+        public const string LaserClick = "Assets/Music & Sounds/SFX/DM-CGS-32.wav";
+        public const string CubeCollision = "Assets/Music & Sounds/SFX/SFX-impact-simple-03_wav.wav";
+        public const string MetalCollision = "Assets/Music & Sounds/SFX/SFX-impact-metal-01_wav.wav";
+
+        public const string MenuMusic = "Assets/Music & Sounds/Music/Neutrin05 - Timeless.wav";
+    }
     
     // Names
     public static class Names
@@ -67,6 +79,7 @@ public abstract record CommonKeys
         public const string Grid = "Grid";
         public const string Cubes = "Cubes";
         public const string PointsOfSpawn = "PointsOfSpawn";
+        public const string SoundsController = "SoundsController";
         
         // Images
         public const string Paintings = "Paintings";
@@ -113,6 +126,31 @@ public abstract record CommonKeys
         public const string TextTimeInfo = "TextTimeInfo";
         public const string TextLevelInfo = "ResultsPanel/LevelInfo/TextLevelInfo";
     }
+    
+    /// <summary>
+    /// Returns a Task on an audio file from game resources
+    /// </summary>
+    /// <param name="strPath">Path to audio file in Addressables</param>
+    /// <returns>Task with AudioClip</returns>
+    #nullable enable
+    public static async Task<T> LoadResource<T>(string strPath)
+    {
+        T? audioClip = default;
+        var asyncOperationHandle = Addressables.LoadAssetAsync<T>(strPath);
+        asyncOperationHandle.Completed += delegate
+        {
+            if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+                audioClip = asyncOperationHandle.Result;
+            else
+                Debug.Log($"Failed to get {strPath}");
+        };
+        await asyncOperationHandle.Task;
+        if(audioClip is null)
+            asyncOperationHandle.WaitForCompletion();
+
+        return audioClip!;
+    }
+    #nullable disable
 
     /// <summary>
     /// Gets a component of an object obtained along the path from the Transform of the current object with log output
@@ -148,6 +186,7 @@ public abstract record CommonKeys
         public const string ImageItem = "Assets/Prefabs/UI/ImageItem.prefab";
         public const string LevelButtonPath = "Assets/Images/UI/MainLevels/LevelButton/LevelButton.png";
         public const string PrefabTimeInfo = "Assets/Prefabs/UI/TimeInfo.prefab";
+        public const string LevelMusic = "LevelMusic";
     }
 }
 

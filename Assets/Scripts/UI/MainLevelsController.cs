@@ -24,7 +24,7 @@ namespace UI
         private int _numLevels;
         
         // Start is called before the first frame update
-        protected override void Start()
+        protected override async void Start()
         {
             base.Start();
             
@@ -40,14 +40,10 @@ namespace UI
             gameObject.SetActive(false);
 
             // Getting the game's main level button prefab
-            var asyncOperation = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.LevelButtonPrefab);
-            asyncOperation.Completed += delegate
-            {
-                if (asyncOperation.Status != AsyncOperationStatus.Succeeded) 
-                    return;
-                _levelButtonPrefab = asyncOperation.Result;
-                _arrMainLevelButtons = CreatePages();
-            };
+            var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.LevelButtonPrefab);
+            await asyncTask;
+            _levelButtonPrefab = asyncTask.Result;
+            _arrMainLevelButtons = CreatePages();
         }
 
         /// Creates a button and places it on the panel

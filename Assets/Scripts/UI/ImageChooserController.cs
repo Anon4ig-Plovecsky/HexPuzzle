@@ -66,28 +66,19 @@ namespace UI
             
             // Getting images and _imageItem template
             var asyncOperationHandleList = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceImages, _ => {});
-            asyncOperationHandleList.Completed += delegate
+            asyncOperationHandleList.Completed += async delegate 
             {
                 if (asyncOperationHandleList.Status == AsyncOperationStatus.Succeeded)
                 {
                     _listSpriteImages = new List<Sprite>(asyncOperationHandleList.Result);
 
-                    var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(CommonKeys.Addressable.ImageItem);
-                    asyncOperationHandle.Completed += delegate
-                    {
-                        if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
-                        {
-                            _prefabImageItem = asyncOperationHandle.Result;
-                            FillImageList();
-                        }
-                        else
-                            Debug.Log("Failed to get prefab ImageItem");
-                    };
+                    var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.ImageItem);
+                    await asyncTask;
+                    _prefabImageItem = asyncTask.Result;
+                    FillImageList();
                 }
                 else
-                {
                     Debug.Log("Failed to get images");
-                }
             };
             
             objThisCanvas.SetActive(false);

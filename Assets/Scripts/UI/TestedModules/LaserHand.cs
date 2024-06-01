@@ -1,3 +1,4 @@
+using CommonScripts.TestedModules;
 using UnityEngine.EventSystems;
 using Valve.VR.Extras;
 using UnityEngine;
@@ -11,10 +12,16 @@ namespace UI.TestedModules
         private SteamVR_LaserPointer _steamVrLaserPointer;
         [SerializeField] private SteamVR_Action_Boolean actionBooleanClick;
         [SerializeField] private SteamVR_Action_Pose actionPoseHand;
+
         private const SteamVR_Input_Sources InputSource = SteamVR_Input_Sources.RightHand;
+        private SoundsController _soundsController;
         private GameObject _laserPointer;
         private bool _bInScrollView;
         private bool _bIsDrag;
+        
+        // Sounds
+        private AudioClip _audioLaserHover;
+        private AudioClip _audioLaserClick;
         
         //Scrolling
         private GameObject _objContentView;
@@ -34,8 +41,20 @@ namespace UI.TestedModules
             } 
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
+            // Retrieving Audio Variables
+            var asyncTask = CommonKeys.LoadResource<AudioClip>(CommonKeys.StrAudioNames.LaserHover);
+            await asyncTask;
+            _audioLaserHover = asyncTask.Result;
+            asyncTask = CommonKeys.LoadResource<AudioClip>(CommonKeys.StrAudioNames.LaserClick);
+            await asyncTask;
+            _audioLaserClick = asyncTask.Result;
+            var objSoundsController = GameObject.Find(CommonKeys.Names.SoundsController);
+            if (objSoundsController is null)
+                return;
+            _soundsController = objSoundsController.GetComponent<SoundsController>();
+            
             _steamVrLaserPointer = gameObject.GetComponent<SteamVR_LaserPointer>();
             if (_steamVrLaserPointer is null)
                 return;
@@ -48,7 +67,11 @@ namespace UI.TestedModules
         {
             var pointerEnterHandler = e.target.GetComponent<IPointerEnterHandler>();
 
-            pointerEnterHandler?.OnPointerEnter(new PointerEventData(EventSystem.current));
+            if(pointerEnterHandler != null)
+            {
+                pointerEnterHandler.OnPointerEnter(new PointerEventData(EventSystem.current));
+                _soundsController.PlaySound(SoundsController.AudioSourceType.SfxSource, _audioLaserHover);
+            }
             
             // Checking if we are interacting with the ScrollView
             if (e.target.CompareTag(CommonKeys.Names.ScrollElement))
@@ -69,7 +92,10 @@ namespace UI.TestedModules
             
             var pointerClickHandler = e.target.GetComponent<IPointerClickHandler>();
 
-            pointerClickHandler?.OnPointerClick(new PointerEventData(EventSystem.current));
+            if (pointerClickHandler == null) 
+                return;
+            pointerClickHandler.OnPointerClick(new PointerEventData(EventSystem.current));
+            _soundsController.PlaySound(SoundsController.AudioSourceType.SfxSource, _audioLaserClick);
         }
         private void OnPointerOut(object sender, PointerEventArgs e)
         {
