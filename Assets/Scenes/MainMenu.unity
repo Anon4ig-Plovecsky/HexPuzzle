@@ -2837,7 +2837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087318170253050425, guid: 9e4900cc0b7a12d4387ca443b7a24bdd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000085383654
+      value: 0.0002321899
       objectReference: {fileID: 0}
     - target: {fileID: 4429342353837483670, guid: 9e4900cc0b7a12d4387ca443b7a24bdd, type: 3}
       propertyPath: objCalled
@@ -3015,6 +3015,10 @@ PrefabInstance:
     - target: {fileID: 7021407486572089204, guid: 938c605d44deb7a49a17cf1a7423fa48, type: 3}
       propertyPath: m_Name
       value: SoundsController
+      objectReference: {fileID: 0}
+    - target: {fileID: 8776327922179794181, guid: 938c605d44deb7a49a17cf1a7423fa48, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

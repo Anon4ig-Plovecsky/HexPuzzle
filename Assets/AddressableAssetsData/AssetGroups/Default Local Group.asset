@@ -250,6 +250,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1c0c64bdf64f99419ba7c5329c1a63a
+    m_Address: Assets/Music & Sounds/SFX/SFX-impact-punch-bag-01_wav.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6660ad9228b62c1449ebe02a394f41a0
+    m_Address: Assets/Music & Sounds/SFX/SFX-impact-pot-02_wav.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e2d9b0b2cf17f5808871e544aff3874a, type: 2}
   m_SchemaSet:

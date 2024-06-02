@@ -136,7 +136,7 @@ namespace LevelsController
                 _normalMaps.RemoveAll(sprite => listStrImagesNames.Contains(sprite.name));
             }
 
-            _paintingIndexes = GenerateNumbers( CommonKeys.CubeSides - iCounter, _paintings.Count);
+            _paintingIndexes = CommonKeys.GenerateNumbers( CommonKeys.CubeSides - iCounter, _paintings.Count);
             for (var i = iCounter; i < CommonKeys.CubeSides; i++)
                 _partsOfPaintings[i] = CreatePartOfPainting(_paintings[_paintingIndexes.ToArray()[i - iCounter]],
                     _normalMaps[_paintingIndexes.ToArray()[i - iCounter]]);
@@ -160,7 +160,7 @@ namespace LevelsController
         
         private void SpawnCubes()
         {
-            _hashIndexesOfSpawn = GenerateNumbers(_gridSize.Item1 * _gridSize.Item2, _pointsOfSpawn.Count);
+            _hashIndexesOfSpawn = CommonKeys.GenerateNumbers(_gridSize.Item1 * _gridSize.Item2, _pointsOfSpawn.Count);
             for (var cubeIndex = 0; cubeIndex < _cubesGameObjects.Length; cubeIndex++)
             {
                 _cubesGameObjects[cubeIndex] = Instantiate(_prefabCube, _pointsOfSpawn[_hashIndexesOfSpawn.ToArray()[cubeIndex]].position, 
@@ -186,25 +186,6 @@ namespace LevelsController
                 _cubesGameObjects[cubeIndex].transform.GetChild(0).GetChild(side).GetComponent<Renderer>().material =
                     imageMaterial;
             }
-        }
-        
-        /// <summary>
-        /// Returns a set of random numbers in a given range
-        /// </summary>
-        /// <param name="size">Number of random numbers</param>
-        /// <param name="range">Number range from 0 to specified(not inclusive)</param>
-        /// <returns>Set of random non-repeating numbers</returns>
-        private static HashSet<int> GenerateNumbers(int size, int range)
-        {
-            var hashSet = new HashSet<int>();
-            
-            // if the range is less than the size, then there will be an Endless Loop
-            if (range < size)
-                return null;
-            
-            while (hashSet.Count < size)
-                hashSet.Add(Random.Range(0, range));
-            return new HashSet<int>(hashSet);
         }
     }
 }

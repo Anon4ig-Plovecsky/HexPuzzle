@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 6854978738937985638}
   - component: {fileID: 3904065289527558660}
   - component: {fileID: 5871310660680556351}
+  - component: {fileID: 7748807294430122211}
   m_Layer: 0
   m_Name: PartOfPainting
   m_TagString: Untagged
@@ -608,6 +609,19 @@ MonoBehaviour:
   onDetachedFromHand:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7748807294430122211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7785057802332584771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 0}
 --- !u!1 &7896318396489630082
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
+using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
+using UnityEngine.AddressableAssets;
 using CommonScripts.TestedModules;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +25,9 @@ namespace UI.TestedModules
         private readonly List<Renderer> _gameObjectsRenderer = new();
 
         private LevelInfoTransfer _levelInfoTransfer;
+        private SoundsController _soundsController;
+        private List<AudioClip> _listAudioClips = new();
+        private IEnumerator<int> _audioIterator;
 
         // Timer
         private float _rTimer;
@@ -41,10 +46,29 @@ namespace UI.TestedModules
 
         private Color _defaultColor;
         private Color _grayColor;
-        private void Start()
+        private async void Start()
         {
-            if (ClassCanvasController == null)
-                ClassCanvasController = this;
+            // Getting SoundsController and music resources
+            var objSoundsController = GameObject.Find(CommonKeys.Names.SoundsController);
+            if (objSoundsController is null)
+            {
+                Debug.Log("Failed to get SoundsController");
+                return;
+            }
+            _soundsController = objSoundsController.GetComponent<SoundsController>();
+            var asyncOperationHandle = Addressables.LoadAssetsAsync<AudioClip>
+                (CommonKeys.Addressable.LevelMusic, _ => {});
+            asyncOperationHandle.Completed += delegate
+            {
+                if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+                    _listAudioClips = new List<AudioClip>(asyncOperationHandle.Result);
+                else
+                    Debug.Log("Failed to load music");
+            };
+            await asyncOperationHandle.Task;
+            if (_listAudioClips.Count == 0)
+                asyncOperationHandle.WaitForCompletion();
+            _audioIterator = GetNextAudioIndex();
             
             // Get LaserHand of player, if not debug
             var objPlayer = GameObject.Find(CommonKeys.Names.Player);
@@ -90,6 +114,26 @@ namespace UI.TestedModules
             _statusText = CommonKeys.GetComponentFromTransformOfType<TMP_Text>(statusPanel.transform,
                 CommonKeys.Names.StatusText);
             statusPanel.SetActive(false);
+
+            _soundsController.MuteSfx = false;
+            
+            if (ClassCanvasController == null)
+                ClassCanvasController = this;
+        }
+
+        /// <summary>
+        /// Returns the next index for playing music
+        /// </summary>
+        /// <returns>Next index to play, if the index is the last - returns to the beginning</returns>
+        private IEnumerator<int> GetNextAudioIndex()
+        {
+            var hashSetMusicOrder = CommonKeys.GenerateNumbers(_listAudioClips.Count, _listAudioClips.Count);
+            for (var i = 0; i < hashSetMusicOrder.Count;)
+            {
+                yield return hashSetMusicOrder.ElementAt(i);
+                if (++i == hashSetMusicOrder.Count)
+                    i = 0;
+            }
         }
 
         /// <summary>
@@ -102,6 +146,15 @@ namespace UI.TestedModules
                     
             if(_rTimer < 10e-3 && _isTimerEnable && _isCountdown)
                 ShowLosePanel();
+
+            // If the music has stopped playing, turn on the next random music
+            if (_soundsController.MusicSource.isPlaying) 
+                return;
+            if (_listAudioClips.Count == 0 || _audioIterator is null || !_audioIterator.MoveNext())
+                return;
+            var currentIndex = _audioIterator.Current;
+            _soundsController.PlaySound(SoundsController.AudioSourceType.MusicSource,
+                _listAudioClips[currentIndex]);
         }
         
         public void SetPause(bool isPaused)

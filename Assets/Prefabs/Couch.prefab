@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1789218325276843445}
   - component: {fileID: 7416216822109338224}
   - component: {fileID: 6056127013937261137}
+  - component: {fileID: 8965547993305743578}
   m_Layer: 0
   m_Name: Pillows1
   m_TagString: Untagged
@@ -263,6 +264,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &8965547993305743578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449474015394318359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
 --- !u!1 &2289965398408767349
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +429,7 @@ GameObject:
   - component: {fileID: 881683826594873122}
   - component: {fileID: 4983281584969824622}
   - component: {fileID: 5629641901498555319}
+  - component: {fileID: 6037941952609075835}
   m_Layer: 0
   m_Name: Pillows2
   m_TagString: Untagged
@@ -641,6 +656,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &6037941952609075835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3053512769258885924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
 --- !u!1 &8611565329815243873
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +684,7 @@ GameObject:
   - component: {fileID: 5926300540854211771}
   - component: {fileID: 616701192953921364}
   - component: {fileID: 6349538419611601344}
+  - component: {fileID: 4682902570409292619}
   m_Layer: 0
   m_Name: Pillows3
   m_TagString: Untagged
@@ -882,3 +911,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &4682902570409292619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611565329815243873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1

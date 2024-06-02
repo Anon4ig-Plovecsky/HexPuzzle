@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3957523564636794658}
   - component: {fileID: 8610318746070824478}
   - component: {fileID: 1797889717254659808}
+  - component: {fileID: 1011445951897058129}
   m_Layer: 0
   m_Name: ShallowDish
   m_TagString: Untagged
@@ -329,6 +330,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &1011445951897058129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711255149048510853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 2
 --- !u!1 &2718362458686254637
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +391,7 @@ GameObject:
   - component: {fileID: 9114499999668253300}
   - component: {fileID: 1032974311073434555}
   - component: {fileID: 4236538837799801223}
+  - component: {fileID: 4707613559361505953}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -604,3 +619,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &4707613559361505953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678521005323171540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 2

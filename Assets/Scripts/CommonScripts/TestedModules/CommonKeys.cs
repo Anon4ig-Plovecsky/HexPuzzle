@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public abstract record CommonKeys
 {
@@ -63,6 +64,8 @@ public abstract record CommonKeys
         public const string LaserClick = "Assets/Music & Sounds/SFX/DM-CGS-32.wav";
         public const string CubeCollision = "Assets/Music & Sounds/SFX/SFX-impact-simple-03_wav.wav";
         public const string MetalCollision = "Assets/Music & Sounds/SFX/SFX-impact-metal-01_wav.wav";
+        public const string PillowCollision = "Assets/Music & Sounds/SFX/SFX-impact-punch-bag-01_wav.wav";
+        public const string DishesCollision = "Assets/Music & Sounds/SFX/SFX-impact-pot-02_wav.wav";
 
         public const string MenuMusic = "Assets/Music & Sounds/Music/Neutrin05 - Timeless.wav";
     }
@@ -174,6 +177,25 @@ public abstract record CommonKeys
         
         Debug.LogError($"Failed to get {typeof(T).FullName} from {strObjPath}");
         return null;
+    }
+    
+    /// <summary>
+    /// Returns a set of random numbers in a given range
+    /// </summary>
+    /// <param name="size">Number of random numbers</param>
+    /// <param name="range">Number range from 0 to specified(not inclusive)</param>
+    /// <returns>Set of random non-repeating numbers</returns>
+    public static HashSet<int> GenerateNumbers(int size, int range)
+    {
+        var hashSet = new HashSet<int>();
+            
+        // if the range is less than the size, then there will be an Endless Loop
+        if (range < size)
+            return null;
+            
+        while (hashSet.Count < size)
+            hashSet.Add(Random.Range(0, range));
+        return new HashSet<int>(hashSet);
     }
     
     // Addressable paths

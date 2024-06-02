@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4896086224052553148}
   - component: {fileID: 6687377105836769619}
   - component: {fileID: 733947930920681382}
+  - component: {fileID: 4312594710039282137}
   m_Layer: 0
   m_Name: Teapot
   m_TagString: Untagged
@@ -242,3 +243,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactable: {fileID: 0}
+--- !u!114 &4312594710039282137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060252843256732959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918d2cdff849432aae91633df092ee86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 3
