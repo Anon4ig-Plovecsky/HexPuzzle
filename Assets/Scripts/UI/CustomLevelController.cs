@@ -1,6 +1,4 @@
-﻿using UnityEngine.ResourceManagement.AsyncOperations;
-using LevelsController.TestedModules;
-using UnityEngine.AddressableAssets;
+﻿using LevelsController.TestedModules;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -34,7 +32,7 @@ namespace UI
         private TMP_Dropdown _dropdownDifficult;
         private TMP_Text _chooseImageButtonText;
         
-        private async void Start()
+        private void Start()
         {
             gameObject.SetActive(false);
 
@@ -98,11 +96,11 @@ namespace UI
 
             // Getting sprites for timeImage
             var asyncTask = CommonKeys.LoadResource<Sprite>(CommonKeys.Addressable.MainLevelDisabled);
-            await asyncTask;
+            asyncTask.Wait();
             _timeImageDisabled = asyncTask.Result;
 
             asyncTask = CommonKeys.LoadResource<Sprite>(CommonKeys.Addressable.LevelButtonPath);
-            await asyncTask;
+            asyncTask.Wait();
             _timeImageDefault = asyncTask.Result;
                             
             // After receiving all the necessary sprites, add a listener for the ToggleButton and StartButton

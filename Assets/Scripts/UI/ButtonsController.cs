@@ -1,5 +1,6 @@
 using LevelsController.TestedModules;
 using Sequence = PrimeTween.Sequence;
+using CommonScripts.TestedModules;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +21,8 @@ namespace UI
         [SerializeField] protected GameObject objCalled;        /// Object that caused the click
         [SerializeField] protected GameObject objThisCanvas;    /// Current panel or canvas on which the button is located
         protected Button ButtonThis;                            /// Current button
+
+        private SoundsController _soundsController;
 
         protected virtual void Start()
         {
@@ -68,8 +71,8 @@ namespace UI
             {
                 ChangeAlphaPanel(objCalled.GetComponent<CanvasGroup>(), 0.0f);
                 objCalled.SetActive(true);
-                
-                Sequence.Create()
+
+                Sequence.Create(useUnscaledTime: true)
                     .Group(HidePanel(objThisCanvas))
                     .Group(ShowPanel(objCalled));
             }
@@ -114,6 +117,7 @@ namespace UI
                 case CommonKeys.StrButtonNames.BackToMenu:
                 case CommonKeys.StrButtonNames.CustomLevel:
                 case CommonKeys.StrButtonNames.Results:
+                case CommonKeys.StrButtonNames.Settings:
                     GoToPanel();
                     break;
                 case CommonKeys.StrButtonNames.ExitToMenu:

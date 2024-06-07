@@ -820,9 +820,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objCalled: {fileID: 0}
-  objThisCanvas: {fileID: 0}
+  objThisCanvas: {fileID: 6598472565286646748}
   assetLabelReferenceImages:
     m_LabelString: Paintings
+  prefabImageItem: {fileID: 6192982835104000168, guid: b615988c026747c4ebc29d016658a34b, type: 3}
 --- !u!1 &6615334925853162281
 GameObject:
   m_ObjectHideFlags: 0

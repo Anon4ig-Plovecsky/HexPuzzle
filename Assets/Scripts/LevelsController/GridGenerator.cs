@@ -20,7 +20,7 @@ namespace LevelsController
 
         private LevelInfoTransfer _levelInfoTransfer;
         
-        protected virtual async void Start()
+        protected virtual void Start()
         {
             // Loading grid size from a static class
             _levelInfoTransfer = LevelInfoTransfer.GetInstance();
@@ -30,7 +30,7 @@ namespace LevelsController
             GameObjectGrid = GameObject.Find(CommonKeys.Names.Grid);
 
             var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.CellPrefab);
-            await asyncTask;
+            asyncTask.Wait();
             _cellPrefab = asyncTask.Result;
             _cellSize = _cellPrefab.GetComponent<BoxCollider>().size;
             CalculateDimensions();

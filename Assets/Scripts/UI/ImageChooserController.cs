@@ -19,10 +19,10 @@ namespace UI
     public class ImageChooserController : ButtonsController
     {
         [SerializeField] private AssetLabelReference assetLabelReferenceImages;
+        [SerializeField] private GameObject prefabImageItem;
 
         private readonly List<GameObject> _listImageItems = new();
         private List<Sprite> _listSpriteImages = new();
-        private GameObject _prefabImageItem;
         private GameObject _imageContent;
         private GameObject _thisPanel;
         private Button _buttonSelect;
@@ -66,20 +66,16 @@ namespace UI
             
             // Getting images and _imageItem template
             var asyncOperationHandleList = Addressables.LoadAssetsAsync<Sprite>(assetLabelReferenceImages, _ => {});
-            asyncOperationHandleList.Completed += async delegate 
+            asyncOperationHandleList.Completed += delegate 
             {
                 if (asyncOperationHandleList.Status == AsyncOperationStatus.Succeeded)
-                {
                     _listSpriteImages = new List<Sprite>(asyncOperationHandleList.Result);
-
-                    var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.ImageItem);
-                    await asyncTask;
-                    _prefabImageItem = asyncTask.Result;
-                    FillImageList();
-                }
                 else
                     Debug.Log("Failed to get images");
             };
+            asyncOperationHandleList.WaitForCompletion();
+            
+            FillImageList();
             
             objThisCanvas.SetActive(false);
         }
@@ -95,7 +91,7 @@ namespace UI
             // Adding ImageItem to ImageContent
             foreach (var spriteImage in _listSpriteImages)
             {
-                var imageItem = Instantiate(_prefabImageItem, Vector3.zero, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+                var imageItem = Instantiate(prefabImageItem, Vector3.zero, Quaternion.Euler(0.0f, 0.0f, 0.0f));
                 
                 imageItem.transform.SetParent(_imageContent.transform);
                 imageItem.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);

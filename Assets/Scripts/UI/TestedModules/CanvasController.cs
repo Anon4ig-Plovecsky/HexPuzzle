@@ -20,6 +20,7 @@ namespace UI.TestedModules
         [SerializeField] private GameObject pausePanel;
         [SerializeField] private GameObject imagePanel;
         [SerializeField] private GameObject statusPanel;
+        [SerializeField] private GameObject settingsPanel;
         [SerializeField] private LaserHand laserHand;
         public static CanvasController ClassCanvasController { get; private set; }
         private readonly List<Renderer> _gameObjectsRenderer = new();
@@ -43,6 +44,9 @@ namespace UI.TestedModules
         private TMP_Text _textResultTime;
         private GameObject _timeResult;
         private TMP_Text _statusText;
+        
+        // SettingsPanel
+        private float _settingsPositionY;
 
         private Color _defaultColor;
         private Color _grayColor;
@@ -115,7 +119,8 @@ namespace UI.TestedModules
                 CommonKeys.Names.StatusText);
             statusPanel.SetActive(false);
 
-            _soundsController.MuteSfx = false;
+            // Save the original position of settingsPanel
+            _settingsPositionY = settingsPanel.transform.localPosition.y;
             
             if (ClassCanvasController == null)
                 ClassCanvasController = this;
@@ -159,16 +164,22 @@ namespace UI.TestedModules
         
         public void SetPause(bool isPaused)
         {
-            if (Time.timeScale == 0 && isPaused)
+            if (Time.timeScale == 0 && isPaused && statusPanel.activeInHierarchy)
                 return;
             
             StopTime(isPaused);
 
             textTimer.text = GetStrTime(_rTimer);
+            
+            // Restoring the position of the panels before and after turning on the pause
+            var vBufPosition = pausePanel.transform.localPosition;
+            pausePanel.transform.localPosition = new Vector3(vBufPosition.x, 0.0f, vBufPosition.z);
+            vBufPosition = settingsPanel.transform.localPosition;
+            settingsPanel.transform.localPosition = new Vector3(vBufPosition.x, _settingsPositionY, vBufPosition.z);
+            settingsPanel.SetActive(false);
+            
             pausePanel.SetActive(isPaused);
-            
             imagePanel.SetActive(isPaused);
-            
             laserHand.enabled = true;
             laserHand.Active = isPaused;
         }
@@ -237,7 +248,7 @@ namespace UI.TestedModules
         }
 
         /// <summary>
-        /// 
+        /// If the timer reaches zero, the game ends
         /// </summary>
         public void ShowLosePanel()
         {

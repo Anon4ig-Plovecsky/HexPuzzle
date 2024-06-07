@@ -21,7 +21,7 @@ namespace LevelsController
         /// </summary>
         private void OnCollisionEnter(Collision collision)
         {
-            _soundsController.PlaySound(objectType);
+            _soundsController.PlaySound(objectType, transform.position);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace UI
         }
 
         /// <summary>
-        /// Increases or decreases timу
+        /// Increases or decreases time
         /// </summary>
         /// <param name="timeType">Time type: minute, second</param>
         /// <param name="bIncrease">If true increases time, otherwise decreases</param>

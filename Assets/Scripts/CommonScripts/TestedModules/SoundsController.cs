@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Unity.VisualScripting;
 using UnityEngine;
 using System;
 
@@ -9,6 +10,7 @@ namespace CommonScripts.TestedModules
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] [MaybeNull] private AudioClip musicSound;
+        [SerializeField] [MaybeNull] private GameObject objPlayer;
 
         private AudioClip _audioCube;
         private AudioClip _audioPillow;
@@ -20,6 +22,11 @@ namespace CommonScripts.TestedModules
         {
             get => sfxSource.mute;
             set => sfxSource.mute = value;
+        }
+        public bool MuteMusic
+        {
+            get => musicSource.mute;
+            set => musicSource.mute = value;
         }
 
         private async void Start()
@@ -39,6 +46,10 @@ namespace CommonScripts.TestedModules
             asyncTask = CommonKeys.LoadResource<AudioClip>(CommonKeys.StrAudioNames.MetalCollision);
             await asyncTask;
             _audioMetal = asyncTask.Result;
+
+            var objVRPlayer = GameObject.Find(CommonKeys.Names.Player);
+            if (!objVRPlayer.IsUnityNull())
+                objPlayer = objVRPlayer;
             
             if (musicSound == null) 
                 return;
@@ -61,7 +72,8 @@ namespace CommonScripts.TestedModules
         /// Plays the sound of the corresponding object
         /// </summary>
         /// <param name="objType">One of the enumerable object types</param>
-        public void PlaySound(ObjectType objType)
+        /// <param name="posSource">Sound source location</param>
+        public void PlaySound(ObjectType objType, Vector3 posSource)
         {
             var audioClip = objType switch
             {
@@ -73,7 +85,23 @@ namespace CommonScripts.TestedModules
             };
 
             if(audioClip != null)
+                PlaySfxByDistance(audioClip, posSource);
+        }
+
+        /// <summary>
+        /// Considering the distance reproduces the sound at the calculated volume
+        /// </summary>
+        private void PlaySfxByDistance(AudioClip audioClip, Vector3 posSource)
+        {
+            if (objPlayer is null || objPlayer.IsUnityNull())
+            {
+                Debug.LogWarning("objPlayer is null");
                 sfxSource.PlayOneShot(audioClip);
+                return;
+            }
+
+            if(!MuteSfx)
+                AudioSource.PlayClipAtPoint(audioClip, posSource, sfxSource.volume);
         }
 
         public enum AudioSourceType

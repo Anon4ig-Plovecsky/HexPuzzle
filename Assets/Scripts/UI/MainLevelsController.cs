@@ -1,6 +1,4 @@
-using UnityEngine.ResourceManagement.AsyncOperations;
 using LevelsController.TestedModules;
-using UnityEngine.AddressableAssets;
 using CommonScripts.TestedModules;
 using Unity.VisualScripting;
 using UnityEngine.UI;
@@ -24,7 +22,7 @@ namespace UI
         private int _numLevels;
         
         // Start is called before the first frame update
-        protected override async void Start()
+        protected override void Start()
         {
             base.Start();
             
@@ -41,7 +39,7 @@ namespace UI
 
             // Getting the game's main level button prefab
             var asyncTask = CommonKeys.LoadResource<GameObject>(CommonKeys.Addressable.LevelButtonPrefab);
-            await asyncTask;
+            asyncTask.Wait();
             _levelButtonPrefab = asyncTask.Result;
             _arrMainLevelButtons = CreatePages();
         }

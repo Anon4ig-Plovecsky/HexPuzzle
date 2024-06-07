@@ -1,5 +1,6 @@
 ﻿using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
+using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
@@ -57,6 +58,10 @@ public abstract record CommonKeys
         // ImageChooser
         public const string SelectButton = "SelectButton";
         public const string CancelButton = "CancelButton";
+        
+        // Settings
+        public const string SfxToggle = "SfxToggle";
+        public const string MusicToggle = "MusicToggle";
     }
     public static class StrAudioNames
     {
@@ -90,6 +95,7 @@ public abstract record CommonKeys
         // Panels
         public const string MainLevels = "MainLevels";
         public const string MainMenu = "MainMenu";
+        public const string Settings = "Settings";
         
         // Scenes
         public const string SceneNature = "Nature";
@@ -128,6 +134,14 @@ public abstract record CommonKeys
         // Results
         public const string TextTimeInfo = "TextTimeInfo";
         public const string TextLevelInfo = "ResultsPanel/LevelInfo/TextLevelInfo";
+        
+        // Settings
+        public const string SfxTogglePath = "SettingsPanel/SfxToggle";
+        public const string MusicTogglePath = "SettingsPanel/MusicToggle";
+        
+        // Keys
+        public const string SfxStatus = "SfxStatus";
+        public const string MusicStatus = "MusicStatus";
     }
     
     /// <summary>
@@ -136,7 +150,7 @@ public abstract record CommonKeys
     /// <param name="strPath">Path to audio file in Addressables</param>
     /// <returns>Task with AudioClip</returns>
     #nullable enable
-    public static async Task<T> LoadResource<T>(string strPath)
+    public static Task<T> LoadResource<T>(string strPath)
     {
         T? audioClip = default;
         var asyncOperationHandle = Addressables.LoadAssetAsync<T>(strPath);
@@ -147,11 +161,9 @@ public abstract record CommonKeys
             else
                 Debug.Log($"Failed to get {strPath}");
         };
-        await asyncOperationHandle.Task;
-        if(audioClip is null)
-            asyncOperationHandle.WaitForCompletion();
+        asyncOperationHandle.WaitForCompletion();
 
-        return audioClip!;
+        return Task.FromResult(audioClip!);
     }
     #nullable disable
 
