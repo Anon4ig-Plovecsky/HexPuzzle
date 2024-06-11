@@ -1,3 +1,16 @@
 {
-	"name": "HexPuzzle-TestedScripts"
+    "name": "HexPuzzle-TestedScripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7a9b8f58d6fe12a41b063b772df28199"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

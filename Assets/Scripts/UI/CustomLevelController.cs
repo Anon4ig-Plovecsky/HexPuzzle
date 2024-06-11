@@ -29,6 +29,7 @@ namespace UI
         private TMP_Text _textMinutes;
         private TMP_Text _textSeconds;
         private Button _buttonStartGame;
+        private TMP_Dropdown _dropdownScene;
         private TMP_Dropdown _dropdownDifficult;
         private TMP_Text _chooseImageButtonText;
         
@@ -48,6 +49,11 @@ namespace UI
 
             _toggleTimer = CommonKeys.GetComponentFromTransformOfType<Toggle>(transform, CommonKeys.Names.TimerToggle);
             if (_toggleTimer.IsUnityNull())
+                return;
+
+            _dropdownScene = CommonKeys.GetComponentFromTransformOfType<TMP_Dropdown>(transform,
+                CommonKeys.Names.DropdownScene);
+            if (_dropdownScene.IsUnityNull())
                 return;
 
             _dropdownDifficult = CommonKeys.GetComponentFromTransformOfType<TMP_Dropdown>(transform,
@@ -170,7 +176,15 @@ namespace UI
                     break;
             }
             var listImageNames = new List<string>(1) { _chooseImageButtonText.text };
-            var levelInfoTransfer = LevelInfoTransfer.SetInstance(lvlNumber, gridSize, listImageNames);
+            
+            // Location Type
+            var strLocationType = _dropdownScene.value switch
+            {
+                0 => CommonKeys.Names.SceneNature,
+                1 => CommonKeys.Names.SceneHome,
+                _ => CommonKeys.Names.SceneNature
+            };
+            var levelInfoTransfer = LevelInfoTransfer.SetInstance(lvlNumber, gridSize, listImageNames, strLocationType);
 
             // Add the timer value if the timer is enabled
             if (_toggleTimer.isOn)
@@ -185,7 +199,7 @@ namespace UI
             Time.timeScale = 1;
             if (CanvasController.ClassCanvasController != null)
                 CanvasController.DestroyClass();
-            SceneManager.LoadScene(CommonKeys.Names.SceneNature); //TODO: 1) Change to selected location; 2) Copy-paste from ButtonsController
+            SceneManager.LoadScene(strLocationType); //TODO: Copy-paste from ButtonsController
         }
     }
 }

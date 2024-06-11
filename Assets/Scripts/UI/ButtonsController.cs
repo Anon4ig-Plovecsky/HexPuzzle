@@ -221,9 +221,9 @@ namespace UI
 
             var gridSize = LevelParametersMap.LevelInfo[iLevelNumber].GridSize;
             var imageNameList = new List<string>(LevelParametersMap.LevelInfo[iLevelNumber].ImageNameList);
-            var sceneName = CommonKeys.Names.SceneNature;       // TODO: Selecting location
+            var sceneName = LevelParametersMap.LevelInfo[iLevelNumber].StrSceneName;
             
-            LevelInfoTransfer.SetInstance(iLevelNumber, gridSize, imageNameList);
+            LevelInfoTransfer.SetInstance(iLevelNumber, gridSize, imageNameList, sceneName);
             
             ChangeScene(sceneName);
         }

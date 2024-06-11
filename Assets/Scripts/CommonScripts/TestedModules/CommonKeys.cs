@@ -99,6 +99,7 @@ public abstract record CommonKeys
         
         // Scenes
         public const string SceneNature = "Nature";
+        public const string SceneHome = "Home";
         
         // CustomLevel
         public const string TimerToggle = "CustomLevelPanel/Timer/TimerToggle";
@@ -113,6 +114,7 @@ public abstract record CommonKeys
         public const string ChooseImageButtonText = "CustomLevelPanel/MainImage/ChooseImageButton/ChooseImageText";
         public const string StartLevelButton = "CustomLevelPanel/StartLevelButton";
         public const string DropdownDifficult = "CustomLevelPanel/Difficult/Dropdown";
+        public const string DropdownScene = "CustomLevelPanel/LocationType/LocationDropdown";
         
         // ImageChooser
         public const string ImageContent = "ImageChooserPanel/Scroll View/Viewport/ScrollMask/ImageContent";

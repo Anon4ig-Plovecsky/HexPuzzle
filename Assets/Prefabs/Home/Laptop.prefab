@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3988896100019909039}
   - component: {fileID: 9208743583923277492}
   - component: {fileID: 2750069311864023558}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Laptop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

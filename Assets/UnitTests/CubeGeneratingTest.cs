@@ -21,9 +21,9 @@ namespace UnitTests
         {
             get
             {
-                yield return new TestCaseData(new LevelInfoTransfer(4, new Tuple<int, int>(2, 2), Array.Empty<string>())).SetName("StartEmptyLevel").Returns(null);
-                yield return new TestCaseData(new LevelInfoTransfer(8, new Tuple<int, int>(4, 5), new []{ "The Last Day of Pompeii - Karl Bryullov" })).SetName("StartMainLevel").Returns(null);
-                yield return new TestCaseData(new LevelInfoTransfer(8, new Tuple<int, int>(2, 3), new []{ "Error file name" })).SetName("StartLevelWithError").Returns(null);
+                yield return new TestCaseData(new LevelInfoTransfer(4, new Tuple<int, int>(2, 2), Array.Empty<string>(), CommonKeys.Names.SceneNature)).SetName("StartEmptyLevel").Returns(null);
+                yield return new TestCaseData(new LevelInfoTransfer(8, new Tuple<int, int>(4, 5), new []{ "The Last Day of Pompeii - Karl Bryullov" }, CommonKeys.Names.SceneNature)).SetName("StartMainLevel").Returns(null);
+                yield return new TestCaseData(new LevelInfoTransfer(8, new Tuple<int, int>(2, 3), new []{ "Error file name" }, CommonKeys.Names.SceneNature)).SetName("StartLevelWithError").Returns(null);
             }
         }
         
@@ -45,7 +45,7 @@ namespace UnitTests
             Time.timeScale = 1;
             if (CanvasController.ClassCanvasController != null)
                 CanvasController.DestroyClass();
-            SceneManager.LoadScene(CommonKeys.Names.SceneNature);
+            SceneManager.LoadScene(levelInfo.StrSceneName);
 
             // Waiting for the scene switch to complete
             const int maxCount = 10000;
