@@ -192,7 +192,7 @@ namespace UI.TestedModules
         /// <param name="sprite"></param>
         /// <param name="dimension">Image size in one part of the cube</param>
         /// <returns></returns>
-        public IEnumerator ShowImage(Sprite sprite, Vector2 dimension)
+        public IEnumerator ShowImage(Sprite sprite, Vector2 dimension, string strSpriteName)
         {
             imagePanel.SetActive(true);
             _rawImageOfImagePanel.texture = sprite.texture;
@@ -200,7 +200,7 @@ namespace UI.TestedModules
             
             // Loading image name
             var saveManager = new SaveManager();
-            var strName = saveManager.ReadNamePainting(sprite.name);
+            var strName = saveManager.ReadNamePainting(strSpriteName);
             _paintingName.text = strName;
             
             StopTime(true);

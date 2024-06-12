@@ -281,6 +281,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 0.045
       objectReference: {fileID: 0}
+    - target: {fileID: 2379823929077964834, guid: 62039110d10b656a491fbbcf843ea029, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -56,5 +56,13 @@
 			<name>The Persistence of Memory - Salvador Dali</name>
 			<ru>Постоянство памяти - Сальвадор Дали</ru>
 		</painting>
+		<painting>
+			<name>Hunters in the Snow - Pieter Bruegel the Elder</name>
+			<ru>Охотники на снегу - Питер Брейгель-старший</ru>
+		</painting>
+		<painting>
+			<name>Impression Rising Sun - Claude Monet</name>
+			<ru>Впечатление. Восходящее солнце - Клод Моне</ru>
+		</painting>
 	</paintings>
 </xml>

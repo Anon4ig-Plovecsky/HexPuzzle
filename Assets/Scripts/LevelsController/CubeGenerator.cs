@@ -40,6 +40,7 @@ namespace LevelsController
         private bool _mainPaintingIsCrop;
         private List<Sprite> _normalMaps; //[0] - mainPainting
         private List<Sprite> _paintings;  //[0] - mainNormalMap
+        private string _strMainPainting;
         private async void Start()
         {
             _cubesParent = GameObject.Find("Cubes");
@@ -83,7 +84,7 @@ namespace LevelsController
             _mainPaintingIsCrop = true;
             var mainSprite = _partsOfPaintings[0].Item1.CropEntirePainting();
             StartCoroutine(CanvasController.ClassCanvasController.
-                ShowImage(mainSprite, _partsOfPaintings[0].Item1.Dimension));
+                ShowImage(mainSprite, _partsOfPaintings[0].Item1.Dimension, _strMainPainting));
         }
         private void OnLoadDone(AsyncOperationHandle<IList<Sprite>> asyncOperationHandle)
         {
@@ -118,12 +119,15 @@ namespace LevelsController
             if (listStrImagesNames is null || listStrImagesNames.Count == 0)
                 Debug.Log("The ImageNameList array in LevelInfoTransfer is empty or not initialized");
             else
+            {
+                _strMainPainting = listStrImagesNames[0];
                 foreach (var iFoundRes in listStrImagesNames
                              .Select(imageName => _paintings.FindIndex(
                                  sprite => sprite.name.Equals(imageName)))
                              .Where(iFoundRes => iFoundRes != -1))
                     _partsOfPaintings[iCounter++] = CreatePartOfPainting(_paintings[iFoundRes],
                         _normalMaps[iFoundRes]);
+            }
 
             // If the array is completely full - return
             if(CommonKeys.CubeSides == iCounter)
@@ -138,8 +142,13 @@ namespace LevelsController
 
             _paintingIndexes = CommonKeys.GenerateNumbers( CommonKeys.CubeSides - iCounter, _paintings.Count);
             for (var i = iCounter; i < CommonKeys.CubeSides; i++)
-                _partsOfPaintings[i] = CreatePartOfPainting(_paintings[_paintingIndexes.ToArray()[i - iCounter]],
+            {
+                var iPaintingIndex = _paintingIndexes.ToArray()[i - iCounter];
+                if (i == 0)
+                    _strMainPainting = _paintings[iPaintingIndex].name;
+                _partsOfPaintings[i] = CreatePartOfPainting(_paintings[iPaintingIndex],
                     _normalMaps[_paintingIndexes.ToArray()[i - iCounter]]);
+            }
         }
         
         /// <summary>
