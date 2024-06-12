@@ -200,7 +200,7 @@ namespace UI.TestedModules
             
             // Loading image name
             var saveManager = new SaveManager();
-            var strName = saveManager.ReadNamePainting(_levelInfoTransfer.ImageNameList[0]);
+            var strName = saveManager.ReadNamePainting(sprite.name);
             _paintingName.text = strName;
             
             StopTime(true);

@@ -41,8 +41,8 @@ namespace CommonScripts
                     _isPaused = Time.timeScale != 0;
                     CanvasController.ClassCanvasController.SetPause(_isPaused);
                 }
-                
-                Teleport.instance.CancelTeleportHint();
+                if(!_objPlayer.IsUnityNull())
+                    Teleport.instance.CancelTeleportHint();
             }
             catch (NullReferenceException e)
             {
