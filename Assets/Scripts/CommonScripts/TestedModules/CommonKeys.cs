@@ -144,6 +144,11 @@ public abstract record CommonKeys
         // Keys
         public const string SfxStatus = "SfxStatus";
         public const string MusicStatus = "MusicStatus";
+        
+        // XML
+        public const string Painting = "painting";
+        public const string PaintingName = "name";
+        public const string PaintingRu = "ru";
     }
     
     /// <summary>
@@ -223,6 +228,7 @@ public abstract record CommonKeys
         public const string LevelButtonPath = "Assets/Images/UI/MainLevels/LevelButton/LevelButton.png";
         public const string PrefabTimeInfo = "Assets/Prefabs/UI/TimeInfo.prefab";
         public const string LevelMusic = "LevelMusic";
+        public const string Paintings = "Assets/Images/Paintings/Paintings.xml";
     }
 }
 

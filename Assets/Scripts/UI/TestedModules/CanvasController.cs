@@ -38,6 +38,7 @@ namespace UI.TestedModules
         
         // ImagePanel
         private RawImage _rawImageOfImagePanel;
+        private TMP_Text _paintingName;
         private static readonly Vector2 MaxDimensions = new(0.6f, 0.3f);
         
         // StatusPanel
@@ -100,6 +101,7 @@ namespace UI.TestedModules
                     _gameObjectsRenderer.Add(gameObjectRenderer);
             });
             _rawImageOfImagePanel = imagePanel.transform.GetChild(0).GetChild(0).GetComponent<RawImage>();
+            _paintingName = imagePanel.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
 
             _levelInfoTransfer = LevelInfoTransfer.GetInstance();
             
@@ -195,6 +197,12 @@ namespace UI.TestedModules
             imagePanel.SetActive(true);
             _rawImageOfImagePanel.texture = sprite.texture;
             _rawImageOfImagePanel.rectTransform.sizeDelta = GetImageDimension(dimension);
+            
+            // Loading image name
+            var saveManager = new SaveManager();
+            var strName = saveManager.ReadNamePainting(_levelInfoTransfer.ImageNameList[0]);
+            _paintingName.text = strName;
+            
             StopTime(true);
             yield return new WaitForSecondsRealtime(4.0f);
             StopTime(false);

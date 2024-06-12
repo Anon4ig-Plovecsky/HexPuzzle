@@ -1,0 +1,60 @@
+<xml>
+	<paintings>
+		<painting>
+			<name>Above Eternal Rest - Isaac Levitan</name>
+			<ru>Над вечным покоем - Исаак Левитан</ru>
+		</painting>
+		<painting>
+			<name>Among the Waves - Ivan Aivazovsky</name>
+			<ru>Среди волн - Иван Константинович Айвазовский</ru>
+		</painting>
+		<painting>
+			<name>Field of Poppies - Claude Monet</name>
+			<ru>Поле маков у Аржантёя - Клод Моне</ru>
+		</painting>
+		<painting>
+			<name>Golden Autumn - Isaac Levitan</name>
+			<ru>Золотая осень - Исаак Левитан</ru>
+		</painting>
+		<painting>
+			<name>Lovers - Rene Magritte</name>
+			<ru>Влюблённые - Рене Магритт</ru>
+		</painting>
+		<painting>
+			<name>Moonlight Night on the Dnieper - Arkhip Ivanovich Kuindzhi</name>
+			<ru>Лунная ночь на Днепре - Архип Иванович Куинджи</ru>
+		</painting>
+		<painting>
+			<name>Morning in a pine forest - Ivan Shishkin and Konstantin Konstantin Savitsky 1889</name>
+			<ru>Утро в сосновом лесу - Иван Шишкин и Константин Аполлонович Савицкий</ru>
+		</painting>
+		<painting>
+			<name>Rainbow - Ivan Aivazovsky</name>
+			<ru>Радуга - Иван Константинович Айвазовский</ru>
+		</painting>
+		<painting>
+			<name>Rye - Ivan Shishkin</name>
+			<ru>Рожь - Иван Шишкин</ru>
+		</painting>
+		<painting>
+			<name>Still Life With Basket, Flowers And Fruit - Balthasar van der Ast</name>
+			<ru>Натюрморт с корзиной фруктов - Бальтазар Ван дер Аст</ru>
+		</painting>
+		<painting>
+			<name>The Last Day of Pompeii - Karl Bryullov</name>
+			<ru>Последний день Помпеи - Карл Павлович Брюллов</ru>
+		</painting>
+		<painting>
+			<name>The Last Supper - Leonardo da Vinci</name>
+			<ru>Тайная вечеря - Леонардо да Винчи и Энрике Кабрера</ru>
+		</painting>
+		<painting>
+			<name>The Ninth Wave - Ivan Aivazovsky</name>
+			<ru>Девятый вал - Иван Айвазовский</ru>
+		</painting>
+		<painting>
+			<name>The Persistence of Memory - Salvador Dali</name>
+			<ru>Постоянство памяти - Сальвадор Дали</ru>
+		</painting>
+	</paintings>
+</xml>

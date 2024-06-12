@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 using System;
+using CommonScripts.TestedModules;
 using TMPro;
 
 namespace UI
@@ -27,6 +28,8 @@ namespace UI
         private GameObject _thisPanel;
         private Button _buttonSelect;
         private Button _buttonCancel;
+
+        private Dictionary<string, string> _listPaintingNames = new();
 
         protected override void Start()
         {
@@ -87,7 +90,8 @@ namespace UI
         {
             if (_listSpriteImages.Count == 0)
                 return;
-            
+
+            var saveManager = new SaveManager();
             // Adding ImageItem to ImageContent
             foreach (var spriteImage in _listSpriteImages)
             {
@@ -115,7 +119,9 @@ namespace UI
                     Debug.Log("Failed to get imageName of imageItem");
                     continue;
                 }
-                imageName.text = spriteImage.name;
+                var strImageName = saveManager.ReadNamePainting(spriteImage.name);
+                imageName.text = strImageName.Equals("") ? spriteImage.name : strImageName;
+                _listPaintingNames.Add(imageName.text, spriteImage.name);
 
                 var toggleImageItem = imageItem.GetComponent<Toggle>();
                 if (toggleImageItem.IsUnityNull())
@@ -205,7 +211,10 @@ namespace UI
                 if (imageItemText.IsUnityNull())
                     Debug.Log("Failed to get name of selectedItem from list");
                 else
-                    CustomLevelController.SelectedImage = imageItemText.text;
+                {
+                    var strPaintingName = _listPaintingNames[imageItemText.text];
+                    CustomLevelController.SelectedImage = strPaintingName;
+                }
             }
             
             GoToPanel();

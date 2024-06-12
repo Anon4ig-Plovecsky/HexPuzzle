@@ -1,15 +1,20 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
+﻿using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.AddressableAssets;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Xml;
 using System.IO;
 using System;
 
 namespace CommonScripts.TestedModules
 {
-    public abstract record SaveManager
+    public class SaveManager
     {
+        private TextAsset _textAsset;
+        
         private static readonly string StrSaveFilePath = Application.persistentDataPath;
 
         /// <summary>
@@ -132,6 +137,52 @@ namespace CommonScripts.TestedModules
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+        
+        /// <summary>
+        /// Gets the name of the picture from the file name of their XML file
+        /// </summary>
+        /// <returns>true - if it was possible to get the name; false - if unsuccessful</returns>
+        public string ReadNamePainting(string strPaintingName)
+        {
+            var xmlDocument = new XmlDocument();
+            
+            if(_textAsset is null)
+            {
+                var asyncOperationHandle = Addressables.LoadAssetAsync<TextAsset>(CommonKeys.Addressable.Paintings);
+                asyncOperationHandle.Completed += delegate
+                {
+                    if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+                        _textAsset = asyncOperationHandle.Result;
+                    else
+                        Debug.Log("Failed to read xml file");
+                };
+                asyncOperationHandle.WaitForCompletion();
+            }
+            if (_textAsset is null)
+                return "";
+            xmlDocument.LoadXml(_textAsset.text);
+
+            var strFoundName = "";
+            var xmlPaintingList = xmlDocument.GetElementsByTagName(CommonKeys.Names.Painting);
+            
+            for (var i = 0; i < xmlPaintingList.Count; i++)
+            {
+                var xmlPainting = xmlPaintingList[i];
+                var xmlName = xmlPainting[CommonKeys.Names.PaintingName];
+                var xmlRu = xmlPainting[CommonKeys.Names.PaintingRu];
+
+                if(xmlName is null || xmlRu is null)
+                    continue;
+                var strName = xmlName.InnerText;
+                var strRu = xmlRu.InnerText;
+                if (!strName.Equals(strPaintingName)) 
+                    continue;
+                strFoundName = strRu;
+                break;
+            }
+            
+            return strFoundName;
         }
     }
 
