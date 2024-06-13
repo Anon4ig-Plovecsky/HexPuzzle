@@ -75,7 +75,7 @@ namespace UI
         /// </summary>
         private void OnDisable()
         {
-            if (_soundsController is null)
+            if (_soundsController?.SfxSource is null || _soundsController.MusicSource is null)
                 return;
             PlayerPrefs.SetInt(CommonKeys.Names.SfxStatus, _soundsController.MuteSfx ? 1 : 0);
             PlayerPrefs.SetInt(CommonKeys.Names.MusicStatus, _soundsController.MuteMusic ? 1 : 0);

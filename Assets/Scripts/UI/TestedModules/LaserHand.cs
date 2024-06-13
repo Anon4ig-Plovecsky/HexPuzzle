@@ -36,9 +36,23 @@ namespace UI.TestedModules
                 if (_steamVrLaserPointer is null)
                     return;
                 _laserPointer ??= _steamVrLaserPointer.transform.GetChild(5).gameObject;
+                _laserPointer ??= _steamVrLaserPointer.transform.GetChild(5).gameObject;
                 if(_laserPointer != null)
                     _laserPointer.SetActive(value);
             } 
+        }
+
+        /// <summary>
+        /// Helper that overrides soundsController for player after scene change
+        /// </summary>
+        public void ReactivateSoundsController()
+        {
+            // When transferred to another scene, player is not destroyed, so to use it need
+            // to catch the receipt of _soundsController the first time
+            var objSoundsController = GameObject.Find(CommonKeys.Names.SoundsController);
+            if (objSoundsController is null)
+                return;
+            _soundsController = objSoundsController.GetComponent<SoundsController>();
         }
 
         private async void OnEnable()

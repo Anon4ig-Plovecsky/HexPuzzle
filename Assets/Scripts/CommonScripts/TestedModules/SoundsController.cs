@@ -18,6 +18,7 @@ namespace CommonScripts.TestedModules
         private AudioClip _audioMetal;
 
         public AudioSource MusicSource => musicSource;
+        public AudioSource SfxSource => sfxSource;
         public bool MuteSfx
         {
             get => sfxSource.mute;
@@ -65,7 +66,7 @@ namespace CommonScripts.TestedModules
         public void PlaySound(AudioSourceType audioSourceType, AudioClip audioClip)
         {
             var audioSource = audioSourceType == AudioSourceType.MusicSource ? musicSource : sfxSource;
-            audioSource.PlayOneShot(audioClip);
+            PlaySourceOneShoot(audioSource, audioClip);
         }
         
         /// <summary>
@@ -96,12 +97,26 @@ namespace CommonScripts.TestedModules
             if (objPlayer is null || objPlayer.IsUnityNull())
             {
                 Debug.LogWarning("objPlayer is null");
-                sfxSource.PlayOneShot(audioClip);
+                PlaySourceOneShoot(sfxSource, audioClip);
                 return;
             }
 
             if(!MuteSfx)
                 AudioSource.PlayClipAtPoint(audioClip, posSource, sfxSource.volume);
+        }
+
+        /// <summary>
+        /// Kludge: if pause is set (time is 0), turns it off while the sound is playing,
+        /// then turns on pause again (returns time to 0)
+        /// </summary>
+        private void PlaySourceOneShoot(AudioSource audioSource, AudioClip audioClip)
+        {
+            var time = Time.timeScale;
+            if (time == 0)
+                Time.timeScale = 1.0f;
+            audioSource.PlayOneShot(audioClip);
+            if (time == 0)
+                Time.timeScale = time;
         }
 
         public enum AudioSourceType

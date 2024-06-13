@@ -1,5 +1,6 @@
 ﻿using LevelsController.TestedModules;
 using Unity.VisualScripting;
+using UI.TestedModules;
 using System.Linq;
 using UnityEngine;
 
@@ -41,6 +42,18 @@ namespace LevelsController
                 return;
             }
 
+            // Reactivating soundsController
+            var objRightHand = objPlayer.transform.GetChild(0).GetChild(2);
+            if (objRightHand is null)
+                return;
+            var laserHand = objRightHand.GetComponent<LaserHand>();
+            if (laserHand is null)
+            {
+                Debug.Log("Failed to get LaserHand from RightHand");
+                return;
+            }
+            laserHand.ReactivateSoundsController();
+            
             objPlayer.transform.position = transform.position;
             objPlayer.transform.rotation = transform.rotation;
         }

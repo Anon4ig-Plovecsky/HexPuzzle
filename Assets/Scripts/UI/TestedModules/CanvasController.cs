@@ -191,6 +191,7 @@ namespace UI.TestedModules
         /// </summary>
         /// <param name="sprite"></param>
         /// <param name="dimension">Image size in one part of the cube</param>
+        /// <param name="strSpriteName">Image name in resources</param>
         /// <returns></returns>
         public IEnumerator ShowImage(Sprite sprite, Vector2 dimension, string strSpriteName)
         {

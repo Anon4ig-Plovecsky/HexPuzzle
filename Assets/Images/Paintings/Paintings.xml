@@ -64,5 +64,29 @@
 			<name>Impression Rising Sun - Claude Monet</name>
 			<ru>Впечатление. Восходящее солнце - Клод Моне</ru>
 		</painting>
+		<painting>
+			<name>The Night Watch - Rembrandt Harmens van Rijn</name>
+			<ru>Ночной дозор - Рембрандт Харменс ван Рейн</ru>
+		</painting>
+		<painting>
+			<name>Breakfast of the rowers - Pierre-Auguste Renoir</name>
+			<ru>Завтрак гребцов - Пьер-Огюст Ренуар</ru>
+		</painting>
+		<painting>
+			<name>Moscow courtyard - Vasily Polenov</name>
+			<ru>Московский дворик - Василий Дмитриевич Поленов</ru>
+		</painting>
+		<painting>
+			<name>Portrait of an Unknown Woman - Ivan Kramskoy</name>
+			<ru>Неизвестная - Иван Николаевич Крамской</ru>
+		</painting>
+		<painting>
+			<name>The Demon Seated - Mikhail Vrubel</name>
+			<ru>Демон сидящий - Михаил Александрович Врубель</ru>
+		</painting>
+		<painting>
+			<name>Boyarina Morozova - Vasily Ivanovich Surikov</name>
+			<ru>Боярыня Морозова - Василий Иванович Суриков</ru>
+		</painting>
 	</paintings>
 </xml>
