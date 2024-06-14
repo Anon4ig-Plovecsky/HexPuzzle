@@ -5,10 +5,10 @@
       "app_key": "application.generated.unity.location1.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\anon\\Unity\\HexPuzzle\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\IVT-345_1\\Documents\\GitHub\\HexPuzzle\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
-          "name": "Location1 [Testing]"
+          "name": "HexPuzzle [Testing]"
         }
       }
     }
